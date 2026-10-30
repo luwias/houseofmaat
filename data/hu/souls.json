@@ -1,0 +1,21 @@
+{
+  "souls": [
+    {
+      "id": "kha", "name": "Kha", "epithet": "a kereskedő", "glyph": "𓊛", "playable": true,
+      "unlock": true,
+      "summary": "Kereskedő a thébai kikötőből. A Ház tekercse tolvajnak nevezi – de a teste három nappal a halála után érkezett a balzsamozóhoz."
+    },
+    {
+      "id": "nefru", "name": "Nefru", "epithet": "a bába", "glyph": "𓁐", "playable": false,
+      "unlock": {"case_done": "kha"},
+      "summary": "Falusi gyógyító és bába. Egy járvány éjszakáján két gyermek született…",
+      "coming": "A következő fejlesztési fázisban érkezik."
+    },
+    {
+      "id": "hori", "name": "Hori", "epithet": "az írnok", "glyph": "𓏞", "playable": false,
+      "unlock": {"case_done": "nefru"},
+      "summary": "Királyi írnok egy aszályos évben. A hivatalos tekercsek tolvajnak nevezik.",
+      "coming": "A következő fejlesztési fázisban érkezik."
+    }
+  ]
+}

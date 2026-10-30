@@ -1,0 +1,12 @@
+# Godot
+.godot/
+*.translation
+export/
+export_presets.cfg
+
+# Blender
+*.blend1
+
+# OS
+Thumbs.db
+.DS_Store

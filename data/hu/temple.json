@@ -1,0 +1,45 @@
+{
+  "initial": {"maat": 75, "ankh": 62, "duat": 28},
+  "categories": {
+    "just_mercy": {"label": "Igazságos kegyelem", "color": "3fb07a", "effects": {"maat": 12, "ankh": 10, "duat": -10},
+      "desc": "A lélek megérdemelte a felmentést, és az ítélet a feltárt igazságon alapult."},
+    "just_accountability": {"label": "Igazságos számonkérés", "color": "3fa8b0", "effects": {"maat": 12, "ankh": 2, "duat": -8},
+      "desc": "A tettek súlya számon kéretett – arányosan, az igazság ismeretében. Ez is a Ma'at diadala."},
+    "unjust_condemnation": {"label": "Igazságtalan elítélés", "color": "c0532e", "effects": {"maat": -15, "ankh": -8, "duat": 15},
+      "desc": "A lélek olyan bűnért bűnhődik, amelyet nem így követett el – vagy nem ő követett el."},
+    "unjust_forgiveness": {"label": "Igazságtalan kegyelem", "color": "c9a23a", "effects": {"maat": -12, "ankh": 2, "duat": 12},
+      "desc": "A felmentés nem az igazságon, hanem hiányos vagy torz rekonstrukción alapult."},
+    "unresolved": {"label": "Függő ítélet", "color": "8a8fa8", "effects": {"maat": 2, "ankh": 1, "duat": 3},
+      "desc": "Az igazság nem tárult fel teljesen. A lélek története nyitva marad."}
+  },
+  "verdicts": [
+    {"id": "mercy", "label": "Felmentés", "glyph": "𓆄", "desc": "A lélek büntetés nélkül halad tovább a Nádmezőre. A tekercs a tetteit megőrzi, de nem rója fel."},
+    {"id": "penance", "label": "Vezeklés, majd Nádmező", "glyph": "𓋹", "desc": "A bűnt rögzítik és számon kérik: a lélek vezeklés után haladhat tovább."},
+    {"id": "condemn", "label": "Elítélés", "glyph": "𓃀", "desc": "A lélek nem haladhat tovább. A neve az Elfeledett Szárnyba kerül."},
+    {"id": "unresolved", "label": "Az ítélet felfüggesztése", "glyph": "𓂀", "desc": "A Ház nem mond ítéletet. A lélek története nyitva marad, amíg új igazság nem kerül elő."}
+  ],
+  "destinations": {
+    "field_of_reeds": "A Nádmező",
+    "forgotten_wing": "Az Elfeledett Szárny",
+    "chamber_of_memories": "Az Emlékek Kamrája",
+    "archive_unresolved": "Az Archívum lezáratlan tekercsei"
+  },
+  "params": [
+    {"id": "truth", "label": "Igazság", "glyph": "𓆄", "desc": "Mennyire felel meg a rekonstrukciód annak, ami valóban történt – a bizonyítékok fényében."},
+    {"id": "evidence", "label": "Bizonyíték", "glyph": "𓂀", "desc": "A feltárt kulcsbizonyítékok köre és megbízhatósága."},
+    {"id": "intent", "label": "Szándék", "glyph": "𓄤", "desc": "A lélek szándékainak tisztasága a rekonstrukciód szerint."},
+    {"id": "harm", "label": "Ártalom", "glyph": "𓌂", "desc": "Mekkora kárt okozott a lélek másoknak."},
+    {"id": "compassion", "label": "Együttérzés", "glyph": "𓇋", "desc": "Mennyire érted a lélek körülményeit és szenvedését."},
+    {"id": "responsibility", "label": "Felelősség", "glyph": "𓍼", "desc": "Mennyire vállalandó felelősség terheli a lelket a saját tetteiért."}
+  ],
+  "base_lexicon": [
+    {"id": "life", "glyph": "𓋹", "meaning": "élet"},
+    {"id": "maat", "glyph": "𓆄", "meaning": "igazság, rend (Ma'at)"},
+    {"id": "secret", "glyph": "𓂀", "meaning": "őrizd / titok"},
+    {"id": "house", "glyph": "𓉐", "meaning": "ház"},
+    {"id": "water", "glyph": "𓈗", "meaning": "víz, folyó"}
+  ],
+  "corruption_duat": 60,
+  "purify_ankh": 40,
+  "restore_ankh": 70
+}

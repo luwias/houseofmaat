@@ -1,0 +1,19 @@
+{
+  "title": "A Ház titka",
+  "intro": "Három lélek, három hamis tekercs. Mi köti össze őket – és ki írja át a holtak feljegyzéseit?",
+  "clues": [
+    {"id": "CL_golden_hand", "case": "kha", "title": "Az arany kéz jele", "glyph": "𓂝",
+     "text": "Kinyújtott arany kéz – magánpecsét Djehuty köréből. Kha gyilkosainak gyűrűjén is ott volt. Nem egyetlen ember jele, hanem egy köré."},
+    {"id": "CL_house", "case": "kha", "title": "„A te Házadban sem…”", "glyph": "𓉐",
+     "text": "Djehuty fenyegetése: „A te Házadban sem minden írnok hűséges.” Lehet, hogy a Ma'at Házán belül is van, aki a kincstár tolvajainak dolgozik?"},
+    {"id": "CL_kha_record", "case": "kha", "title": "Kha előre megírt tekercse", "glyph": "𓏞",
+     "text": "A Ház saját nyilvántartásában Kha neve mellett már az érkezése előtt ott állt: „áruló – az Elfeledett Szárnyba”. A bejegyzés tintája frissebb, mint a tekercs. Ki írta be – és hány lélekkel tette ugyanezt?"},
+    {"id": "CL_nefru_1", "case": "nefru", "title": "???", "glyph": "?", "text": "Egy nemesi család levele – a következő lélek ügyében."},
+    {"id": "CL_nefru_2", "case": "nefru", "title": "???", "glyph": "?", "text": "—"},
+    {"id": "CL_hori_1", "case": "hori", "title": "???", "glyph": "?", "text": "Egy gabonafelügyelő pecsétje – a harmadik lélek ügyében."},
+    {"id": "CL_hori_2", "case": "hori", "title": "???", "glyph": "?", "text": "—"},
+    {"id": "CL_final_1", "case": "final", "title": "???", "glyph": "?", "text": "—"},
+    {"id": "CL_final_2", "case": "final", "title": "???", "glyph": "?", "text": "—"}
+  ],
+  "door_text": "A lepecsételt kapun egyetlen felirat: „Csak az nyithatja meg, aki mindhárom lélek igazát ismeri.”"
+}

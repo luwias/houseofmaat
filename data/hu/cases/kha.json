@@ -1,0 +1,697 @@
+{
+  "id": "kha",
+  "name": "Kha",
+  "epithet": "a kereskedő",
+  "glyph": "𓊛",
+  "theme": "Politikai összeesküvés, árulás, kapzsiság, identitás és megrendezett halál.",
+  "arrival": "A Csarnok kapuján egy férfi lelke lép be. Kereskedőköpenye tengervíztől merev, a haja iszapos. Nem szól, csak a mérlegre néz – mintha attól tartana, hogy a szíve túl nehéz lesz.\n\nA Ház tekercse szerint Kha kereskedő Peret évszak második hónapjának 14. napján halt meg, otthonában, lázban. Ugyanez a tekercs tolvajnak nevezi: azt állítja, aranyat lopott a királyi kincstárból.\n\nDe a lélek három nappal később érkezett a balzsamozóhoz, mint ahogy meghalt. És a tekercs tintája frissebb, mint kellene.",
+  "biography": "Kha a thébai kikötőnegyed nádkunyhói között nőtt fel. Az apja szegény hajós volt. Kha kereskedőként meggazdagodott, és a királyi kincstár megbízásait is elnyerte. Felesége Merit.",
+  "questions": [
+    {"text": "Mikor halt meg valójában Kha?", "done": {"flag": "delay_found"}},
+    {"text": "Valóban Kha lopta el a kincstár aranyát?", "done": {"any": [{"flag": "forged_seal"}, {"evidence": "K11"}]}},
+    {"text": "Ki volt Ankhu, és hová tartott?", "done": {"any": [{"flag": "merit_revealed"}, {"flag": "k03_translated"}]}},
+    {"text": "Hogyan halt meg Kha?", "done": {"any": [{"evidence": "K13"}, {"evidence": "K14"}]}},
+    {"text": "Ki állt mindezek mögött?", "done": {"any": [{"evidence": "K07"}, {"flag": "djehuty_confronted"}]}}
+  ],
+  "canonical_story": "Kha szegény kereskedőcsaládba született, meggazdagodott, és üzletet kötött a királyi kincstárral. Rájött, hogy Djehuty, a kincstár felügyelője aranyat lop. Eleinte maga is részt vett néhány ügyletben, később azonban bizonyítékot gyűjtött Djehuty ellen. Djehuty rájött a szándékára. Kha felesége, Merit segítségével megrendezte a halálát: hivatalos halálát három nappal a tényleges halála előtt jegyezték be. Hajóra szállt, de Djehuty megvesztegette Hapu kapitányt. Khát a szökés közben megölték, a testét visszavitték a kikötőbe. Merit azt hitte, megmenekült. A balzsamozó három nappal a hivatalos halál után kapta meg a testet.",
+  "cards": [
+    {"id": "c_kha", "category": "character", "title": "Kha", "glyph": "𓀀", "desc": "Kereskedő a thébai kikötőből. A Házba érkezett lélek.", "unlock": true},
+    {"id": "c_merit", "category": "character", "title": "Merit", "glyph": "𓁐", "desc": "Kha felesége.", "unlock": true},
+    {"id": "c_djehuty", "category": "character", "title": "Djehuty", "glyph": "𓁹", "desc": "A Két Ország kincstárának felügyelője.", "unlock": {"any": [{"evidence": "K11"}, {"flag": "djehuty_named"}]}},
+    {"id": "c_hapu", "category": "character", "title": "Hapu", "glyph": "𓊛", "desc": "A Hórusz Szeme nevű hajó kapitánya.", "unlock": {"any": [{"evidence": "K12"}, {"flag": "hapu_named"}]}},
+    {"id": "c_ipy", "category": "character", "title": "Ipy", "glyph": "𓋴", "desc": "Balzsamozómester a nyugati parton.", "unlock": {"node": "ipy.start"}},
+    {"id": "c_nebi", "category": "character", "title": "Nebi", "glyph": "𓀀", "desc": "Kha apja, szegény hajós.", "unlock": {"revealed": "K01.flip"}},
+
+    {"id": "e_poverty", "category": "event", "title": "Nélkülözés", "glyph": "𓏏", "desc": "Szegénység a kikötőnegyed nádkunyhói között.", "unlock": true},
+    {"id": "e_first_trade", "category": "event", "title": "Az első üzlet", "glyph": "𓂻", "desc": "Egy fiatal kereskedő első saját alkuja.", "unlock": true},
+    {"id": "e_wedding", "category": "event", "title": "Házasság", "glyph": "𓀀𓁐", "desc": "Két élet egybekötése.", "unlock": true},
+    {"id": "e_treasury_deal", "category": "event", "title": "Kincstári megbízás", "glyph": "𓉐", "desc": "Szerződés a királyi kincstárral.", "unlock": true},
+    {"id": "e_embezzlement", "category": "event", "title": "Sikkasztás", "glyph": "𓂝", "desc": "Arany tűnik el a kincstár tekercseiből.", "unlock": true},
+    {"id": "e_natural_death", "category": "event", "title": "Váratlan halál", "glyph": "𓇳", "desc": "Hirtelen láz, halál otthon – a hivatalos változat.", "unlock": true},
+    {"id": "e_secret_agreement", "category": "event", "title": "Titkos alku", "glyph": "𓂀", "desc": "Egy megállapodás, amelyről senki sem tudhat.", "unlock": {"any": [{"evidence": "K09"}, {"evidence": "K07"}]}},
+    {"id": "e_exposure", "category": "event", "title": "Leleplezési terv", "glyph": "𓁹", "desc": "Bizonyítékok gyűjtése egy hatalmas ember ellen.", "unlock": {"any": [{"evidence": "K10"}, {"flag": "k03_translated"}, {"flag": "exposure_memory"}]}},
+    {"id": "e_staged_death", "category": "event", "title": "Megrendezett halál", "glyph": "𓊹", "desc": "Halál a tekercsen – élet a valóságban.", "unlock": {"any": [{"flag": "delay_found"}, {"evidence": "K09"}]}},
+    {"id": "e_escape", "category": "event", "title": "Szökés", "glyph": "𓂻", "desc": "Menekülés új néven, idegen földre.", "unlock": {"any": [{"evidence": "K12"}, {"evidence": "K10"}]}},
+    {"id": "e_murder", "category": "event", "title": "Gyilkosság", "glyph": "𓌂", "desc": "Erőszakos halál.", "unlock": {"any": [{"evidence": "K13"}, {"evidence": "K14"}]}},
+    {"id": "e_false_accusation", "category": "event", "title": "Hamis vád", "glyph": "𓂋", "desc": "Bűn, amelyet valaki más nevére írtak.", "unlock": {"any": [{"flag": "forged_seal"}, {"evidence": "K11"}]}},
+
+    {"id": "o_gold", "category": "object", "title": "Kincstári arany", "glyph": "𓋞", "desc": "Debenben mért aranyrudak a királyi kincstárból.", "unlock": true},
+    {"id": "o_royal_seal", "category": "object", "title": "Királyi pecsét", "glyph": "𓍼", "desc": "A kincstár hitelesítő pecsétje.", "unlock": true},
+    {"id": "o_ring", "category": "object", "title": "Aranykéz-gyűrű", "glyph": "𓂝", "desc": "Pecsétgyűrű kinyújtott arany kézzel.", "unlock": {"clarified": "M3.1"}},
+
+    {"id": "l_harbor", "category": "location", "title": "Thébai kikötő", "glyph": "𓈗", "desc": "Hajók, kötelek, nádkunyhók.", "unlock": true},
+    {"id": "l_treasury", "category": "location", "title": "Királyi kincstár", "glyph": "𓉐", "desc": "A Két Ország aranyának őrzőhelye.", "unlock": true},
+    {"id": "l_merit_house", "category": "location", "title": "Merit háza", "glyph": "𓉐", "desc": "Kha és Merit otthona.", "unlock": {"node": "merit.start"}},
+    {"id": "l_embalming", "category": "location", "title": "Balzsamozóház", "glyph": "𓋴", "desc": "A nyugati part balzsamozóműhelye.", "unlock": {"node": "ipy.start"}},
+    {"id": "l_ship", "category": "location", "title": "A Hórusz Szeme", "glyph": "𓊛", "desc": "Hapu kapitány hajójának fedélzete.", "unlock": {"evidence": "K12"}}
+  ],
+  "evidence": [
+    {
+      "id": "K01", "title": "Családi portré", "type": "image", "illustration": "portrait",
+      "description": "Festett fatábla: egy hajós, egy asszony és egy kisfiú a kikötő nádkunyhói előtt.",
+      "text": "A festék kopott, a fa repedezett. A gyermek kezében egy kicsi, faragott hajó. A háttérben a folyó hullámvonalai.",
+      "reliability": 90, "start": true, "required": false,
+      "associated": ["c_kha", "c_nebi", "l_harbor", "e_poverty"],
+      "implication": "Kha a kikötő szegénységéből emelkedett fel.",
+      "param": {"compassion": 3},
+      "inspect": [
+        {"id": "flip", "tool": "flip", "label": "Megfordítod a táblát",
+         "text": "A hátoldalon gyermeki kézírás: „Apám hajója, a Napfény, nem tért vissza a folyóról. Én vissza fogok térni.” Alatta két apró jel: egy ülő férfi és egy ülő nő – 𓀀𓁐. A tanítók így írják: „mi ketten”.",
+         "effects": [{"unlock_memory": "M1"}, {"lexicon": "couple"}]}
+      ]
+    },
+    {
+      "id": "K02", "title": "Kereskedelmi nyilvántartás", "type": "document", "illustration": "ledger",
+      "description": "A kincstár hivatalos tekercse Kha ügyleteiről, a királyi pecséttel hitelesítve.",
+      "text": "Peret 1. hónap – 120 deben arany. Átvevő: Kha kereskedő.\nPeret 2. hónap – 340 deben arany. Átvevő: Kha kereskedő.\nMegjegyzés: a második szállítmány nem tért vissza a kincstárba.\nHitelesítette: a királyi kincstár pecsétje.",
+      "reliability": 75, "start": true, "required": true,
+      "associated": ["c_kha", "l_treasury", "o_gold", "o_royal_seal", "e_treasury_deal", "e_embezzlement"],
+      "implication": "A hivatalos tekercs szerint Kha tetemes aranyat vett át, és nem számolt el vele.",
+      "inspect": [
+        {"id": "magnify", "tool": "magnify", "label": "Nagyítóval vizsgálod a pecséteket",
+         "text": "Az utolsó bejegyzés alatt két pecsétlenyomat fedi egymást. Az egyik kopott, a másik éles és mély – frissebb agyagba nyomták.",
+         "effects": [{"unlock_evidence": "K08"}]}
+      ]
+    },
+    {
+      "id": "K03", "title": "Titkos levél", "type": "document", "illustration": "letter_glyph",
+      "description": "Kha levele Meritnek, szokatlan rendben álló hieroglifákkal.",
+      "text": "𓇳𓇳𓇳 · 𓊛 · 𓂻 · 𓀀𓁐 · 𓂀\n\nA jelek nem a megszokott rendben állnak, és nincs köztük egyetlen név sem. A fordításhoz a Hieroglifák Kamrájában kell összevetni őket az ismert jelekkel.",
+      "reliability": 40, "required": false,
+      "associated": ["c_kha", "c_merit", "e_escape", "e_staged_death"],
+      "implication": "Kha üzenetet hagyott a feleségének, amelyet senki más nem érthetett.",
+      "translation": "K03"
+    },
+    {
+      "id": "K04", "title": "Halotti jelentés", "type": "document", "illustration": "report",
+      "description": "A nekropolisz írnokának hivatalos feljegyzése Kha haláláról.",
+      "text": "Kha kereskedő, a kikötőnegyedből.\nElhunyt Peret 2. hónapjának 14. napján (𓇳 × 14), otthonában, hirtelen lázban.\nTanú: felesége, Merit.\nLejegyezte: Amenemope, a nekropolisz írnoka.",
+      "reliability": 70, "start": true, "required": true,
+      "associated": ["c_kha", "c_merit", "e_natural_death", "l_merit_house"],
+      "implication": "A hivatalos változat: természetes halál otthon.",
+      "inspect": [
+        {"id": "glyphs", "tool": "magnify", "label": "Megvizsgálod a dátum jeleit",
+         "text": "A dátumot napkorongok jelzik: 𓇳. Minden korong egy napot vagy éjt jelöl – megtanultad a jelet.",
+         "effects": [{"lexicon": "days"}]}
+      ]
+    },
+    {
+      "id": "K05", "title": "Eltűnt szállítmány", "type": "record", "illustration": "ledger",
+      "description": "A kincstári raktár feljegyzése egy soha meg nem érkezett aranyszállítmányról.",
+      "text": "340 deben arany elindult (𓂻) a kincstárból Kha kereskedő hajóján.\nCélállomás: Koptosz. Megérkezett: —\nA szállítmányt kísérő írnok neve: kivakarva.",
+      "reliability": 55, "required": false,
+      "associated": ["c_kha", "o_gold", "l_treasury", "e_embezzlement"],
+      "implication": "A feljegyzés Kha hajóját nevezi meg az arany utolsó ismert helyeként.",
+      "inspect": [
+        {"id": "legs", "tool": "magnify", "label": "Megnézed az „elindult” jelet",
+         "text": "A lépő lábak jele – 𓂻 – indulást, útra kelést jelent.",
+         "effects": [{"lexicon": "depart"}]},
+        {"id": "scraped", "tool": "lamp", "label": "Lámpafénybe tartod a kivakart nevet",
+         "text": "A kivakart név nyoma ferde fényben még kivehető: „…ehuty embere”.",
+         "effects": [{"set_flag": "djehuty_named"}]}
+      ]
+    },
+    {
+      "id": "K06", "title": "A balzsamozó naplója", "type": "document", "illustration": "ledger",
+      "description": "Ipy balzsamozómester munkanaplója.",
+      "text": "Peret 2. hónap 17. napja: átvettem Kha kereskedő testét.\nA test nedves, folyami iszap a hajában. A koponyán zúzódás.\nMegkezdtem a hetvennapos szertartást.",
+      "reliability": 90, "required": true,
+      "associated": ["c_kha", "c_ipy", "l_embalming", "e_staged_death"],
+      "implication": "A test később érkezett, mint ahogy a halál napja indokolná.",
+      "contradictions": [{"with": "K04", "text": "A halotti jelentés a 14. napot rögzíti – a test csak a 17-én érkezett."}],
+      "inspect": [
+        {"id": "sun", "tool": "magnify", "label": "Megszámolod a napkorongokat",
+         "text": "Tizenhét napkorong 𓇳 sorakozik a bejegyzés előtt – a 17. nap.",
+         "effects": [{"lexicon": "days"}]}
+      ]
+    },
+    {
+      "id": "K07", "title": "Rejtett kifizetés", "type": "record", "illustration": "payment",
+      "description": "Kincstári kiutalás egy „H.” jelű hajósnak.",
+      "text": "Kiutalva: 30 deben arany.\nKedvezményezett: H., hajós.\nJóváhagyta: Dj.\nIndok: „szállítási szolgálat”.\nKelt: Peret 2. hónap 13. napja – két nappal Kha szökése előtt.",
+      "reliability": 80, "required": true,
+      "associated": ["c_hapu", "c_djehuty", "o_gold", "e_secret_agreement"],
+      "implication": "Valaki a kincstár aranyából fizette meg a kapitányt – még a szökés előtt.",
+      "param": {"responsibility": -4}
+    },
+    {
+      "id": "K08", "title": "Kettős pecsét", "type": "object", "illustration": "seal",
+      "model": "res://assets/models/prop_k08.glb",
+      "description": "Agyagtábla két egymásra nyomott pecséttel – a kincstári tekercs hitelesítéséről.",
+      "text": "Az egyik lenyomat a régi kincstári pecsét, a másik másolat: a jelek egy hajszálnyit elcsúsztak. Valaki utólag hitelesítette a bejegyzést.",
+      "reliability": 85, "required": true,
+      "associated": ["o_royal_seal", "l_treasury", "e_false_accusation"],
+      "implication": "A Kha elleni vád egyik alapját utólag hamisították.",
+      "contradictions": [{"with": "K02", "text": "A kereskedelmi nyilvántartás hitelesítése hamisított."}],
+      "inspect": [
+        {"id": "rotate_back", "tool": "rotate", "label": "Megfordítod a táblát",
+         "text": "A tábla hátoldalán aranyozott jel: kinyújtott kéz. Nem kincstári jel – valakinek a magánpecsétje.",
+         "effects": [{"clue": "CL_golden_hand"}]}
+      ]
+    },
+    {
+      "id": "K09", "title": "Titkos szerződés", "type": "document", "illustration": "contract",
+      "description": "Megállapodás Kha és Amenemope írnok között, Ipy balzsamozó tanúságával.",
+      "text": "Kha kereskedő 20 deben ezüstöt fizet, hogy halálát Peret 2. hónapjának 14. napjára jegyezzék be.\nA koporsó lepecsételve marad a balzsamozóházban, amíg „a test meg nem érkezik”.\nTanú: Ipy.",
+      "reliability": 85, "required": true,
+      "associated": ["c_kha", "c_ipy", "e_staged_death", "e_secret_agreement", "l_embalming"],
+      "implication": "Kha maga vásárolta meg a saját halotti bejegyzését.",
+      "inspect": [
+        {"id": "lamp", "tool": "lamp", "label": "Lámpafénybe tartod",
+         "text": "Láthatatlan tintával írt záradék: „Ha a hajó nem ér célba, a test harmadnapon visszatér. Akkor temessétek el igaz nevén.”",
+         "effects": [{"set_flag": "contract_clause"}, {"param": {"intent": 5}}]}
+      ]
+    },
+    {
+      "id": "K10", "title": "Merit vallomása", "type": "testimony", "illustration": "testimony",
+      "description": "Merit elmondja a teljes tervet.",
+      "text": "„Kha eleinte maga is aláírta Djehuty hamis tételeit – azt mondta, a kincstárban mindenki ezt teszi. Aztán látta, hogy az arany a kikötőnegyed gabonájának ára. Másolatokat készített Djehuty pecsétjeiről, hogy a vezír elé vigye őket. Amikor Djehuty gyanakodni kezdett, megrendeztük a halálát. Új néven, Ankhuként akart elhajózni.”",
+      "reliability": 70, "required": true,
+      "associated": ["c_merit", "c_kha", "c_djehuty", "e_staged_death", "e_exposure", "e_escape", "e_embezzlement"],
+      "implication": "Kha egyszerre volt bűnrészes és leleplező.",
+      "param": {"responsibility": 6, "intent": 8}
+    },
+    {
+      "id": "K11", "title": "Második aláírás", "type": "document", "illustration": "signature",
+      "description": "Ellenjegyzés Kha kincstári tekercsein.",
+      "text": "Minden kifogásolt tétel alatt ugyanaz az ellenjegyzés: „Djehuty, a Két Ország kincstárának felügyelője”.\nA második pecsétet ugyanazon a napon nyomták a tekercsre, amikor Kha halálát bejegyezték.",
+      "reliability": 85, "required": true,
+      "associated": ["c_djehuty", "c_kha", "o_royal_seal", "l_treasury", "e_false_accusation", "e_embezzlement"],
+      "implication": "A sikkasztás tételeit Djehuty hagyta jóvá – és ő hitelesítette utólag a vádat is.",
+      "contradictions": [{"with": "K02", "text": "A vádat Djehuty hitelesítette – Kha halála napján."}]
+    },
+    {
+      "id": "K12", "title": "Hajójegyzék", "type": "document", "illustration": "manifest",
+      "model": "res://assets/models/prop_ship.glb",
+      "description": "A Hórusz Szeme utaslistája a kikötőmester tekercséből.",
+      "text": "Hajó: Hórusz Szeme 𓊛. Kapitány: Hapu.\nIndult (𓂻): a 15. éjjel, dél felé.\nUtas: Ankhu, kereskedő, egy láda poggyásszal.\nVisszaérkezett: a 17. napon – utas nélkül.",
+      "reliability": 80, "required": true,
+      "associated": ["c_hapu", "l_ship", "l_harbor", "e_escape"],
+      "implication": "Egy Ankhu nevű utas egy nappal Kha hivatalos halála után hajóra szállt – és nem érkezett meg.",
+      "inspect": [
+        {"id": "ship", "tool": "magnify", "label": "Megnézed a hajó jelét",
+         "text": "𓊛 – a hajó jele. Megtanultad.",
+         "effects": [{"lexicon": "ship"}]},
+        {"id": "lamp", "tool": "lamp", "label": "Lámpafénybe tartod a margót",
+         "text": "A margón halvány, letörölt sor: „H. – 30 deben – Dj.”",
+         "effects": [{"unlock_evidence": "K07"}]}
+      ]
+    },
+    {
+      "id": "K13", "title": "A kapitány vallomása", "type": "testimony", "illustration": "testimony",
+      "description": "Hapu kapitány beszámolója az utolsó útról.",
+      "text": "Hapu még nem tett vallomást.",
+      "variants": [
+        {"when": {"flag": "hapu_lie_exposed"}, "text": "„…Nem a vihar volt. Djehuty emberei vártak a fedélzeten. Én csak kormányoztam – és elvettem az aranyat.”"},
+        {"when": {"choice": {"hapu_approach": "threat"}}, "text": "„Volt egy utas. A vihar… egy hullám vitte el még az első éjjel. Senki sem tehetett semmit. Ennyi.”"},
+        {"when": {"choice": {"hapu_approach": "contract"}}, "text": "„Djehuty tudott a tervről. Harminc debent kaptam, hogy ne nézzek hátra. Még aznap éjjel, az első kanyarnál két embere várta Khát a fedélzeten. Hallottam az ütést. A testet csónakon vitték vissza a kikötőhöz, hogy hivatalosan is megtalálják. Djehuty azt akarta, hogy Kha tolvajként haljon meg – papíron és valóságban is.”"},
+        {"when": {"choice": {"hapu_approach": "protect"}}, "text": "„Djehuty emberei szálltak fel a kikötő végén. Én a kormánylapátnál álltam. Hallottam egy puffanást… reggelre az utas eltűnt. A pénzt elfogadtam. Ez az én bűnöm.”"}
+      ],
+      "reliability": 60, "required": true,
+      "associated": ["c_hapu", "c_kha", "c_djehuty", "e_murder", "l_ship", "e_secret_agreement"],
+      "implication": "A kapitány beszámolója arról, mi történt Khával a hajón."
+    },
+    {
+      "id": "K14", "title": "Test azonosítása", "type": "record", "illustration": "report",
+      "description": "A kikötői őrség jelentése a folyóból kiemelt testről.",
+      "text": "A 16. nap hajnalán a hajóállomás mellett férfitestet emeltünk ki a vízből.\nUjján kereskedőgyűrű, Kha jelével.\nA koponyán ütés nyoma. A tüdőben nincs víz – nem fulladt meg.\nÁtadtuk Ipy balzsamozónak.",
+      "reliability": 85, "required": true,
+      "associated": ["c_kha", "c_ipy", "l_harbor", "e_murder"],
+      "implication": "Khát megölték, mielőtt a vízbe került.",
+      "contradictions": [{"with": "K04", "text": "A hivatalos jelentés lázról beszél – a test ütés nyomát viseli."}]
+    }
+  ],
+  "comparisons": [
+    {"pair": ["K04", "K06"], "text": "A halotti jelentés a 14. napot rögzíti, a balzsamozó a 17-én vette át a testet. Három nap – a nyári hőségben ez lehetetlen. Kha később halt meg, mint ahogy hivatalosan bejegyezték.", "effects": [{"set_flag": "delay_found"}], "hint": "Két dokumentum dátuma nem fér össze."},
+    {"pair": ["K02", "K08"], "text": "A tekercs hitelesítését utólag hamisították: a második pecsét másolat. A kereskedelmi nyilvántartás már nem tekinthető megbízhatónak.", "effects": [{"set_flag": "forged_seal"}, {"reliability": {"K02": 25}}], "hint": "A kincstári tekercs pecsétje nem egyedül áll."},
+    {"pair": ["K05", "K07"], "text": "A Hapunak kiutalt 30 deben ugyanabból a hónapból származik, amikor a 340 debenes szállítmány „eltűnt” – és ugyanaz a kéz hagyta jóvá: Dj.", "effects": [{"set_flag": "gold_trail"}, {"reliability": {"K05": 30}}, {"param": {"responsibility": -4}}], "hint": "Kövesd az aranyat."},
+    {"pair": ["K13", "K14"], "requires": {"choice": {"hapu_approach": "threat"}}, "text": "Az őrség szerint a test tüdejében nem volt víz: Kha nem a hullámok közt halt meg. Hapu hazudott.", "effects": [{"set_flag": "hapu_lie_exposed"}, {"reliability": {"K13": 60}}, {"unlock_evidence": "K07"}, {"set_flag": "djehuty_named"}], "hint": "A kapitány története és a test állapota nem egyezik."},
+    {"pair": ["K13", "K14"], "text": "A kapitány vallomása és az őrség jelentése egybevág: Kha nem fulladt meg – megölték.", "effects": [{"set_flag": "murder_corroborated"}]},
+    {"pair": ["K12", "K04"], "text": "Ankhu a 15. éjjel szállt hajóra – egy nappal azután, hogy Khát hivatalosan halottnak nyilvánították.", "effects": [{"set_flag": "ankhu_after_death"}], "hint": "Egy utas egy nappal egy halál után."},
+    {"pair": ["K10", "K04"], "text": "Merit szerint Kha a 15. éjjel még élt. A halotti jelentés megvásárolt dátumot rögzít.", "effects": [{"set_flag": "delay_found"}]},
+    {"pair": ["K09", "K04"], "text": "A szerződés pontosan azt a napot vásárolta meg, amely a halotti jelentésben áll.", "effects": [{"set_flag": "delay_found"}]},
+    {"pair": ["K11", "K02"], "text": "Az ellenjegyzés napja egybeesik Kha bejegyzett halálával: a vádat akkor hitelesítették, amikor Kha már nem védekezhetett.", "effects": [{"set_flag": "forged_seal"}, {"reliability": {"K02": 25}}]}
+  ],
+  "investigation": [
+    {"id": "embalmer", "letter": "A", "title": "A balzsamozó", "location": "Balzsamozóház, nyugati part", "glyph": "𓋴", "desc": "Ipy, a balzsamozómester fogadta Kha testét. A test sosem hazudik – csak a papírok.", "dialogue": "ipy", "unlock": true},
+    {"id": "ship", "letter": "B", "title": "A hajó", "location": "Thébai kikötő", "glyph": "𓊛", "desc": "A kikötőmester minden indulást és érkezést feljegyez.", "dialogue": "harbor", "unlock": true},
+    {"id": "treasury", "letter": "C", "title": "A királyi kincstár", "location": "Királyi kincstár levéltára", "glyph": "𓉐", "desc": "Szenedzsem írnok őrzi Kha ügyleteinek tekercseit.", "dialogue": "treasury", "unlock": true},
+    {"id": "merit", "letter": "D", "title": "Merit kikérdezése", "location": "Merit háza", "glyph": "𓁐", "desc": "Kha özvegye. Gyászol – vagy vár valakire?", "dialogue": "merit", "unlock": true}
+  ],
+  "encounters": [
+    {"id": "hapu", "title": "Hapu kapitány", "glyph": "𓊛", "desc": "A Hórusz Szeme kapitányának ka-ja.", "dialogue": "hapu", "unlock": {"any": [{"flag": "hapu_available"}, {"flag": "merit_saw_boarding"}]}},
+    {"id": "djehuty", "title": "Djehuty felügyelő", "glyph": "𓁹", "desc": "Az élők világából, álmában megidézve.", "dialogue": "djehuty", "unlock": {"card": "c_djehuty"}}
+  ],
+  "dialogues": {
+    "ipy": {
+      "speaker": "Ipy", "role": "balzsamozómester", "glyph": "𓋴",
+      "nodes": {
+        "start": {
+          "text": "Kátrány- és mirhaszag. Ipy, a balzsamozómester ka-ja felnéz a vászoncsíkok közül.\n– A Ház Őrzője? Sok testet adtam már át az örökkévalóságnak. Melyikről kérdezel?",
+          "options": [
+            {"text": "Kha kereskedőéről. Mikor került hozzád?", "next": "ledger", "once": true},
+            {"text": "A halotti jelentés szerint a 14. napon halt meg. A te naplód a 17. napot írja.", "next": "delay", "requires": {"all": [{"evidence": "K04"}, {"evidence": "K06"}]}, "hide_if": {"flag": "delay_found"}, "effects": [{"set_flag": "delay_found"}]},
+            {"text": "Valaki megfizetett, hogy a test késéséről hallgass.", "next": "pressure", "requires": {"flag": "delay_found"}, "hide_if": {"evidence": "K09"}},
+            {"text": "Ki hozta be hozzád a testet?", "next": "guards", "requires": {"evidence": "K06"}, "once": true},
+            {"text": "Milyen állapotban volt a test?", "next": "body", "requires": {"evidence": "K06"}, "once": true},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "ledger": {
+          "text": "– Kha… igen. – Ipy ujja végigfut egy tekercsen. – Itt van: Peret második hónapjának 17. napja. Nedves test volt, a folyó iszapja a hajában.",
+          "effects": [{"unlock_evidence": "K06"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "delay": {
+          "text": "Ipy keze megáll a levegőben.\n– Három nap… a hőségben egy holttest nem vár három napot. Hacsak… – elhallgat. – Hacsak nem halt meg később, mint ahogy leírták.",
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "pressure": {
+          "text": "– Én csak a dolgomat végeztem – mondja Ipy, de a hangja megremeg, és a tekintete a műhely sarkában álló, lepecsételt koporsóra siklik.",
+          "options": [
+            {"text": "– A Ma'at mérlege előtt állsz. Itt a hazugság nehezebb, mint a halál.", "next": "confess_soft", "group": "ipy_approach", "value": "maat", "effects": [{"unlock_evidence": "K09"}]},
+            {"text": "– Ha hallgatsz, a neved az Elfeledett Szárnyba kerül.", "next": "confess_fear", "group": "ipy_approach", "value": "threat", "effects": [{"unlock_evidence": "K09"}, {"reliability": {"K09": 70}}]},
+            {"text": "Egyelőre nem erőlteted.", "next": "start"}
+          ]
+        },
+        "confess_soft": {
+          "text": "Ipy sokáig hallgat, aztán sóhajt.\n– Kha maga jött hozzám, élve, napokkal a „halála” előtt. Húsz deben ezüstöt fizetett Amenemope írnoknak, hogy a 14. napot jegyezze be. A koporsót lepecsételtük – üresen. Aztán három nappal később megérkezett a teste. Igazi holttest. – Egy összehajtott papiruszt tesz eléd. – Itt a szerződés.",
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "confess_fear": {
+          "text": "– Jól van! Jól van… – Ipy egy összehajtott papiruszt lök eléd. – Kha fizetett, hogy halottnak írják. Én csak tanú voltam. Többet nem tudok.",
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "guards": {
+          "text": "– A kikötői őrök hozták. A 16. nap hajnalán emelték ki a vízből a hajóállomásnál. Itt a jelentésük másolata – minden testhez megőrzöm.",
+          "effects": [{"unlock_evidence": "K14"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "body": {
+          "text": "– A koponyáján ütés nyoma. És valami furcsa: a tüdejében nem volt víz. Aki a folyóba fullad, annak tele van vele.",
+          "effects": [{"set_flag": "no_water_lungs"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        }
+      }
+    },
+    "harbor": {
+      "speaker": "Kikötőmester", "role": "a thébai kikötő felügyelője", "glyph": "𓈗",
+      "nodes": {
+        "start": {
+          "text": "Dagályszag, kötélnyikorgás. A kikötőmester ka-ja a hajóit számolja.\n– Hajók jönnek, hajók mennek, Őrző. Én csak a nevüket írom fel.",
+          "options": [
+            {"text": "Mely hajók futottak ki Peret 2. hónapjának 14. napja után?", "next": "manifest", "once": true},
+            {"text": "Ki volt ez az Ankhu?", "next": "ankhu", "requires": {"evidence": "K12"}, "once": true},
+            {"text": "Hol találom Hapu kapitányt?", "next": "hapu", "requires": {"evidence": "K12"}, "hide_if": {"flag": "hapu_available"}},
+            {"text": "Kha hajói is itt horgonyoztak abban a hónapban?", "next": "kha_ships", "once": true},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "manifest": {
+          "text": "– A 15. éjjel a Hórusz Szeme futott ki, Hapu kapitány hajója. Egy utassal. – A kikötőmester az orrod alá tartja a tekercset.",
+          "effects": [{"unlock_evidence": "K12"}, {"set_flag": "hapu_named"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "ankhu": {
+          "text": "– Senki sem ismerte. Gazdag köpeny, szegény név. Egy ládát vitt magával, és a csuklyáját le sem vette. A Hórusz Szeme két nap múlva visszafordult – utas nélkül.",
+          "effects": [{"set_flag": "ankhu_vanished"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "hapu": {
+          "text": "– Hapu? Azóta nem hajózik. Iszik, és a vizet bámulja. A ka-ját megidézheted, ha a Ház engedi.",
+          "effects": [{"set_flag": "hapu_available"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "kha_ships": {
+          "text": "– Kha hajói? Peret második hónapjában mind itt álltak, kijavításra várva. Egyik sem futott ki. Emlékszem, mert a kereskedő maga panaszkodott.",
+          "effects": [{"set_flag": "ships_in_port"}, {"reliability": {"K05": 35}}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        }
+      }
+    },
+    "treasury": {
+      "speaker": "Szenedzsem", "role": "kincstári írnok", "glyph": "𓉐",
+      "nodes": {
+        "start": {
+          "text": "Poros polcok, viaszmécses. Szenedzsem írnok ka-ja a tekercsek fölé görnyed.\n– Kha ügye? A tolvajé? Azt már lezárták. A pecsét hitelesítette.",
+          "options": [
+            {"text": "Kérem a Kha szállítmányairól szóló tekercseket.", "next": "rolls", "once": true},
+            {"text": "Ki ellenjegyezte Kha ügyleteit?", "next": "noname", "hide_if": {"evidence": "K08"}, "once": true},
+            {"text": "[Bemutatod: Kettős pecsét] Ezen a tekercsen két pecsét fedi egymást. Az egyik hamis.", "next": "countersign", "requires": {"evidence": "K08"}, "hide_if": {"evidence": "K11"}, "evidence": "K08"},
+            {"text": "[Bemutatod: Rejtett kifizetés] Ki hagyja jóvá a hajósoknak szóló kiutalásokat?", "next": "payment", "requires": {"evidence": "K07"}, "once": true, "evidence": "K07"},
+            {"text": "Hová lett a 340 deben arany?", "next": "gold", "requires": {"evidence": "K05"}, "once": true},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "rolls": {
+          "text": "Szenedzsem kelletlenül előhúz egy tekercset.\n– Tessék. A második szállítmány sosem érkezett meg. A kereskedő hajóján indult útnak.",
+          "effects": [{"unlock_evidence": "K05"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "noname": {
+          "text": "– Az ellenjegyző neve nem tartozik rád, Őrző. A pecsét az pecsét. – A tekintete mégis a tekercs aljára siklik, ahol a pecsétlenyomatok vannak.",
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "countersign": {
+          "text": "Szenedzsem sokáig nézi a két lenyomatot.\n– Ez… ez nem a régi pecsétnyomó. – Remegő kézzel előhúz egy másik köteg tekercset. – Minden ilyen tétel alatt ugyanaz az ellenjegyzés áll. Djehutyé, a felügyelőé.",
+          "effects": [{"unlock_evidence": "K11"}, {"set_flag": "djehuty_named"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "payment": {
+          "text": "– „Dj.”… csak egy ember írja így a nevét a kincstárban. Djehuty, a felügyelő. – Szenedzsem lehalkítja a hangját. – Harminc deben egy hajósnak? Ennyiért egy egész flottát lehet bérelni.",
+          "effects": [{"set_flag": "djehuty_named"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "gold": {
+          "text": "– A tekercs szerint Kha hajója vitte el. Bár… – a homlokát ráncolja – abban a hónapban a raktár kulcsa a felügyelőnél volt, nem a kereskedőknél.",
+          "effects": [{"set_flag": "key_with_overseer"}, {"reliability": {"K05": 40}}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        }
+      }
+    },
+    "djehuty": {
+      "speaker": "Djehuty", "role": "kincstári felügyelő (élő)", "glyph": "𓁹",
+      "nodes": {
+        "start": {
+          "text": "Arannyal hímzett köpeny, gyűrűk minden ujján. Djehuty ka-ja – az élők világából, álmában megidézve – megvetően néz rád.\n– Kha közönséges tolvaj volt. A kincstár tekercsei mindent elmondanak.",
+          "options": [
+            {"text": "Miért csak a halála után jelentetted fel?", "next": "late", "once": true},
+            {"text": "[Bemutatod: Második aláírás] A te ellenjegyzésed áll minden hamis tétel alatt.", "next": "confront", "requires": {"evidence": "K11"}, "once": true, "evidence": "K11"},
+            {"text": "[Bemutatod: Rejtett kifizetés] Harminc deben Hapu kapitánynak – a te jóváhagyásoddal.", "next": "threat", "requires": {"evidence": "K07"}, "once": true, "evidence": "K07"},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "late": {
+          "text": "– Mert akkor derült ki a hiány. – Djehuty legyint. – A halottak nem tudnak tovább hazudni, Őrző. Ezért olyan hasznosak.",
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "confront": {
+          "text": "Djehuty arcán egy pillanatra megreped a maszk.\n– Hamisítvány. Egy halott kereskedő bosszúja. – Ahogy elfordul, az ujján megcsillan egy gyűrű: kinyújtott arany kéz.",
+          "effects": [{"set_flag": "djehuty_confronted"}, {"clue": "CL_golden_hand"}, {"param": {"responsibility": -4}}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "threat": {
+          "text": "– Vigyázz, Őrző. – Djehuty hangja halk és hideg lesz. – A holtak nem tanúskodnak. És a te Házadban sem minden írnok hűséges.\nA ka szétfoszlik, mielőtt bármit kérdezhetnél.",
+          "effects": [{"clue": "CL_house"}, {"set_flag": "house_hint"}],
+          "options": [{"text": "Visszatérsz a Csarnokba.", "next": "end"}]
+        }
+      }
+    },
+    "merit": {
+      "speaker": "Merit", "role": "Kha özvegye", "glyph": "𓁐",
+      "nodes": {
+        "start": {
+          "text": "Fehér gyászvászon, kialudt mécses. Merit ka-ja az ablaknál ül, mintha még mindig várna valakit.\n– Kha elment, Őrző. Messzire. Ennyit tudok.",
+          "options": [
+            {"text": "Mesélj róla. Milyen ember volt?", "next": "about", "once": true, "hide_if": {"any": [{"flag": "merit_hostile"}, {"flag": "merit_revealed"}]}},
+            {"text": "Tudtál a kincstári ügyeiről?", "next": "deny", "once": true, "hide_if": {"flag": "merit_revealed"}},
+            {"text": "Te segítettél neki eltűnni, és most hallgatsz!", "next": "hostile", "hide_if": {"any": [{"flag": "merit_hostile"}, {"flag": "merit_revealed"}]}, "effects": [{"set_flag": "merit_hostile"}]},
+            {"text": "[Bemutatod: Titkos szerződés] Kha fizetett, hogy halottnak írják. Tudom.", "next": "reveal", "requires": {"evidence": "K09"}, "hide_if": {"flag": "merit_revealed"}, "evidence": "K09"},
+            {"text": "[Felolvasod a megfejtett levelet] „A harmadik éjjel a hajó indul. Mi ketten tudjuk.”", "next": "reveal", "requires": {"flag": "k03_translated"}, "hide_if": {"flag": "merit_revealed"}, "evidence": "K03"},
+            {"text": "[Bemutatod: A balzsamozó naplója] A teste három nappal a „halála” után érkezett.", "next": "soften", "requires": {"all": [{"evidence": "K06"}, {"flag": "merit_hostile"}]}, "hide_if": {"flag": "merit_revealed"}, "evidence": "K06"},
+            {"text": "Felszállt a hajóra?", "next": "boarded", "requires": {"flag": "merit_revealed"}, "once": true},
+            {"text": "Kha részt vett a sikkasztásban?", "next": "complicit", "requires": {"flag": "merit_revealed"}, "once": true},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "about": {
+          "text": "Merit halványan elmosolyodik.\n– A kikötőben nőtt fel, egy nádkunyhóban. Az apja hajója sosem tért vissza. Kha megfogadta, hogy ő vissza fog. Gazdag lett… aztán félni kezdett.\nElővesz egy összehajtott levelet.\n– Ezt hagyta az ágyunk alatt. Titkosírás. Nem tudom elolvasni.",
+          "effects": [{"unlock_evidence": "K03"}, {"unlock_memory": "M2"}, {"set_flag": "merit_trust"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "deny": {
+          "text": "– Én csak a felesége voltam. A kincstárról nem beszélt velem. – A tekintete elkerül, a kezei a ruhája szegélyét gyűrik.",
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "hostile": {
+          "text": "Merit feláll.\n– Kifelé, Őrző. A gyászom nem a tiéd.\nA ka elhalványul. Csak egy bizonyíték törheti meg a hallgatását.",
+          "options": [{"text": "Távozol.", "next": "end"}]
+        },
+        "soften": {
+          "text": "Merit sokáig hallgat.\n– Három nap… – suttogja. – Akkor nem jutott el. Jól van. Elmondom.",
+          "options": [{"text": "Meghallgatod.", "next": "reveal"}]
+        },
+        "reveal": {
+          "text": "– Igen. Megrendeztük a halálát. – Merit hangja megkeményedik. – Djehuty rájött, hogy Kha bizonyítékot gyűjt ellene. Amenemope írnok a 14. napot írta be, a koporsó üresen várt a balzsamozónál. Kha új néven, Ankhuként akart elhajózni, és onnan üzenni a vezírnek.",
+          "effects": [{"unlock_evidence": ["K10", "K03"]}, {"set_flag": "merit_revealed"}, {"clear_flag": "merit_hostile"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "boarded": {
+          "text": "– A 15. éjjel ott álltam a kikötőben. Láttam, ahogy felszáll a Hórusz Szemére. Hapu kapitány maga segítette fel. Integetett… – A hangja elcsuklik. – Azt hittem, megmenekült.",
+          "effects": [{"set_flag": ["merit_saw_boarding", "hapu_named", "hapu_available"]}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "complicit": {
+          "text": "Merit lesüti a szemét.\n– Eleinte igen. Aláírta, amit Djehuty elé tett, és elfogadta a részét. Azt mondta, a kincstárban mindenki ezt csinálja. Aztán látta, hogy az arany a kikötőnegyed gabonájának ára. Akkor fordult szembe velük.",
+          "effects": [{"set_flag": "kha_complicity_admitted"}, {"param": {"responsibility": 8}}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        }
+      }
+    },
+    "hapu": {
+      "speaker": "Hapu", "role": "a Hórusz Szeme kapitánya", "glyph": "𓊛",
+      "nodes": {
+        "start": {
+          "text": "Cserzett bőr, kötélhegek a tenyerén. Hapu ka-ja a fedélzet deszkáit bámulja.\n– Én csak szállítok, Őrző. Árut, embereket. Nem kérdezek.",
+          "options": [
+            {"text": "Mit tudsz Kha kereskedőről?", "next": "nothing", "once": true},
+            {"text": "[Bemutatod: Hajójegyzék] Ankhu a te hajódon utazott a 15. éjjel.", "next": "passenger", "requires": {"evidence": "K12"}, "hide_if": {"flag": "hapu_admitted_passenger"}, "evidence": "K12"},
+            {"text": "Fenyegetsz: – Ha hazudsz, a szíved Ammit, a Faló elé kerül.", "next": "threat", "requires": {"flag": "hapu_admitted_passenger"}, "group": "hapu_approach", "value": "threat", "effects": [{"unlock_evidence": "K13"}, {"reliability": {"K13": 35}}]},
+            {"text": "[Bemutatod: Titkos szerződés] Tudom, hogy Kha a halálát színlelte, és a te hajódon akart elmenekülni.", "next": "contract", "requires": {"all": [{"flag": "hapu_admitted_passenger"}, {"evidence": "K09"}]}, "group": "hapu_approach", "value": "contract", "evidence": "K09", "effects": [{"unlock_evidence": ["K13", "K07", "K14"]}, {"reliability": {"K13": 85}}, {"set_flag": "djehuty_named"}]},
+            {"text": "Védelmet ajánlasz: – A Ház megóvja a ka-dat, ha igazat szólsz.", "next": "protect", "requires": {"flag": "hapu_admitted_passenger"}, "group": "hapu_approach", "value": "protect", "effects": [{"unlock_evidence": ["K13", "K07"]}, {"reliability": {"K13": 70}}, {"set_flag": "djehuty_named"}]},
+            {"text": "[Bemutatod: Test azonosítása] A tüdejében nem volt víz. Nem a hullám ölte meg.", "next": "exposed", "requires": {"all": [{"evidence": "K14"}, {"choice": {"hapu_approach": "threat"}}]}, "hide_if": {"flag": "hapu_lie_exposed"}, "evidence": "K14", "effects": [{"set_flag": ["hapu_lie_exposed", "djehuty_named"]}, {"reliability": {"K13": 60}}, {"unlock_evidence": "K07"}]},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "nothing": {
+          "text": "– Kháról? Semmit. Nem volt az utasom. – Hapu nem néz fel.",
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "passenger": {
+          "text": "Hapu állkapcsa megfeszül.\n– Volt egy utas. És? Fizetett, felszállt. Mit akarsz tudni?\nÉrzed, hogy most csak egyféleképpen kérdezheted – a második esély ritka a ka-k között.",
+          "effects": [{"set_flag": "hapu_admitted_passenger"}],
+          "options": [{"text": "Mérlegeled, hogyan folytasd.", "next": "start"}]
+        },
+        "threat": {
+          "text": "– Jól van! – Hapu hátrál. – A vihar… egy hullám vitte el még az első éjjel. Senki sem tehetett semmit. Ennyi. Többet nem mondok.",
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "contract": {
+          "text": "Hapu sokáig hallgat, aztán leül a deszkára.\n– Szóval tudod. Djehuty is tudta. Harminc debent kaptam, hogy ne nézzek hátra. Még aznap éjjel, az első kanyarnál két embere várta a fedélzeten. Hallottam az ütést. A testet csónakon vitték vissza a kikötőhöz, hogy hivatalosan is megtalálják.\nEgy összegyűrt kiutalást és az őrség jelentésének másolatát teszi eléd.",
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "protect": {
+          "text": "Hapu a válla fölött hátrapillant, mintha valaki hallgatózna.\n– Djehuty emberei szálltak fel a kikötő végén. Én a kormánylapátnál álltam. Hallottam egy puffanást… Reggelre az utas eltűnt. A pénzt elfogadtam. Ez az én bűnöm. – Előhúz egy kiutalást. – Ezt kaptam érte.",
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "exposed": {
+          "text": "Hapu arca elszürkül.\n– …Nem a vihar volt. Djehuty emberei. Én csak kormányoztam – és elvettem az aranyat. Itt a kiutalás. Vidd.",
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        }
+      }
+    }
+  },
+  "memories": [
+    {
+      "id": "M1", "card": "m_father_ship", "title": "Az apa elveszett hajója", "glyph": "𓊛",
+      "unlock": {"revealed": "K01.flip"},
+      "fragments": [
+        {"text": "Nádkunyhó a kikötő szélén. Egy fiú a parton ül, és egy vitorlát néz, amely sosem tér vissza."},
+        {"text": "„Apám neve…”", "blurred": true, "clarify_with": "K01", "revealed": "„Apám neve Nebi volt. A Napfény nevű bárkán hajózott. Én vissza fogok térni – gazdagon.”", "effects": [{"param": {"compassion": 4}}]},
+        {"text": "A szegénység szaga: hal, iszap és üres korsók."}
+      ]
+    },
+    {
+      "id": "M2", "card": "m_merit_promise", "title": "Merit ígérete", "glyph": "𓁐",
+      "unlock": {"node": "merit.about"},
+      "fragments": [
+        {"text": "Mécsesfény egy kis házban. Merit kezei Kha kezén."},
+        {"text": "„Ha egyszer el kell tűnnöm…”", "blurred": true, "clarify_with": "K03", "revealed": "„Ha egyszer el kell tűnnöm, ne sirass. Várj a harmadik éjszakáig. Ha akkor sem jön hír, temess el igaz nevemen.”", "effects": [{"set_flag": "exposure_memory"}]},
+        {"text": "Az asztalon pecsétlenyomatok agyagmásolatai száradnak. Kha betakarja őket, amikor kopogtatnak."}
+      ]
+    },
+    {
+      "id": "M3", "card": "m_last_night", "title": "Az utolsó éj", "glyph": "𓇳",
+      "unlock": {"any": [{"evidence": "K13"}, {"evidence": "K14"}]},
+      "fragments": [
+        {"text": "Fekete víz, csillagok. A Hórusz Szeme orra hasítja a folyót. Hapu nem néz a szemembe."},
+        {"text": "„Egy kéz a sötétben…”", "blurred": true, "clarify_with": "K07", "revealed": "Egy kéz a sötétben, rajta pecsétgyűrű: kinyújtott arany kéz. Ugyanaz a jel, amelyet Djehuty magánlevelein láttam.", "effects": [{"clue": "CL_golden_hand"}]},
+        {"text": "Aztán csend. És valahonnan messziről Merit hangja, aki a harmadik éjszakát várja."}
+      ]
+    }
+  ],
+  "lexicon": [
+    {"id": "days", "glyph": "𓇳", "meaning": "napok / éjek (a korongok száma)"},
+    {"id": "ship", "glyph": "𓊛", "meaning": "hajó"},
+    {"id": "depart", "glyph": "𓂻", "meaning": "indulás, útra kelés"},
+    {"id": "couple", "glyph": "𓀀𓁐", "meaning": "mi ketten"}
+  ],
+  "translations": [
+    {
+      "evidence": "K03", "title": "Kha titkos levele",
+      "glyphs": [
+        {"g": "𓇳𓇳𓇳", "answer": "days"},
+        {"g": "𓊛", "answer": "ship"},
+        {"g": "𓂻", "answer": "depart"},
+        {"g": "𓀀𓁐", "answer": "couple"},
+        {"g": "𓂀", "answer": "secret"}
+      ],
+      "success": "„A harmadik éjjel a hajó indul. Mi ketten tudjuk. Őrizd a titkot.”",
+      "effects": [{"set_flag": "k03_translated"}, {"reliability": {"K03": 85}}]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "childhood", "title": "Gyermekkor", "numeral": "I",
+      "desc": "Honnan indult Kha?",
+      "interpretations": [
+        {"id": "i_child_poor", "title": "A kikötő gyermeke", "required": ["c_kha", "e_poverty"], "optional": ["l_harbor", "c_nebi", "m_father_ship", "K01"], "support": ["K01", "m_father_ship"], "truth": 100, "confirm": 150,
+         "narrative": "Kha a kikötő nádkunyhói között nőtt fel. Az apja hajója sosem tért vissza; a fiú megfogadta, hogy ő vissza fog.", "implications": {"compassion": 6}},
+        {"id": "i_child_trader", "title": "Kereskedőcsalád sarja", "required": ["c_kha", "e_first_trade"], "optional": ["l_harbor", "c_nebi", "K01"], "support": ["K01"], "truth": 55, "confirm": 200,
+         "narrative": "Kha fiatalon kötötte meg első üzletét a kikötőben, és korán megtanulta az alku törvényeit."}
+      ]
+    },
+    {
+      "id": "wealth", "title": "Gazdagság", "numeral": "II",
+      "desc": "Hogyan lett Kha gazdag – és mibe keveredett?",
+      "interpretations": [
+        {"id": "i_wealth_complicit", "title": "Bűnrészesség a kincstárban", "required": ["c_kha", "e_embezzlement", "c_djehuty"], "optional": ["o_gold", "l_treasury", "e_treasury_deal", "K02", "K05", "K11", "K10"], "support": ["K10", "K11", "K02"], "truth": 100, "confirm": 150,
+         "narrative": "Kha a kincstári megbízásokkal gazdagodott meg, és eleinte maga is aláírta Djehuty hamis tételeit, elfogadva a részét.", "implications": {"responsibility": 22, "harm": 12}},
+        {"id": "i_wealth_honest", "title": "A becsületes kereskedő", "required": ["c_kha", "e_treasury_deal"], "optional": ["o_gold", "l_treasury", "e_first_trade", "K02"], "support": ["K02"], "contradict": ["K10"], "truth": 45, "confirm": 200,
+         "narrative": "Kha tisztességes munkával és a kincstár megbízásaival lett gazdag, és sosem nyúlt idegen aranyhoz.", "implications": {"responsibility": -12}},
+        {"id": "i_wealth_thief", "title": "A tolvaj kereskedő", "required": ["c_kha", "e_embezzlement"], "optional": ["o_gold", "o_royal_seal", "l_treasury", "K02", "K05", "e_treasury_deal"], "support": ["K02", "K05"], "contradict": ["K08", "K11"], "truth": 20, "confirm": 140,
+         "narrative": "Kha a kincstár bizalmával visszaélve egymaga sikkasztotta el a királyi aranyat.", "implications": {"responsibility": 35, "harm": 30, "intent": -25}}
+      ]
+    },
+    {
+      "id": "marriage", "title": "Házasság", "numeral": "III",
+      "desc": "Ki volt Merit Kha életében?",
+      "interpretations": [
+        {"id": "i_marriage_plan", "title": "Szövetség Merittel", "required": ["c_kha", "c_merit", "e_staged_death"], "optional": ["e_wedding", "l_merit_house", "m_merit_promise", "K03", "K10", "K09"], "support": ["K10", "K03", "m_merit_promise"], "truth": 100, "confirm": 150,
+         "narrative": "Merit nemcsak a felesége volt, hanem a szövetségese: együtt tervelték ki Kha halálának megrendezését.", "implications": {"intent": 8, "compassion": 5}},
+        {"id": "i_marriage_love", "title": "Szerelmi házasság", "required": ["c_kha", "c_merit", "e_wedding"], "optional": ["l_merit_house", "m_merit_promise", "K01", "K10"], "support": ["K10", "m_merit_promise", "K03"], "truth": 70, "confirm": 140,
+         "narrative": "Kha és Merit szerelemből házasodtak, és Merit a végsőkig hitt a férjében.", "implications": {"compassion": 5}},
+        {"id": "i_marriage_betrayal", "title": "Merit árulása", "required": ["c_merit", "c_djehuty"], "optional": ["o_gold", "e_secret_agreement", "e_embezzlement"], "support": [], "contradict": ["K10"], "truth": 0,
+         "narrative": "Merit Djehutynak játszotta át férjét, hogy megszerezze a vagyonát.", "implications": {"intent": 5}}
+      ]
+    },
+    {
+      "id": "betrayal", "title": "Árulás", "numeral": "IV",
+      "desc": "Ki kit árult el?",
+      "interpretations": [
+        {"id": "i_betrayal_conspiracy", "title": "Djehuty összeesküvése", "required": ["c_djehuty", "c_hapu", "e_secret_agreement"], "optional": ["o_gold", "K07", "K13", "l_ship", "c_kha", "e_murder", "o_ring"], "support": ["K07", "K13", "K12"], "truth": 100, "confirm": 150,
+         "narrative": "Djehuty megvesztegette Hapu kapitányt, hogy Kha szökése csapdává váljon – a kincstár aranyából.", "implications": {"intent": 12, "responsibility": -10}},
+        {"id": "i_betrayal_exposure", "title": "Kha leleplezési terve", "required": ["c_kha", "c_djehuty", "e_exposure"], "optional": ["o_royal_seal", "K11", "K08", "K03", "K10", "l_treasury"], "support": ["K11", "K08", "K10"], "truth": 90, "confirm": 150,
+         "narrative": "Kha szembefordult Djehutyval, és bizonyítékot gyűjtött ellene, hogy a vezír elé vigye.", "implications": {"intent": 18, "responsibility": -5}},
+        {"id": "i_betrayal_false_accusation", "title": "A hamis vád", "required": ["c_djehuty", "e_false_accusation"], "optional": ["c_kha", "K08", "K11", "o_royal_seal", "l_treasury"], "support": ["K08", "K11"], "truth": 85, "confirm": 150,
+         "narrative": "Djehuty utólag hamisított pecséttel Kha nevére írta a saját lopását.", "implications": {"intent": 10, "responsibility": -8}},
+        {"id": "i_betrayal_kha_traitor", "title": "Kha elárulja a kincstárat", "required": ["c_kha", "o_royal_seal", "o_gold"], "optional": ["K02", "K05", "l_treasury", "e_embezzlement"], "support": ["K02", "K05"], "contradict": ["K08", "K11", "K07"], "truth": 0, "confirm": 140,
+         "narrative": "Kha a királyi pecséttel visszaélve elárulta a fáraó kincstárát.", "implications": {"responsibility": 30, "harm": 30, "intent": -30}}
+      ]
+    },
+    {
+      "id": "death", "title": "Halál", "numeral": "V",
+      "desc": "Hogyan és mikor halt meg Kha?",
+      "interpretations": [
+        {"id": "i_death_murder", "title": "Gyilkosság a szökés éjjelén", "required": ["c_kha", "c_hapu", "e_murder"], "optional": ["l_ship", "e_escape", "K13", "K14", "K12", "m_last_night", "c_djehuty", "o_ring"], "support": ["K13", "K14", "K12", "m_last_night"], "truth": 100, "confirm": 160,
+         "narrative": "Kha a Hórusz Szeme fedélzetén halt meg, a szökés első éjjelén: Djehuty emberei megölték, a testét visszavitték a kikötőbe.", "implications": {"intent": 5}},
+        {"id": "i_death_escape", "title": "Megrendezett halál és szökés", "required": ["c_kha", "e_staged_death", "e_escape"], "optional": ["c_merit", "c_ipy", "l_ship", "K06", "K09", "K12", "K10"], "support": ["K06", "K09", "K12", "K10"], "truth": 65, "confirm": 160,
+         "narrative": "Kha megvásárolta a saját halotti bejegyzését, és új néven hajóra szállt. Ami ezután történt, homályban marad.", "implications": {"intent": 4}},
+        {"id": "i_death_official", "title": "Váratlan halál otthon", "required": ["c_kha", "e_natural_death"], "optional": ["l_merit_house", "K04", "c_merit"], "support": ["K04"], "contradict": ["K06", "K14"], "truth": 10, "confirm": 140,
+         "narrative": "Kha a 14. napon, otthonában halt meg hirtelen lázban, ahogy a hivatalos jelentés rögzíti."},
+        {"id": "i_death_flight_thief", "title": "A tolvaj menekülése", "required": ["c_kha", "e_escape", "o_gold"], "optional": ["l_ship", "K05", "K12"], "support": ["K05", "K12"], "contradict": ["K07", "K13"], "truth": 15, "confirm": 140,
+         "narrative": "Kha az ellopott arannyal próbált elmenekülni, és a folyó elnyelte.", "implications": {"responsibility": 20, "harm": 10}}
+      ]
+    }
+  ],
+  "judgment": {
+    "base": {"intent": 45, "harm": 35, "compassion": 50, "responsibility": 40},
+    "truth_needed": 65
+  },
+  "on_judged": [{"clue": "CL_kha_record"}],
+  "endings": [
+    {
+      "id": "A", "title": "Az elárult kereskedő",
+      "conditions": {"all": [
+        {"verdict": ["mercy", "penance"]},
+        {"param": ["truth", ">=", 65]},
+        {"slot": ["death", "i_death_murder", ["confirmed", "supported"]]},
+        {"slot": ["wealth", "i_wealth_complicit", ["confirmed", "supported", "uncertain"]]},
+        {"any": [
+          {"slot": ["betrayal", "i_betrayal_conspiracy", ["confirmed", "supported"]]},
+          {"slot": ["betrayal", "i_betrayal_exposure", ["confirmed", "supported"]]},
+          {"slot": ["betrayal", "i_betrayal_false_accusation", ["confirmed", "supported"]]}
+        ]}
+      ]},
+      "category": {"mercy": "just_mercy", "penance": "just_accountability"},
+      "destination": "field_of_reeds",
+      "narrative": "A mérleg nyelve lassan megnyugszik. Kha szíve nem könnyebb a tollnál – de nem is nehezebb.\n\nA Ház tekercsébe új sorok kerülnek: Kha eleinte részese volt a kincstár lopásainak, és elfogadta a részét. Később azonban szembefordult a tolvajokkal, bizonyítékot gyűjtött, és az életével fizetett érte. Djehuty megvesztegette Hapu kapitányt, és Kha a szökés éjjelén meghalt.\n\nKha felemeli a fejét. Először, mióta belépett a Csarnokba.",
+      "variants": [
+        {"when": {"verdict": ["penance"]}, "text": "A vezeklés ideje alatt Kha a kikötő éhezőinek emlékére gyújt mécsest, minden ellopott debenért egyet. Amikor az utolsó is ég, a Nádmező kapuja megnyílik előtte."},
+        {"when": {"verdict": ["mercy"]}, "text": "A felmentés nem törli el a bűnt – a tekercs megőrzi. De a Ma'at elismeri, hogy Kha végül az igazság oldalára állt. A Nádmező kapuja megnyílik."}
+      ],
+      "explain": [
+        {"when": true, "text": "Feltártad, hogy a hivatalos halálnap megvásárolt dátum volt, és Kha valójában a szökés közben halt meg."},
+        {"when": {"slot": ["wealth", "i_wealth_complicit"]}, "text": "Nem hallgattad el Kha korábbi bűnrészességét: az ítélet egyszerre ismeri el a felelősségét és azt, hogy áldozat lett."},
+        {"when": {"evidence": "K07"}, "text": "A rejtett kifizetés Djehutyhoz kötötte Hapu kapitány megvesztegetését."},
+        {"when": {"choice": {"hapu_approach": "threat"}}, "text": "Hapu vallomását fenyegetéssel szerezted – megbízhatósága csak más bizonyítékokkal együtt állt meg."}
+      ]
+    },
+    {
+      "id": "B", "title": "A hamis áruló",
+      "conditions": {"verdict": ["condemn"]},
+      "category": "unjust_condemnation",
+      "destination": "forgotten_wing",
+      "narrative": "A mérleg megbillen. Kha nem tiltakozik – mintha mindig is erre számított volna.\n\nA Ház tekercse változatlan marad: „Kha, a tolvaj kereskedő.” Az árnyak az Elfeledett Szárnyba kísérik, ahol a neve lassan elhalványul a kövön.\n\nValahol az élők világában Djehuty mosolyog. A hamisított pecsét elvégezte a dolgát – most már a túlvilágon is.",
+      "variants": [
+        {"when": {"param": ["truth", ">=", 65]}, "text": "És ami a legsúlyosabb: te tudtad. A bizonyítékok előtted feküdtek, és mégis a vádat erősítetted meg. A Ma'at nem bocsátja meg könnyen az igazság ismeretében hozott igazságtalanságot."},
+        {"when": {"param": ["truth", "<", 65]}, "text": "A hamis tekercsek meggyőztek. De a Ma'at nem a tekercsek tintáját méri, hanem az igazságot – és az igazság ezen az estén vesztett."}
+      ],
+      "explain": [
+        {"when": {"slot": ["wealth", "i_wealth_thief"]}, "text": "A rekonstrukciód Khát tette meg a sikkasztás egyedüli elkövetőjének – a hamisított hivatalos tekercsre támaszkodva."},
+        {"when": {"slot": ["betrayal", "i_betrayal_kha_traitor"]}, "text": "Az Árulás jelenetben Khát nevezted árulónak, bár a pecsétet utólag hamisították."},
+        {"when": {"not": {"evidence": "K08"}}, "text": "A kincstári tekercs pecsétjét nem vizsgáltad meg elég közelről."},
+        {"when": {"evidence": "K14"}, "text": "Tudtad, hogy Khát megölték – az elítélés a gyilkosát mentette fel."}
+      ]
+    },
+    {
+      "id": "C", "title": "A befejezetlen utazás",
+      "conditions": {"verdict": ["unresolved"]},
+      "category": "unresolved",
+      "destination": "chamber_of_memories",
+      "narrative": "A mérleg megáll félúton. Kha lelke nem indul sem a Nádmező, sem az Elfeledett Szárny felé.\n\nAz Emlékek Kamrájában egy új gömb gyúl ki, halványan. Benne egy hajó orra hasítja a fekete vizet – és a kép mindig ugyanott szakad meg.",
+      "variants": [
+        {"when": {"any": [{"slot": ["death", "i_death_escape"]}, {"flag": "merit_revealed"}]}, "text": "Tudod, hogy Kha megrendezte a halálát és hajóra szállt. De hogy mi történt a fedélzeten, azt nem tudtad bizonyítani. Az utazás befejezetlen marad – amíg valaki be nem fejezi."},
+        {"when": {"not": {"flag": "merit_revealed"}}, "text": "Túl kevés maradt a kezedben ahhoz, hogy ítélj. Talán bölcs döntés volt – talán csak a nehezebb utat kerülted el."}
+      ],
+      "explain": [
+        {"when": {"not": {"slot": ["death", "i_death_murder", ["confirmed", "supported"]]}}, "text": "A gyilkosságot nem sikerült bizonyítékokkal alátámasztanod."},
+        {"when": true, "text": "A függő ítélet nem büntet és nem ment fel. A Ma'at alig mozdul – a Duat nyugtalansága kissé nő."}
+      ]
+    },
+    {
+      "id": "D", "title": "Az elhamarkodott kegyelem",
+      "conditions": {"verdict": ["mercy", "penance"]},
+      "category": "unjust_forgiveness",
+      "destination": "field_of_reeds",
+      "narrative": "Kha a Nádmezőre lép – de nem az igazság nyitotta meg előtte a kaput, hanem a te sietséged.\n\nA tekercs, amelyet aláírtál, hiányos. A Ma'at mérlege remeg, és a Csarnok mélyén valami megmozdul az árnyékban: egy ítélet, amely nem a valóságra épült, nem hoz egyensúlyt – akkor sem, ha véletlenül a jó irányba mutat.",
+      "explain": [
+        {"when": {"param": ["truth", "<", 65]}, "text": "A rekonstrukciód igazságtartalma túl alacsony volt ahhoz, hogy a felmentés megalapozott legyen."},
+        {"when": {"not": {"slot": ["wealth", "i_wealth_complicit"]}}, "text": "A felmentés figyelmen kívül hagyta Kha korábbi részvételét a sikkasztásban: a jó szándék nem törli el a tetteket."},
+        {"when": {"not": {"slot": ["death", "i_death_murder", ["confirmed", "supported"]]}}, "text": "Nem bizonyítottad, hogyan halt meg Kha – így azt sem, hogy áldozat volt."}
+      ]
+    }
+  ],
+  "hints": [
+    {"deity": "thoth", "when": {"all": [{"evidence": "K04"}, {"evidence": "K06"}, {"not": {"flag": "delay_found"}}]}, "text": "Thot tolla két dátum fölött áll meg. „A halál napja és a test érkezése között több idő telt el, mint amennyit a hőség megenged.”"},
+    {"deity": "thoth", "when": {"all": [{"evidence": "K02"}, {"not": {"evidence": "K08"}}]}, "text": "„A kincstár pecsétje erős – de nem mindig áll egyedül. Nézd meg közelebbről.”"},
+    {"deity": "thoth", "when": {"all": [{"evidence": "K03"}, {"not": {"flag": "k03_translated"}}]}, "text": "„A levél jelei szavakká állnak össze, ha ismered őket. A napkorong, a hajó, a lépő láb – a tekercsek megtanítják.”"},
+    {"deity": "thoth", "when": {"all": [{"evidence": "K12"}, {"not": {"revealed": "K12.lamp"}}, {"not": {"evidence": "K07"}}]}, "text": "„A hajójegyzék margóján letörölt sor áll. A lámpafény előhívja, amit a kéz eltüntetni akart.”"},
+    {"deity": "thoth", "when": {"all": [{"evidence": "K08"}, {"not": {"evidence": "K11"}}]}, "text": "„A hamis pecsétet valaki ellenjegyezte. Az írnok tudja, ki – ha megmutatod neki, amit láttál.”"},
+    {"deity": "anubis", "when": {"not": {"evidence": "K06"}}, "text": "Anubisz a balzsamozóház felé fordítja sakálfejét. „A test mindig igazat mond. Kérdezd azt, aki megmosta.”"},
+    {"deity": "anubis", "when": {"all": [{"evidence": "K06"}, {"not": {"evidence": "K14"}}]}, "text": "„Kérdezd meg, ki hozta a testet – és milyen állapotban volt.”"},
+    {"deity": "anubis", "when": {"all": [{"choice": {"hapu_approach": "threat"}}, {"not": {"flag": "hapu_lie_exposed"}}]}, "text": "„A kapitány hullámokról beszél. De akit a folyó fojt meg, annak a tüdeje tele van vízzel. Így volt?”"},
+    {"deity": "anubis", "when": {"all": [{"flag": "delay_found"}, {"not": {"evidence": "K12"}}]}, "text": "„Aki élve hagyja el a sírját, az vízre száll. Kérdezd a kikötőt.”"},
+    {"deity": "anubis", "when": true, "text": "„Ennek a léleknek a halála tisztán áll előtted. A többi a szívedre tartozik.”"}
+  ]
+}
