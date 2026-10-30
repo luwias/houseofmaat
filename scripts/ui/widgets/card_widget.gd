@@ -50,6 +50,16 @@ func setup(card: Dictionary, slot_id: String = "", compact: bool = false) -> voi
 	v.add_child(t)
 
 
+## Darabszám-jelvény (pl. „×3”), ha a kártyából több példány maradt a tálcán.
+func set_count(n: int) -> void:
+	var b := UI.badge("×%d" % n, T.RED_INK, 12)
+	b.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.tooltip_text = ""
+	var top: Control = get_child(0).get_child(0)
+	top.add_child(b)
+	tooltip_text += "\n" + Loc.t("sb_copies_left", [n])
+
+
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if event.double_click:

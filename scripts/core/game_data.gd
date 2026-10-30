@@ -77,6 +77,24 @@ func _index_case(c: Dictionary) -> void:
 	c["_cards"] = card_map
 	c["_scenes"] = scene_map
 	c["_memories"] = mem_map
+	_count_copies(c)
+
+
+## Hány példány legyen egy kártyából a storyboardon: ahány jelenetben valamelyik
+## értelmezés kötelezően igényli (legalább 1). Az adatban "copies" mezővel felülírható.
+func _count_copies(c: Dictionary) -> void:
+	var need := {}
+	for sc in c.get("scenes", []):
+		var in_scene := {}
+		for it in sc.get("interpretations", []):
+			for id in it.get("required", []):
+				in_scene[id] = true
+		for id in in_scene:
+			need[id] = int(need.get(id, 0)) + 1
+	for id in c._cards:
+		var card: Dictionary = c._cards[id]
+		if not card.has("copies"):
+			card["copies"] = maxi(1, int(need.get(id, 0)))
 
 
 func _evidence_glyph(ev: Dictionary) -> String:

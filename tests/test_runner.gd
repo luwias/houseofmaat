@@ -28,6 +28,7 @@ func _ready() -> void:
 	test_all_branch_combinations()
 	test_misleading_evidence()
 	test_save_load()
+	test_card_copies()
 	test_temple_effects()
 	print("\n==== %d sikeres, %d hibás ====" % [passes, fails])
 	get_tree().quit(1 if fails > 0 else 0)
@@ -172,7 +173,7 @@ func explore_everything(forced: Dictionary) -> void:
 func best_board() -> void:
 	GS.set_board_slot("kha", "childhood", ["c_kha", "e_poverty", "K01", "m_father_ship"])
 	GS.set_board_slot("kha", "wealth", ["c_kha", "e_embezzlement", "c_djehuty", "K10"])
-	GS.set_board_slot("kha", "marriage", ["c_kha", "c_merit", "e_staged_death", "K10"])
+	GS.set_board_slot("kha", "marriage", ["c_kha", "c_merit", "e_staged_death", "K03"])
 	GS.set_board_slot("kha", "betrayal", ["c_djehuty", "c_hapu", "e_secret_agreement", "K07"])
 	GS.set_board_slot("kha", "death", ["c_kha", "c_hapu", "e_murder", "K14", "K12"])
 	GS.flush()
@@ -325,7 +326,7 @@ func test_naive_route() -> void:
 	GS.set_board_slot("kha", "childhood", ["c_kha", "e_poverty"])
 	GS.set_board_slot("kha", "wealth", ["c_kha", "e_embezzlement", "K02"])
 	GS.set_board_slot("kha", "marriage", ["c_kha", "c_merit", "e_wedding"])
-	GS.set_board_slot("kha", "betrayal", ["c_kha", "o_royal_seal", "o_gold", "K02"])
+	GS.set_board_slot("kha", "betrayal", ["c_kha", "o_royal_seal", "o_gold", "K05"])
 	GS.set_board_slot("kha", "death", ["c_kha", "e_natural_death", "K04"])
 	GS.flush()
 	var st := states()
@@ -416,6 +417,40 @@ func test_save_load() -> void:
 	ok(GS.board("kha").childhood == ["c_kha", "e_poverty"], "a rekonstrukció megmaradt")
 	ok(is_equal_approx(GS.get_stat("maat"), 60.0), "a templom-értékek megmaradtak")
 	GS.delete_save()
+
+
+func board_within_copies() -> bool:
+	var count := {}
+	for sid in GS.board("kha"):
+		for id in GS.board("kha")[sid]:
+			count[id] = int(count.get(id, 0)) + 1
+	for id in count:
+		if count[id] > int(GameData.card(id).get("copies", 1)):
+			print("    túl sok példány: ", id, " ", count[id])
+			return false
+	return true
+
+
+func test_card_copies() -> void:
+	print("
+[kártyapéldányok]")
+	ok(GameData.card("c_kha").copies == 5, "Kha kártyája 5 példányban (mind az 5 jelenethez kell)")
+	ok(GameData.card("c_djehuty").copies >= 2, "Djehuty több jelenetben is kell (%d)" % GameData.card("c_djehuty").copies)
+	ok(GameData.card("K10").copies == 1, "egy bizonyíték 1 példányban")
+	ok(GameData.card("e_poverty").copies == 1, "a „Nélkülözés” 1 példányban")
+	fresh()
+	ok(GS.card_remaining("kha", "e_poverty") == 1, "elhelyezés előtt 1 maradt")
+	GS.set_board_slot("kha", "childhood", ["c_kha", "e_poverty"])
+	ok(GS.card_remaining("kha", "e_poverty") == 0, "elhelyezés után elfogy a tálcáról")
+	ok(GS.card_remaining("kha", "c_kha") == 4, "Kha kártyájából 4 maradt")
+	GS.set_board_slot("kha", "childhood", ["c_kha"])
+	ok(GS.card_remaining("kha", "e_poverty") == 1, "visszavéve újra elérhető")
+	# a legjobb kirakás és minden tesztkirakás belefér a példányszámokba
+	fresh()
+	explore_everything({"hapu_approach": "contract", "ipy_approach": "maat", "hostile": false})
+	best_board()
+	ok(board_within_copies(), "a teljes igazság kirakható a rendelkezésre álló példányokból")
+	ok(Judgment.resolve(case_data, "mercy", GS).ending == "A", "és A befejezéshez vezet")
 
 
 func test_temple_effects() -> void:

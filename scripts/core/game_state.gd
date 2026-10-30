@@ -382,6 +382,20 @@ func card_available(card_id: String) -> bool:
 	return Cond.check(card.get("unlock", true), self)
 
 
+## Hányszor van már lehelyezve a kártya a storyboardon.
+func card_used(cid: String, card_id: String) -> int:
+	var n := 0
+	for sid in board(cid):
+		if card_id in board(cid)[sid]:
+			n += 1
+	return n
+
+
+## Hány példány maradt még a tálcán.
+func card_remaining(cid: String, card_id: String) -> int:
+	return int(GameData.card(card_id).get("copies", 1)) - card_used(cid, card_id)
+
+
 func board(cid: String) -> Dictionary:
 	if not data.cases.has(cid):
 		return {}

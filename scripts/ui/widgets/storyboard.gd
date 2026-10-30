@@ -123,8 +123,13 @@ func _build_tray() -> void:
 		var card := GameData.card(id)
 		if filter != "all" and card.category != filter:
 			continue
+		var left := GameState.card_remaining(cid, id)
+		if left <= 0:
+			continue
 		var w := CardWidget.new()
 		w.setup(card, "", true)
+		if left > 1:
+			w.set_count(left)
 		if not id in _last_available and not _last_available.is_empty():
 			w.modulate = Color(1.3, 1.25, 0.9)
 		w.double_clicked.connect(_on_tray_double)
@@ -150,11 +155,15 @@ func can_add(sid: String, card_id: String, from: String) -> bool:
 	if from == sid:
 		return false
 	var cards: Array = GameState.board(cid).get(sid, [])
+	if from == "" and GameState.card_remaining(cid, card_id) <= 0:
+		return false
 	return cards.size() < Validator.MAX_CARDS and not card_id in cards
 
 
 func add_card(sid: String, card_id: String, from: String) -> void:
 	if not GameState.card_available(card_id):
+		return
+	if from == "" and GameState.card_remaining(cid, card_id) <= 0:
 		return
 	if from != "" and from != sid:
 		var src: Array = GameState.board(cid).get(from, []).duplicate()
@@ -167,6 +176,7 @@ func add_card(sid: String, card_id: String, from: String) -> void:
 	cards.append(card_id)
 	GameState.set_board_slot(cid, sid, cards)
 	_build_slot(case_data._scenes[sid], true)
+	_build_tray()
 
 
 func remove_card(sid: String, card_id: String) -> void:
@@ -174,6 +184,7 @@ func remove_card(sid: String, card_id: String) -> void:
 	cards.erase(card_id)
 	GameState.set_board_slot(cid, sid, cards)
 	_build_slot(case_data._scenes[sid])
+	_build_tray()
 
 
 func _build_slot(sc: Dictionary, flash := false) -> void:
