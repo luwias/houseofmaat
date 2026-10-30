@@ -36,7 +36,7 @@ func build() -> void:
 	var p := framed(26)
 	var v := UI.vbox(12)
 	p.add_child(v)
-	v.add_child(header("%s, %s" % [soul.name, soul.epithet], soul.glyph, Loc.t("case_subtitle")))
+	v.add_child(header("%s, %s" % [soul.name, soul.epithet], soul.glyph, "" if T.compact else Loc.t("case_subtitle")))
 	progress_label = UI.label("", 14, T.SAND)
 	v.add_child(progress_label)
 	v.add_child(UI.separator())
@@ -44,7 +44,7 @@ func build() -> void:
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(body)
 	var tabs := UI.vbox(8)
-	tabs.custom_minimum_size.x = 210
+	tabs.custom_minimum_size.x = T.px(210)
 	body.add_child(tabs)
 	for t in TABS:
 		var b := UI.button("%s   %s" % [TAB_GLYPHS[t], Loc.t("tab_" + t)], _on_tab.bind(t))
@@ -60,7 +60,8 @@ func build() -> void:
 	tabs.add_child(UI.spacer(false))
 	questions_holder = UI.vbox(0)
 	tabs.add_child(questions_holder)
-	questions_holder.add_child(_questions_panel())
+	if not T.compact:
+		questions_holder.add_child(_questions_panel())
 	content = PanelContainer.new()
 	content.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -104,7 +105,8 @@ func _show_tab() -> void:
 func refresh() -> void:
 	_update_progress()
 	UI.clear(questions_holder)
-	questions_holder.add_child(_questions_panel())
+	if not T.compact:
+		questions_holder.add_child(_questions_panel())
 	if tab == "storyboard":
 		if storyboard != null:
 			storyboard.refresh()
@@ -151,6 +153,9 @@ func _questions_panel() -> Control:
 func _briefing() -> Control:
 	var p := UI.papyrus(34)
 	var v := UI.vbox(14)
+	if T.compact:
+		# telefonon a nyitott kérdések az Érkezés lapra kerülnek
+		v.add_child(_questions_panel())
 	v.add_child(UI.title(Loc.t("brief_arrival"), 26, T.RED_INK))
 	v.add_child(UI.rich(str(case_data.arrival).replace("\n\n", "\n\n"), 19))
 	v.add_child(UI.separator(T.INK_L))
@@ -202,7 +207,7 @@ func _branch_card(br: Dictionary, letter: String) -> Control:
 	var h := UI.hbox(14)
 	p.add_child(h)
 	var badge := UI.box_panel(T.LAPIS, T.GOLD, 2, 8, 10)
-	badge.custom_minimum_size = Vector2(64, 64)
+	badge.custom_minimum_size = T.v2(64, 64)
 	badge.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	var gl := UI.glyphs(letter if letter != "" else str(br.get("glyph", "?")), 30, T.GOLD)
 	gl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -254,7 +259,7 @@ func _evidence() -> Control:
 		f.add_child(tile)
 	for i in case_data.evidence.size() - found:
 		var ph := UI.box_panel(Color(T.DEEP, 0.4), Color(T.GOLD_D, 0.35), 1, 10)
-		ph.custom_minimum_size = Vector2(200, 128)
+		ph.custom_minimum_size = T.v2(200, 128)
 		var l := UI.glyphs("?", 40, Color(T.GOLD_D, 0.5))
 		ph.add_child(l)
 		ph.tooltip_text = Loc.t("ev_hidden")
@@ -263,7 +268,7 @@ func _evidence() -> Control:
 	h.add_child(left)
 
 	var right := UI.box_panel(Color(T.DEEP, 0.55), T.GOLD_D, 1, 14)
-	right.custom_minimum_size.x = 330
+	right.custom_minimum_size.x = T.px(330)
 	var rv := UI.vbox(10)
 	right.add_child(rv)
 	rv.add_child(UI.title(Loc.t("ev_memories"), 20, T.TURQ))

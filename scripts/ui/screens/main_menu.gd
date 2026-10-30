@@ -29,23 +29,23 @@ func _ready() -> void:
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(shade)
 
-	var m := UI.margin(null, 110, 90, 0, 70)
+	var m := UI.margin(null, int(T.px(110)), int(T.px(90)) - (30 if T.compact else 0), 0, int(T.px(70)))
 	m.set_anchors_and_offsets_preset(Control.PRESET_LEFT_WIDE)
-	m.offset_right = 900
+	m.offset_right = T.px(900) + (120 if T.compact else 0)
 	add_child(m)
 	var v := UI.vbox(14)
 	m.add_child(v)
 	v.add_child(UI.glyphs("𓋹  𓆄  𓂀  𓆄  𓋹", 26, T.GOLD_D, HORIZONTAL_ALIGNMENT_LEFT))
-	var t := UI.title("THE HOUSE OF MA'AT", 64, T.GOLD)
+	var t := UI.title("THE HOUSE OF MA'AT", 48 if T.compact else 64, T.GOLD)
 	t.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
 	t.add_theme_constant_override("shadow_offset_y", 3)
 	v.add_child(t)
 	v.add_child(UI.title(Loc.t("game_title_hu"), 30, T.GOLD_L))
 	v.add_child(UI.gap(6))
 	var tag := UI.label(Loc.t("menu_tagline"), 20, T.SAND, true)
-	tag.custom_minimum_size.x = 640
+	tag.custom_minimum_size.x = T.px(640)
 	v.add_child(tag)
-	v.add_child(UI.gap(28))
+	v.add_child(UI.gap(10 if T.compact else 28))
 
 	var has_save := GameState.has_save()
 	var b_cont := UI.button(Loc.t("menu_continue"), func(): main.continue_game(), 320)

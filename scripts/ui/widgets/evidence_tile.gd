@@ -13,7 +13,7 @@ func setup(p_eid: String) -> void:
 	eid = p_eid
 	var ev := GameData.evidence(eid)
 	var corrupted := GameState.is_corrupted(eid)
-	custom_minimum_size = Vector2(200, 128)
+	custom_minimum_size = T.v2(200, 128)
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	var border := T.DUAT if corrupted else T.GOLD
 	add_theme_stylebox_override("panel", T.flat(Color(T.LAPIS.darkened(0.45), 0.97), border, 2, 6, 10))

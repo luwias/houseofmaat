@@ -33,22 +33,22 @@ func build() -> void:
 	p.add_child(h)
 	# bal oldal: kép / 3D
 	var left := UI.vbox(12)
-	left.custom_minimum_size.x = 600
+	left.custom_minimum_size.x = T.px(600)
 	h.add_child(left)
 	var frame := UI.box_panel(Color(T.DEEP, 0.8), T.GOLD, 2, 6)
-	frame.custom_minimum_size = Vector2(600, 450)
+	frame.custom_minimum_size = T.v2(600, 450)
 	left.add_child(frame)
 	if ev.has("model"):
 		viewer = ModelViewer.new()
-		viewer.custom_minimum_size = Vector2(580, 430)
+		viewer.custom_minimum_size = T.v2(580, 430)
 		frame.add_child(viewer)
 		viewer.setup(str(ev.model))
 		viewer.rotated_back.connect(_on_rotated_back)
-		var tip := UI.label(Loc.t("insp_rotate_tip"), 13, T.SAND)
+		var tip := UI.label(Loc.t("insp_rotate_tip_touch" if T.compact else "insp_rotate_tip"), 13, T.SAND)
 		left.add_child(tip)
 	else:
 		illus = Illustration.new()
-		illus.custom_minimum_size = Vector2(580, 430)
+		illus.custom_minimum_size = T.v2(580, 430)
 		frame.add_child(illus)
 	_update_illus()
 	tools_box = UI.vbox(8)

@@ -31,6 +31,11 @@ const CATEGORY_COLORS := {
 	"location": Color("4f9a5a"), "memory": Color("3fb0a6"), "evidence": Color("1f3a7a")
 }
 
+## Mobil/kompakt mód: a felület nagyobb skálán fut (olvasható szöveg telefonon),
+## ezért a fix méretek arányosan kisebbek.
+static var compact := false
+const COMPACT_SIZE := 0.72
+
 static var font_body: Font
 static var font_title: Font
 static var font_glyph: Font
@@ -174,6 +179,14 @@ static func flat(bg: Color, border: Color = GOLD_D, bw: int = 2, radius: int = 6
 	s.content_margin_top = margin
 	s.content_margin_bottom = margin
 	return s
+
+
+static func px(v: float) -> float:
+	return v * COMPACT_SIZE if compact else v
+
+
+static func v2(x: float, y: float) -> Vector2:
+	return Vector2(px(x), px(y))
 
 
 static func state_color(state: String) -> Color:

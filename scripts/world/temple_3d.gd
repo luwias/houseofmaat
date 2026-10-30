@@ -14,6 +14,8 @@ const GLYPH_SHADER := preload("res://shaders/glyph_wall.gdshader")
 const FLAME_SHADER := preload("res://shaders/flame.gdshader")
 
 var input_enabled := true
+## Gyengébb (mobil) hardver: nincs SSAO, térfogati köd és lámpaárnyék.
+var low_spec := false
 var current_room := "hall"
 var menu_mode := false
 
@@ -349,7 +351,7 @@ func _make_light(marker: Node3D, room: String) -> void:
 			l.light_energy = 1.3
 			l.omni_range = 14.0
 	l.omni_attenuation = 1.2
-	l.shadow_enabled = kind == "flame" and room == "hall"
+	l.shadow_enabled = kind == "flame" and room == "hall" and not low_spec
 	add_child(l)
 	l.global_position = marker.global_position
 	lights.append({"light": l, "base": l.light_energy, "phase": randf() * TAU, "kind": kind, "room": room})
@@ -433,10 +435,14 @@ func _setup_env() -> void:
 	env.glow_intensity = 0.7
 	env.glow_bloom = 0.08
 	env.glow_hdr_threshold = 1.1
-	env.ssao_enabled = true
+	env.ssao_enabled = not low_spec
 	env.ssao_radius = 1.2
 	env.ssao_intensity = 1.6
-	env.volumetric_fog_enabled = true
+	env.volumetric_fog_enabled = not low_spec
+	# mobilon egyszerű mélységi köd a térfogati helyett
+	env.fog_enabled = low_spec
+	env.fog_light_color = Color(0.35, 0.27, 0.2)
+	env.fog_density = 0.008
 	env.volumetric_fog_density = 0.012
 	env.volumetric_fog_albedo = Color(0.9, 0.8, 0.7)
 	env.volumetric_fog_anisotropy = 0.3
@@ -450,6 +456,9 @@ func _setup_env() -> void:
 	sun.light_color = Color(1.0, 0.68, 0.45)
 	sun.light_energy = 1.2
 	sun.shadow_enabled = true
+	if low_spec:
+		sun.directional_shadow_max_distance = 40
+		sun.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
 	sun.directional_shadow_max_distance = 120
 	add_child(sun)
 
@@ -608,6 +617,9 @@ func _apply_visuals(delta: float) -> void:
 		fn.scale = Vector3(s.x * 0.8, s.y * (1.0 + 0.15 * sin(_t * 11.0 + fl.phase)), s.z * 0.8) * lerpf(0.7, 1.0, km)
 	# köd: a Duat sötétebb, lilább, sűrűbb ködöt hoz
 	env.volumetric_fog_density = 0.008 + kd * 0.03
+	if low_spec:
+		env.fog_density = 0.004 + kd * 0.02
+		env.fog_light_color = Color(0.35, 0.27, 0.2).lerp(Color(0.25, 0.18, 0.4), kd)
 	env.volumetric_fog_albedo = Color(0.9, 0.8, 0.7).lerp(Color(0.45, 0.35, 0.75), kd)
 	env.ambient_light_energy = lerpf(0.25, 0.48, km)
 	env.adjustment_saturation = lerpf(0.75, 1.08, km)
@@ -706,6 +718,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if input_enabled and not menu_mode:
 			_pick(event.position)
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		# érintőképernyőn nincs előzetes egérmozgás: koppintáskor itt választunk
+		if input_enabled and not menu_mode:
+			_pick(event.position)
 		if input_enabled and not menu_mode and not _hover.is_empty():
 			interact.emit(_hover.id, _hover.room)
 			get_viewport().set_input_as_handled()

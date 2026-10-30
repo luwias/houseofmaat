@@ -80,3 +80,21 @@ tests/              logikai tesztek (befejezések, zsákutca-ellenőrzés, ment�
 
 Másold le a `data/hu` mappát (pl. `data/en`), fordítsd le a JSON-okat, és hívd meg a
 `Loc.load_locale("en")`-t, majd a `GameData.reload()`-ot.
+
+## Mobil (Android)
+
+Telefonon a játék automatikusan kompakt módban fut: nagyobb skála (olvasható szöveg),
+ikonos HUD, koppintásos kártyalerakás, ✕ gomb a lehelyezett kártyákon, az Android vissza
+gombja ablakot zár. A grafika a mobil renderelőt használja SSAO és térfogati köd nélkül.
+Asztali gépen kipróbálható: `-- --mobile` (pl. `--resolution 1800x810`).
+
+APK export (Android Studio SDK-val és JBR-rel):
+
+```
+ANDROID_HOME=%LOCALAPPDATA%\Android\Sdk
+JAVA_HOME=C:\Program Files\Android\Android Studio\jbr
+GODOT_ANDROID_KEYSTORE_RELEASE_PATH / _USER / _PASSWORD = a kiadási kulcstár adatai
+Godot_v4.7.2-stable_win64_console.exe --headless --path . --export-release "Android" export/android/HouseOfMaat.apk
+```
+
+A kiadási kulcstár nincs a repóban – őrizd meg, nélküle nem adható ki frissítés.

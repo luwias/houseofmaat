@@ -36,10 +36,15 @@ func _ready() -> void:
 	top.add_child(th)
 	th.add_child(UI.glyphs("𓆄", 32, T.GOLD))
 	var tv := UI.vbox(-2)
-	tv.add_child(UI.title(Loc.t("game_title_hu"), 20, T.GOLD))
+	if not T.compact:
+		tv.add_child(UI.title(Loc.t("game_title_hu"), 20, T.GOLD))
 	room_title = UI.label("", 14, T.SAND)
+	if T.compact:
+		room_title = UI.title("", 17, T.GOLD)
 	tv.add_child(room_title)
 	th.add_child(tv)
+	if T.compact:
+		th.add_theme_constant_override("separation", 10)
 	th.add_child(UI.spacer())
 	m_maat = Meter.new()
 	m_maat.setup("Ma'at", "𓆄", T.GOLD)
@@ -56,11 +61,12 @@ func _ready() -> void:
 	th.add_child(UI.spacer())
 	active_case_btn = UI.button("", _open_active_case)
 	th.add_child(active_case_btn)
-	th.add_child(UI.button(Loc.t("btn_souls"), func(): main.open_soul_board()))
-	th.add_child(UI.button(Loc.t("btn_archive"), func(): main.open_room_screen("archive", "evidence")))
-	th.add_child(UI.button(Loc.t("btn_notes"), func(): main.open_notes()))
-	th.add_child(UI.button("?", func(): main.open_help()))
-	th.add_child(UI.button(Loc.t("btn_menu"), func(): main.confirm(Loc.t("confirm_to_menu"), main.show_menu)))
+	var c := T.compact
+	th.add_child(_top_btn("𓁹" if c else Loc.t("btn_souls"), func(): main.open_soul_board()))
+	th.add_child(_top_btn("𓏞" if c else Loc.t("btn_archive"), func(): main.open_room_screen("archive", "evidence")))
+	th.add_child(_top_btn("✎" if c else Loc.t("btn_notes"), func(): main.open_notes()))
+	th.add_child(_top_btn("?", func(): main.open_help()))
+	th.add_child(_top_btn("☰" if c else Loc.t("btn_menu"), func(): main.confirm(Loc.t("confirm_to_menu"), main.show_menu)))
 
 	# terem-leírás
 	var info := UI.vbox(2)
@@ -68,7 +74,8 @@ func _ready() -> void:
 	info.offset_left = 28
 	info.offset_bottom = -96
 	info.offset_top = -200
-	info.offset_right = 760
+	info.offset_right = T.px(760)
+	info.visible = not T.compact
 	info.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	info.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(info)
@@ -81,7 +88,7 @@ func _ready() -> void:
 	room_state.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.95))
 	room_state.add_theme_constant_override("shadow_offset_x", 1)
 	room_state.add_theme_constant_override("shadow_offset_y", 1)
-	room_state.custom_minimum_size.x = 700
+	room_state.custom_minimum_size.x = T.px(700)
 	info.add_child(room_state)
 
 	# rámutatás
@@ -108,12 +115,23 @@ func _ready() -> void:
 	for rid in ROOM_ORDER:
 		var r := GameData.room(rid)
 		var b := UI.button("%s  %s" % [r.get("glyph", ""), r.get("name", rid)])
-		b.add_theme_font_size_override("font_size", 15)
+		b.add_theme_font_size_override("font_size", 22 if T.compact else 15)
+		if T.compact:
+			b.custom_minimum_size = Vector2(72, 52)
 		b.pressed.connect(func(): main.go_room(rid))
 		room_buttons[rid] = b
 		bh.add_child(b)
 	update_meters(false)
 	refresh()
+
+
+func _top_btn(text: String, cb: Callable) -> Button:
+	var b := UI.button(text, cb)
+	if T.compact:
+		b.add_theme_font_size_override("font_size", 24)
+		b.custom_minimum_size = Vector2(56, 50)
+		b.add_theme_font_override("font", T.font_glyph)
+	return b
 
 
 func _open_active_case() -> void:
@@ -161,7 +179,10 @@ func refresh() -> void:
 		var st := GameState.room_status(rid)
 		var rr := GameData.room(rid)
 		b.disabled = not st.open
-		b.text = "%s  %s" % ["🔒" if not st.open else str(rr.get("glyph", "")), rr.get("name", rid)]
+		if T.compact:
+			b.text = "🔒" if not st.open else str(rr.get("glyph", ""))
+		else:
+			b.text = "%s  %s" % ["🔒" if not st.open else str(rr.get("glyph", "")), rr.get("name", rid)]
 		b.tooltip_text = str(rr.get("purpose", "")) if st.open else str(st.reason)
 		var cur: bool = rid == current_room
 		b.add_theme_color_override("font_color", T.GOLD_L if cur else T.PAPYRUS)

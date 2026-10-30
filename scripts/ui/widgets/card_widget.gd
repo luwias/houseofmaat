@@ -50,6 +50,22 @@ func setup(card: Dictionary, slot_id: String = "", compact: bool = false) -> voi
 	v.add_child(t)
 
 
+## Kis ✕ gomb a lehelyezett kártyára (érintőképernyőn a dupla koppintás helyett).
+func add_remove_button(cb: Callable) -> void:
+	var b := Button.new()
+	b.text = "✕"
+	b.focus_mode = Control.FOCUS_NONE
+	b.flat = true
+	b.tooltip_text = Loc.t("sb_remove")
+	b.add_theme_font_size_override("font_size", 18 if T.compact else 13)
+	b.add_theme_color_override("font_color", T.RED_INK)
+	b.add_theme_color_override("font_hover_color", T.RED)
+	b.custom_minimum_size = Vector2(30, 26) if T.compact else Vector2(20, 18)
+	b.pressed.connect(cb)
+	var top: Control = get_child(0).get_child(0)
+	top.add_child(b)
+
+
 ## Darabszám-jelvény (pl. „×3”), ha a kártyából több példány maradt a tálcán.
 func set_count(n: int) -> void:
 	var b := UI.badge("×%d" % n, T.RED_INK, 12)

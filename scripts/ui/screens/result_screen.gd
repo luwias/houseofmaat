@@ -51,7 +51,7 @@ func build() -> void:
 	h.add_child(paper)
 
 	var side := UI.vbox(10)
-	side.custom_minimum_size.x = 330
+	side.custom_minimum_size.x = T.px(330)
 	side.add_child(UI.title(Loc.t("res_params"), 18, T.GOLD))
 	var params: Dictionary = result.get("params", {})
 	for pd in GameData.temple.get("params", []):

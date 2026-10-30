@@ -83,7 +83,7 @@ func _clues() -> Control:
 	for c in m.get("clues", []):
 		var found := GameState.has_clue(c.id)
 		var p := UI.papyrus(16) if found else UI.box_panel(Color(T.DEEP, 0.5), Color(T.GOLD_D, 0.4), 1, 16)
-		p.custom_minimum_size = Vector2(360, 150)
+		p.custom_minimum_size = T.v2(360, 150)
 		var pv := UI.vbox(6)
 		p.add_child(pv)
 		if found:

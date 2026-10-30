@@ -17,6 +17,15 @@ func _init() -> void:
 	offset_left = -440
 	offset_right = -18
 	offset_top = 84
+	if T.compact:
+		# telefonon alul, középen, hogy ne takarja a bezárógombokat
+		set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+		offset_left = -300
+		offset_right = 300
+		offset_top = -150
+		offset_bottom = -70
+		grow_vertical = Control.GROW_DIRECTION_BEGIN
+		alignment = BoxContainer.ALIGNMENT_END
 	grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	add_theme_constant_override("separation", 6)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -32,7 +41,7 @@ func push(text: String, kind := "info") -> void:
 	g.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	h.add_child(g)
 	var l := UI.label(text, 15, T.PAPYRUS, true)
-	l.custom_minimum_size.x = 340
+	l.custom_minimum_size.x = T.px(340)
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	h.add_child(l)
 	p.add_child(h)

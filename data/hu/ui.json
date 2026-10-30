@@ -144,6 +144,7 @@
   "ev_legend": "Kattints egy bizonyítékra a részletes vizsgálathoz. A megbízhatóság változhat, ha új bizonyíték kerül elő – egyes dokumentumok szándékosan félrevezetők.",
 
   "insp_rotate_tip": "Húzd az egeret a tárgy forgatásához, görgess a nagyításhoz.",
+  "insp_rotate_tip_touch": "Húzd az ujjad a tárgyon a forgatáshoz.",
   "insp_tools": "Vizsgálat",
   "insp_compare": "Összevetés más bizonyítékkal",
   "insp_translate": "Fordítás a Hieroglifák Kamrájában",
@@ -179,9 +180,10 @@
   "dlg_replay_close": "Visszatérés",
   "dlg_exclusive": "Kizáró döntés: ha ezt választod, a többi megközelítés elvész.",
 
-  "sb_hint": "Húzd a kártyákat a tálcáról a jelenetekbe. Egy jelenethez legalább két elem kell. Minden kártya csak annyiszor használható, ahány példány van belőle – a lehelyezett kártya eltűnik a tálcáról. Dupla kattintással eltávolíthatod, vagy húzd vissza a tálcára. Az értelmezés állapota a feltárt bizonyítékokon múlik – nem a helyes válaszon.",
+  "sb_hint": "Húzd a kártyákat a tálcáról a jelenetekbe. Egy jelenethez legalább két elem kell. Minden kártya csak annyiszor használható, ahány példány van belőle – a lehelyezett kártya eltűnik a tálcáról. Húzhatod is, vagy koppints a kártyára, majd a jelenetre. Eltávolítás: a kártya ✕ gombja, dupla kattintás, vagy húzd vissza a tálcára. Az értelmezés állapota a feltárt bizonyítékokon múlik – nem a helyes válaszon.",
   "sb_tray": "Kártyák",
   "sb_copies_left": "Még %d példány helyezhető el.",
+  "sb_remove": "Kártya eltávolítása",
   "sb_drop_here": "húzz ide egy kártyát",
   "sb_supported_by": "Alátámasztja: %s",
   "sb_contradicted_by": "Ellentmond: %s",

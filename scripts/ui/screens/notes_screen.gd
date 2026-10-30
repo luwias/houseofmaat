@@ -29,7 +29,7 @@ func build() -> void:
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(body)
 	var tabs := UI.vbox(8)
-	tabs.custom_minimum_size.x = 220
+	tabs.custom_minimum_size.x = T.px(220)
 	body.add_child(tabs)
 	_add_page_button(tabs, "general", "𓆄", Loc.t("notes_general"))
 	for s in GameData.souls:

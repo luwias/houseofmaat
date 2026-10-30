@@ -37,8 +37,13 @@ var fade: ColorRect
 
 func _ready() -> void:
 	add_to_group("main")
+	var mobile := OS.has_feature("mobile") or Dev.args.has("mobile")
+	if mobile:
+		T.compact = true
+		get_window().content_scale_factor = _mobile_scale()
 	T.build()
 	temple = Temple3D.new()
+	temple.low_spec = mobile
 	add_child(temple)
 	layer = CanvasLayer.new()
 	add_child(layer)
@@ -163,6 +168,30 @@ func close_all_overlays() -> void:
 
 func top_overlay() -> Control:
 	return overlays.back() if not overlays.is_empty() else null
+
+
+## Telefonon nagyobb skála, hogy a szöveg olvasható legyen; táblagépen kisebb.
+func _mobile_scale() -> float:
+	if Dev.args.has("mobile"):
+		return float(Dev.args.get("mobile_scale", "1.5"))
+	var dpi := float(DisplayServer.screen_get_dpi())
+	var h := float(DisplayServer.screen_get_size().y)
+	if dpi <= 0.0:
+		return 1.4
+	var inches := minf(h, float(DisplayServer.screen_get_size().x)) / dpi
+	return clampf(4.4 / inches, 1.0, 1.55)
+
+
+func _notification(what: int) -> void:
+	# Android vissza gomb: ablak bezárása, nem kilépés
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		if menu != null and is_instance_valid(menu):
+			return
+		var top := top_overlay()
+		if top != null:
+			top.close()
+		else:
+			confirm(Loc.t("confirm_to_menu"), show_menu)
 
 
 func _input(event: InputEvent) -> void:

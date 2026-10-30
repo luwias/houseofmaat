@@ -33,9 +33,9 @@ func build() -> void:
 
 	# bal: mérleg + paraméterek
 	var left := UI.vbox(10)
-	left.custom_minimum_size.x = 470
+	left.custom_minimum_size.x = T.px(470)
 	var scales := ScalesView.new()
-	scales.custom_minimum_size = Vector2(460, 230)
+	scales.custom_minimum_size = T.v2(460, 230)
 	scales.set_balance(comp.balance)
 	left.add_child(scales)
 	left.add_child(UI.title(Loc.t("jd_thoth_record"), 18, T.GOLD))
@@ -68,23 +68,23 @@ func build() -> void:
 
 	# jobb: ítéletek
 	var right := UI.vbox(10)
-	right.custom_minimum_size.x = 380
+	right.custom_minimum_size.x = T.px(380)
 	right.add_child(UI.title(Loc.t("jd_verdicts"), 20, T.GOLD))
 	for vd in GameData.temple.get("verdicts", []):
 		var b := UI.button("%s   %s" % [vd.glyph, vd.label], _select.bind(str(vd.id)))
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.add_theme_font_size_override("font_size", 19)
-		b.custom_minimum_size.y = 52
+		b.custom_minimum_size.y = T.px(52)
 		verdict_buttons[vd.id] = b
 		right.add_child(b)
 	verdict_desc = UI.label(Loc.t("jd_pick"), 15, T.SAND, true)
-	verdict_desc.custom_minimum_size.y = 90
+	verdict_desc.custom_minimum_size.y = T.px(90)
 	right.add_child(verdict_desc)
 	right.add_child(UI.spacer(false))
 	confirm_btn = UI.button(Loc.t("jd_pronounce"), _pronounce)
 	confirm_btn.disabled = true
 	confirm_btn.add_theme_font_size_override("font_size", 21)
-	confirm_btn.custom_minimum_size.y = 58
+	confirm_btn.custom_minimum_size.y = T.px(58)
 	right.add_child(confirm_btn)
 	h.add_child(right)
 
@@ -102,7 +102,7 @@ func _param_row(pd: Dictionary, val: float) -> Control:
 	bar.max_value = 100
 	bar.value = val
 	bar.show_percentage = false
-	bar.custom_minimum_size.y = 8
+	bar.custom_minimum_size.y = T.px(8)
 	var fill := T.flat(T.GOLD, Color(0, 0, 0, 0), 0, 3, 0)
 	var bg := T.flat(Color(0, 0, 0, 0.45), T.GOLD_D, 1, 3, 0)
 	bar.add_theme_stylebox_override("fill", fill)

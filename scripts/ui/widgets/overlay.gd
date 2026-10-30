@@ -64,13 +64,18 @@ func centered(min_size: Vector2, panel: PanelContainer = null) -> PanelContainer
 	cc.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(cc)
 	var p := panel if panel != null else UI.dark_panel(22)
-	p.custom_minimum_size = min_size
+	var want := T.v2(min_size.x, min_size.y)
+	var avail := get_viewport().get_visible_rect().size - Vector2(24, 24) if is_inside_tree() else want
+	p.custom_minimum_size = Vector2(minf(want.x, avail.x), minf(want.y, avail.y))
 	cc.add_child(p)
 	return p
 
 
 ## Teljes képernyős keret margóval.
 func framed(margin_px: int = 36, panel: PanelContainer = null) -> PanelContainer:
+	margin_px = int(T.px(margin_px)) if T.compact else margin_px
+	if T.compact:
+		margin_px = mini(margin_px, 10)
 	var m := UI.margin(null, margin_px, margin_px, margin_px, margin_px)
 	UI.full_rect(m)
 	m.mouse_filter = Control.MOUSE_FILTER_IGNORE

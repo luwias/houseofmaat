@@ -16,6 +16,8 @@ var tray_flow: HFlowContainer
 var filter := "all"
 var filter_buttons := {}
 var _last_available := []
+## Koppintással kiválasztott kártya (érintőképernyőhöz): utána egy jelenetre koppintva kerül le.
+var selected := ""
 
 
 class SceneSlot extends PanelContainer:
@@ -27,6 +29,10 @@ class SceneSlot extends PanelContainer:
 
 	func _drop_data(_p: Vector2, d: Variant) -> void:
 		sb.add_card(sid, d.id, d.from)
+
+	func _gui_input(e: InputEvent) -> void:
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			sb.tap_slot(sid)
 
 
 class TrayDrop extends PanelContainer:
@@ -49,6 +55,7 @@ func _init(p_cid := "") -> void:
 func _ready() -> void:
 	case_data = GameData.get_case(cid)
 	var hint := UI.label(Loc.t("sb_hint"), 14, T.SAND, true)
+	hint.visible = not T.compact
 	add_child(hint)
 	var paper := UI.papyrus(14)
 	paper.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -68,7 +75,7 @@ func _ready() -> void:
 	var tray := TrayDrop.new()
 	tray.sb = self
 	tray.add_theme_stylebox_override("panel", T.flat(Color(T.DEEP, 0.85), T.GOLD_D, 1, 6, 10))
-	tray.custom_minimum_size.y = 210
+	tray.custom_minimum_size.y = T.px(210)
 	add_child(tray)
 	var tv := UI.vbox(8)
 	tray.add_child(tv)
@@ -83,7 +90,7 @@ func _ready() -> void:
 		fh.add_child(b)
 	tray_flow = UI.flow(8)
 	var sc := UI.scroll(tray_flow)
-	sc.custom_minimum_size.y = 150
+	sc.custom_minimum_size.y = T.px(150)
 	tv.add_child(sc)
 	refresh()
 
@@ -133,6 +140,9 @@ func _build_tray() -> void:
 		if not id in _last_available and not _last_available.is_empty():
 			w.modulate = Color(1.3, 1.25, 0.9)
 		w.double_clicked.connect(_on_tray_double)
+		w.clicked.connect(_on_tray_click)
+		if id == selected:
+			w.modulate = Color(1.35, 1.3, 0.8)
 		tray_flow.add_child(w)
 	_last_available = avail
 
@@ -149,6 +159,29 @@ func _on_tray_double(card_id: String) -> void:
 		if cards.is_empty():
 			add_card(sc.id, card_id, "")
 			return
+
+
+func _on_tray_click(card_id: String) -> void:
+	selected = "" if selected == card_id else card_id
+	_highlight_selected()
+
+
+func _highlight_selected() -> void:
+	for w in tray_flow.get_children():
+		var sel: bool = w.get("card_id") == selected and selected != ""
+		w.modulate = Color(1.35, 1.3, 0.8) if sel else Color.WHITE
+
+
+func tap_slot(sid: String) -> void:
+	if selected == "":
+		return
+	if can_add(sid, selected, ""):
+		var id := selected
+		selected = ""
+		add_card(sid, id, "")
+	else:
+		selected = ""
+		_build_tray()
 
 
 func can_add(sid: String, card_id: String, from: String) -> bool:
@@ -213,12 +246,13 @@ func _build_slot(sc: Dictionary, flash := false) -> void:
 			continue
 		var w := CardWidget.new()
 		w.setup(card, sc.id, true)
-		w.custom_minimum_size = Vector2(0, 54)
+		w.custom_minimum_size = T.v2(0, 54)
 		w.double_clicked.connect(func(c_id): remove_card(sc.id, c_id))
+		w.add_remove_button(remove_card.bind(sc.id, id))
 		cards_box.add_child(w)
 	if cards.size() < Validator.MAX_CARDS:
 		var ph := UI.box_panel(Color(0, 0, 0, 0.04), Color(T.INK_L, 0.35), 1, 6, 4)
-		ph.custom_minimum_size = Vector2(0, 40)
+		ph.custom_minimum_size = T.v2(0, 40)
 		ph.mouse_filter = Control.MOUSE_FILTER_PASS
 		var pl := UI.label(Loc.t("sb_drop_here"), 13, Color(T.INK_L, 0.7), false, HORIZONTAL_ALIGNMENT_CENTER)
 		pl.size_flags_vertical = Control.SIZE_EXPAND_FILL

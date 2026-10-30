@@ -19,7 +19,7 @@ func build() -> void:
 	h.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(h)
 	list_box = UI.vbox(8)
-	list_box.custom_minimum_size.x = 300
+	list_box.custom_minimum_size.x = T.px(300)
 	h.add_child(list_box)
 	var right := UI.papyrus(26)
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL

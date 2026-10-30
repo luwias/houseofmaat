@@ -21,7 +21,7 @@ func build() -> void:
 		body.add_child(UI.separator(T.INK_L))
 	body.add_child(UI.rich(Loc.t("help_text"), 17))
 	var sc := UI.scroll(body)
-	sc.custom_minimum_size.y = 520
+	sc.custom_minimum_size.y = T.px(520)
 	v.add_child(sc)
 	var h := UI.hbox()
 	h.alignment = BoxContainer.ALIGNMENT_CENTER

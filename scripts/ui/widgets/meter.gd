@@ -20,7 +20,7 @@ func setup(p_label: String, p_glyph: String, p_color: Color, p_inverse := false)
 	glyph = p_glyph
 	color = p_color
 	inverse = p_inverse
-	custom_minimum_size = Vector2(190, 44)
+	custom_minimum_size = Vector2(T.px(190), 44)
 	mouse_filter = Control.MOUSE_FILTER_PASS
 
 

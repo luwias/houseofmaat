@@ -56,7 +56,7 @@ func build() -> void:
 	_update_preview(1)
 	result_box = UI.vbox(6)
 	var rp := UI.box_panel(Color(T.DEEP, 0.7), T.GOLD_D, 1, 14)
-	rp.custom_minimum_size.y = 120
+	rp.custom_minimum_size.y = T.px(120)
 	rp.add_child(result_box)
 	v.add_child(rp)
 	result_box.add_child(UI.label(Loc.t("cmp_help"), 15, T.SAND, true))

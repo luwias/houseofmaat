@@ -19,7 +19,7 @@ func build() -> void:
 	h.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(h)
 	var left := UI.vbox(10)
-	left.custom_minimum_size.x = 380
+	left.custom_minimum_size.x = T.px(380)
 	left.add_child(UI.title(Loc.t("hg_lexicon"), 20, T.GOLD))
 	lex_box = UI.vbox(6)
 	left.add_child(UI.scroll(lex_box))
@@ -93,7 +93,7 @@ func _puzzle(cid: String, tr: Dictionary) -> Control:
 		var sel: int = selections[key][gi]
 		ob.select(sel + 1 if sel >= 0 else 0)
 		ob.item_selected.connect(func(i): selections[key][gi] = i - 1)
-		ob.custom_minimum_size.x = 150
+		ob.custom_minimum_size.x = T.px(150)
 		col.add_child(ob)
 		row.add_child(col)
 	v.add_child(row)

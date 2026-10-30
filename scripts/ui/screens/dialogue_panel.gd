@@ -25,9 +25,10 @@ func _init(p_cid := "", p_did := "", p_replay := false) -> void:
 func build() -> void:
 	case_data = GameData.get_case(cid)
 	dlg = Dlg.get_dialogue(case_data, did)
-	var m := UI.margin(null, 120, 0, 120, 60)
+	var side := 12 if T.compact else 120
+	var m := UI.margin(null, side, 0, side, 12 if T.compact else 60)
 	m.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	m.offset_top = -560
+	m.offset_top = -T.px(560) - (60 if T.compact else 0)
 	m.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(m)
 	var p := UI.dark_panel(22, 0.96, T.GOLD)
@@ -36,9 +37,9 @@ func build() -> void:
 	p.add_child(h)
 	# portré
 	var port := UI.vbox(8)
-	port.custom_minimum_size.x = 210
+	port.custom_minimum_size.x = T.px(210)
 	var circle := UI.box_panel(T.LAPIS.darkened(0.3), T.GOLD, 3, 10, 90)
-	circle.custom_minimum_size = Vector2(170, 170)
+	circle.custom_minimum_size = T.v2(170, 170)
 	circle.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	var g := UI.glyphs(str(dlg.get("glyph", "𓂓")), 84, T.GOLD_L)
 	g.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -53,7 +54,7 @@ func build() -> void:
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(right)
 	text_label = UI.rich("", 20, T.PAPYRUS)
-	text_label.custom_minimum_size.y = 150
+	text_label.custom_minimum_size.y = T.px(150)
 	text_label.mouse_filter = Control.MOUSE_FILTER_STOP
 	text_label.gui_input.connect(_on_text_input)
 	right.add_child(text_label)
@@ -98,7 +99,7 @@ func _build_options() -> void:
 		var b := UI.button(txt, _choose.bind(int(o.index)))
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		b.custom_minimum_size.x = 600
+		b.custom_minimum_size.x = T.px(600)
 		b.add_theme_font_size_override("font_size", 17)
 		if opt.has("evidence"):
 			b.add_theme_stylebox_override("normal", T.flat(Color(T.GOLD_D, 0.45), T.GOLD, 2, 6, 10))
@@ -140,7 +141,7 @@ func _build_replay_options(current: String) -> void:
 		var b := UI.button("↺  " + str(e.question), _replay_node.bind(str(e.node), str(e.question)))
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		b.custom_minimum_size.x = 600
+		b.custom_minimum_size.x = T.px(600)
 		b.add_theme_font_size_override("font_size", 16)
 		if e.node == current:
 			b.add_theme_stylebox_override("normal", T.flat(Color(T.LAPIS_L, 0.95), T.GOLD_L, 2, 6, 10))
