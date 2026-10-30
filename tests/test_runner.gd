@@ -8,6 +8,7 @@ const Cond = preload("res://scripts/systems/conditions.gd")
 const Dlg = preload("res://scripts/systems/dialogue.gd")
 const Validator = preload("res://scripts/systems/story_validator.gd")
 const Judgment = preload("res://scripts/systems/judgment.gd")
+const House = preload("res://scripts/systems/house_judgment.gd")
 
 var GS
 var case_data: Dictionary
@@ -30,6 +31,10 @@ func _ready() -> void:
 	test_save_load()
 	test_card_copies()
 	test_dialogue_replay()
+	for cid in ["kha", "nefru", "hori"]:
+		test_case_generic(cid)
+	test_final_mystery()
+	case_data = GameData.get_case("kha")
 	test_temple_effects()
 	print("\n==== %d sikeres, %d hibás ====" % [passes, fails])
 	get_tree().quit(1 if fails > 0 else 0)
@@ -44,9 +49,11 @@ func ok(cond: bool, msg: String) -> void:
 		print("  FAIL ", msg)
 
 
-func fresh() -> void:
+func fresh(cid := "") -> void:
+	if cid != "":
+		case_data = GameData.get_case(cid)
 	GS.reset_state()
-	GS.start_case("kha")
+	GS.start_case(case_data.id)
 	GS.flush()
 
 
@@ -88,7 +95,7 @@ func compare_all() -> void:
 			ids.append(ev.id)
 	for i in ids.size():
 		for j in range(i + 1, ids.size()):
-			GS.compare_evidence("kha", ids[i], ids[j])
+			GS.compare_evidence(case_data.id, ids[i], ids[j])
 	GS.flush()
 
 
@@ -101,7 +108,7 @@ func translate_all() -> void:
 			if not GS.knows_glyph(str(g.answer)):
 				all_known = false
 		if all_known:
-			Cond.apply(tr.effects, GS, "kha")
+			Cond.apply(tr.effects, GS, case_data.id)
 	GS.flush()
 
 
@@ -112,7 +119,7 @@ func clarify_all() -> void:
 		var frags: Array = m.fragments
 		for i in frags.size():
 			if frags[i].get("blurred", false) and GS.has_evidence(str(frags[i].get("clarify_with", ""))):
-				GS.clarify(m.id, i, "kha")
+				GS.clarify(m.id, i, case_data.id)
 	GS.flush()
 
 
@@ -156,7 +163,7 @@ func explore_dialogue(did: String, forced: Dictionary) -> void:
 func explore_everything(forced: Dictionary) -> void:
 	var last := -1
 	for _round in 12:
-		if forced.get("hostile", false) and not GS.has_flag("merit_hostile") and not GS.has_flag("merit_revealed"):
+		if forced.get("hostile", false) and case_data.id == "kha" and not GS.has_flag("merit_hostile") and not GS.has_flag("merit_revealed"):
 			talk("merit", ["Te segítettél"])
 		for br in case_data.investigation + case_data.encounters:
 			if Cond.check(br.get("unlock", true), GS):
@@ -499,3 +506,191 @@ func test_temple_effects() -> void:
 	ok(not GS.room_status("forgotten").open, "Elfeledett Szárny kezdetben zárva")
 	GS.set_temple({"duat": 55})
 	ok(GS.room_status("forgotten").open, "magas Duat mellett az Elfeledett Szárny felébred")
+
+
+# ------------------------------------------------------------ általános, minden esetre
+func groups_of(cd: Dictionary) -> Dictionary:
+	var g := {}
+	for did in cd.dialogues:
+		for nid in cd.dialogues[did].nodes:
+			for o in cd.dialogues[did].nodes[nid].get("options", []):
+				if o.has("group"):
+					if not g.has(o.group):
+						g[o.group] = []
+					if not str(o.value) in g[o.group]:
+						g[o.group].append(str(o.value))
+	return g
+
+
+func combos(groups: Dictionary) -> Array:
+	var out := [{}]
+	for k in groups:
+		var nxt := []
+		for base in out:
+			for v in groups[k]:
+				var c: Dictionary = base.duplicate()
+				c[k] = v
+				nxt.append(c)
+		out = nxt
+	return out
+
+
+## A legjobb (legnagyobb igazságú) értelmezés kirakása a feltárt elemekből, a példányszámokat betartva.
+func best_board_auto() -> void:
+	var used := {}
+	for sc in case_data.scenes:
+		var best: Dictionary = {}
+		for it in sc.interpretations:
+			if best.is_empty() or float(it.truth) > float(best.truth):
+				best = it
+		var cards := []
+		for id in best.required + best.get("support", []):
+			if cards.size() >= Validator.MAX_CARDS or id in cards or not GS.card_available(id):
+				continue
+			if int(used.get(id, 0)) >= int(GameData.card(id).get("copies", 1)):
+				continue
+			cards.append(id)
+			used[id] = int(used.get(id, 0)) + 1
+		GS.set_board_slot(case_data.id, sc.id, cards)
+	GS.flush()
+
+
+func test_case_generic(cid: String) -> void:
+	print("\n[%s – általános ellenőrzés]" % cid)
+	case_data = GameData.get_case(cid)
+	var cards: Dictionary = case_data._cards
+	var bad := []
+	for sc in case_data.scenes:
+		for it in sc.interpretations:
+			for key in ["required", "optional", "support", "contradict"]:
+				for id in it.get(key, []):
+					if not cards.has(id):
+						bad.append("%s.%s:%s" % [it.id, key, id])
+	for ev in case_data.evidence:
+		for id in ev.get("associated", []):
+			if not cards.has(id):
+				bad.append("%s:%s" % [ev.id, id])
+		for c in ev.get("contradictions", []):
+			if not case_data._evidence.has(str(c.with)):
+				bad.append("%s ellentmondás:%s" % [ev.id, c.with])
+	for did in case_data.dialogues:
+		var nodes: Dictionary = case_data.dialogues[did].nodes
+		for nid in nodes:
+			for o in nodes[nid].get("options", []):
+				var nx := str(o.get("next", "end"))
+				if nx != "end" and not nodes.has(nx):
+					bad.append("%s.%s→%s" % [did, nid, nx])
+	for br in case_data.investigation + case_data.encounters:
+		if not case_data.dialogues.has(br.dialogue):
+			bad.append("ág:%s" % br.dialogue)
+	for c in case_data.comparisons:
+		for e in c.pair:
+			if not case_data._evidence.has(str(e)):
+				bad.append("összevetés:%s" % e)
+	for tr in case_data.get("translations", []):
+		for g in tr.glyphs:
+			if not GameData.lexicon.has(str(g.answer)):
+				bad.append("jel:%s" % g.answer)
+	for v in case_data.ideal.verdicts:
+		if GameData.verdict(str(v)).is_empty():
+			bad.append("ítélet:%s" % v)
+	ok(bad.is_empty(), "%s: minden hivatkozás érvényes %s" % [cid, bad])
+	ok(case_data.evidence.size() >= 10, "%s: legalább 10 bizonyíték (%d)" % [cid, case_data.evidence.size()])
+	ok(case_data.scenes.size() == 5, "%s: 5 jelenet" % cid)
+	ok(case_data.investigation.size() == 4, "%s: 4 nyomozási ág" % cid)
+	ok(case_data.endings.size() >= 3, "%s: legalább 3 befejezés" % cid)
+
+	for forced in combos(groups_of(case_data)):
+		var f: Dictionary = forced.duplicate()
+		fresh(cid)
+		explore_everything(f)
+		var missing := []
+		for ev in case_data.evidence:
+			if ev.get("required", false) and not GS.has_evidence(ev.id):
+				missing.append(ev.id)
+		best_board_auto()
+		var label := "%s %s" % [cid, forced]
+		ok(missing.is_empty(), "%s: minden kötelező bizonyíték elérhető %s" % [label, missing])
+		ok(board_within_copies(), "%s: a kirakás belefér a kártyapéldányokba" % label)
+		for v in case_data.ideal.verdicts:
+			var r := Judgment.resolve(case_data, str(v), GS)
+			ok(r.get("ending", "") == "A" and str(r.category).begins_with("just_"),
+				"%s: %s → A (%s, igazság %d)" % [label, v, r.get("ending", "?"), int(r.get("params", {}).get("truth", 0))])
+	var rb := Judgment.resolve(case_data, "condemn", GS)
+	ok(rb.ending == "B" and rb.category == "unjust_condemnation", "%s: elítélés → B" % cid)
+	var rc := Judgment.resolve(case_data, "unresolved", GS)
+	ok(rc.ending == "C", "%s: felfüggesztés → C" % cid)
+	# bizonyíték nélküli felmentés soha nem igazságos
+	fresh(cid)
+	for sc in case_data.scenes:
+		var worst: Dictionary = {}
+		for it in sc.interpretations:
+			if worst.is_empty() or float(it.truth) < float(worst.truth):
+				worst = it
+		var cards2 := []
+		for id in worst.required:
+			if GS.card_available(id):
+				cards2.append(id)
+		GS.set_board_slot(cid, sc.id, cards2)
+	GS.flush()
+	var rd := Judgment.resolve(case_data, "mercy", GS)
+	ok(not str(rd.category).begins_with("just_"), "%s: megalapozatlan felmentés nem igazságos (%s)" % [cid, rd.ending])
+
+
+func play_case_best(cid: String) -> void:
+	case_data = GameData.get_case(cid)
+	GS.start_case(cid)
+	GS.flush()
+	var forced := {}
+	var groups := groups_of(case_data)
+	for k in groups:
+		forced[k] = groups[k][0]
+	if cid == "kha":
+		forced["hapu_approach"] = "contract"
+	explore_everything(forced)
+	best_board_auto()
+	var r := Judgment.resolve(case_data, str(case_data.ideal.verdicts[0]), GS)
+	GS.record_judgment(cid, r)
+	GS.flush()
+
+
+func test_final_mystery() -> void:
+	print("\n[a Ház titka – végső ítélet]")
+	GS.reset_state()
+	ok(not House.is_open(GS), "a belső kapu kezdetben zárva")
+	ok(not Cond.check(GameData.soul("nefru").unlock, GS), "Nefru csak Kha után érkezik")
+	play_case_best("kha")
+	ok(Cond.check(GameData.soul("nefru").unlock, GS), "Kha ítélete után Nefru megérkezik")
+	play_case_best("nefru")
+	ok(GS.has_flag("healing_garden"), "Nefru A befejezése gyógyító kertet hoz")
+	play_case_best("hori")
+	ok(GS.has_flag("archive_restored"), "Hori A befejezése helyreállítja az Archívumot")
+	ok(House.is_open(GS), "mindhárom ítélet után megnyílik a belső kapu")
+	for a in House.final_data().actions:
+		Cond.apply(a.effects, GS)
+	GS.flush()
+	ok(GS.data.clues.size() >= 8, "elegendő nyom gyűlt össze (%d)" % GS.data.clues.size())
+	var saved: Dictionary = GS.data.duplicate(true)
+	var cases := {
+		"F1": {"q1": "amenemope", "q2": "neferhotep", "q3": "expose"},
+		"F3": {"q1": "djehuty", "q2": "neferhotep", "q3": "expose"},
+		"F4": {"q1": "amenemope", "q2": "neferhotep", "q3": "silence"},
+		"F5": {"q1": "amenemope", "q2": "victim", "q3": "close"}
+	}
+	for want in cases:
+		GS.data = saved.duplicate(true)
+		var r := House.resolve(cases[want], GS)
+		ok(r.get("ending", "") == want, "válaszok %s → %s (%s)" % [cases[want], want, r.get("ending", "?")])
+	GS.data = saved.duplicate(true)
+	var r1 := House.resolve(cases.F1, GS)
+	var before: float = GS.get_stat("maat")
+	House.apply(r1, GS)
+	ok(GS.has_flag("names_restored") and GS.get_stat("maat") >= before and GS.get_stat("duat") < 20, "a megtisztított Ház visszaírja a neveket")
+	ok(str(r1.epilogue) == str(House.final_data().epilogue_just), "igazságos ítéletek után igazságos epilógus")
+	GS.data = saved.duplicate(true)
+	var few := {}
+	for k in GS.data.clues.keys().slice(0, 4):
+		few[k] = true
+	GS.data.clues = few
+	var r2 := House.resolve(cases.F1, GS)
+	ok(r2.get("ending", "") == "F2", "helyes válasz kevés nyommal → bizonyítatlan vád (F2)")

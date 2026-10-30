@@ -1,19 +1,85 @@
 {
   "title": "A Ház titka",
-  "intro": "Három lélek, három hamis tekercs. Mi köti össze őket – és ki írja át a holtak feljegyzéseit?",
+  "intro": "Három lélek, három hamis tekercs. Mi köti össze őket – és ki írja át a holtak feljegyzéseit, mielőtt a Házba érnének?",
   "clues": [
     {"id": "CL_golden_hand", "case": "kha", "title": "Az arany kéz jele", "glyph": "𓂝",
      "text": "Kinyújtott arany kéz – magánpecsét Djehuty köréből. Kha gyilkosainak gyűrűjén is ott volt. Nem egyetlen ember jele, hanem egy köré."},
     {"id": "CL_house", "case": "kha", "title": "„A te Házadban sem…”", "glyph": "𓉐",
-     "text": "Djehuty fenyegetése: „A te Házadban sem minden írnok hűséges.” Lehet, hogy a Ma'at Házán belül is van, aki a kincstár tolvajainak dolgozik?"},
+     "text": "Djehuty fenyegetése: „A te Házadban sem minden írnok hűséges.” Lehet, hogy a Ma'at Házán belül is van, aki a tolvajoknak dolgozik?"},
     {"id": "CL_kha_record", "case": "kha", "title": "Kha előre megírt tekercse", "glyph": "𓏞",
-     "text": "A Ház saját nyilvántartásában Kha neve mellett már az érkezése előtt ott állt: „áruló – az Elfeledett Szárnyba”. A bejegyzés tintája frissebb, mint a tekercs. Ki írta be – és hány lélekkel tette ugyanezt?"},
-    {"id": "CL_nefru_1", "case": "nefru", "title": "???", "glyph": "?", "text": "Egy nemesi család levele – a következő lélek ügyében."},
-    {"id": "CL_nefru_2", "case": "nefru", "title": "???", "glyph": "?", "text": "—"},
-    {"id": "CL_hori_1", "case": "hori", "title": "???", "glyph": "?", "text": "Egy gabonafelügyelő pecsétje – a harmadik lélek ügyében."},
-    {"id": "CL_hori_2", "case": "hori", "title": "???", "glyph": "?", "text": "—"},
-    {"id": "CL_final_1", "case": "final", "title": "???", "glyph": "?", "text": "—"},
-    {"id": "CL_final_2", "case": "final", "title": "???", "glyph": "?", "text": "—"}
+     "text": "A Ház saját nyilvántartásában Kha neve mellett már az érkezése előtt ott állt: „áruló – az Elfeledett Szárnyba”. A bejegyzés tintája frissebb, mint a tekercs. Kha halotti jelentését Amenemope, a nekropolisz írnoka írta."},
+    {"id": "CL_nefru_seal", "case": "nefru", "title": "A nemesi ház pecsétje", "glyph": "𓂝",
+     "text": "Ptahmose nemes háza ugyanazzal az arany kéz pecséttel zárta a levelét, mint Djehuty. A kincstár és a nemesi házak egy hálózat részei."},
+    {"id": "CL_nefru_scribe", "case": "nefru", "title": "Amenemope keze Nefru tekercsén", "glyph": "𓏞",
+     "text": "Nefru temetési bejegyzésébe a „gyermekrabló” szót utólag írták be – Amenemope, a nekropolisz írnoka. Henut szerint Ptahmose egy erszény aranyat küldött neki."},
+    {"id": "CL_nefru_record", "case": "nefru", "title": "Nefru előre megírt tekercse", "glyph": "𓏞",
+     "text": "A Ház nyilvántartásában Nefru mellett is ott állt az ítélet, mielőtt megérkezett: „gyermekrabló – az Elfeledett Szárnyba”. Ugyanaz a friss tinta, ugyanaz a kéz."},
+    {"id": "CL_hori_hand", "case": "hori", "title": "Panehsy és az arany kéz", "glyph": "𓂝",
+     "text": "Panehsy titkos levelét – és emberének gyűrűjét – ugyanaz az arany kéz jelöli. Djehuty a kincstárban, Panehsy a magtárban, Ptahmose a nemesek között: egy hálózat, három hivatal."},
+    {"id": "CL_hori_scribe", "case": "hori", "title": "Amenemope keze Hori tekercsén", "glyph": "𓏞",
+     "text": "Hori börtönfeljegyzésébe a „tolvaj” szót is Amenemope írta be utólag. Három lélek, három hamis bejegyzés – ugyanaz az írnok."},
+    {"id": "CL_hori_record", "case": "hori", "title": "Hori előre megírt tekercse", "glyph": "𓏞",
+     "text": "Hori tekercsén is ott állt az előre megírt ítélet: „tolvaj – az Elfeledett Szárnyba”. A Ház minden tekercset elfogadott, amelyet a nekropolisz írnoka küldött. Ki engedte ezt?"},
+    {"id": "CL_final_neferhotep", "case": "final", "title": "Az előző Őrző szarkofágja", "glyph": "𓃀",
+     "text": "Az Elfeledett Szárny kitörölt nevű szarkofágjai között egy Őrző fekszik: Neferhotep, a te elődöd. A nevét nem az idő törölte ki – vésővel kaparták le."},
+    {"id": "CL_final_ledger", "case": "final", "title": "Neferhotep főkönyve", "glyph": "𓏛",
+     "text": "Az előző Őrző lepecsételt főkönyvében minden évben ugyanaz a sor: „A nekropolisz tekercseit ellenőrzés nélkül elfogadni.” Mellette egy arany kéz rajza – és egy összeg."}
   ],
-  "door_text": "A lepecsételt kapun egyetlen felirat: „Csak az nyithatja meg, aki mindhárom lélek igazát ismeri.”"
+  "door_text": "A lepecsételt kapun egyetlen felirat: „Csak az nyithatja meg, aki mindhárom lélek igazát ismeri.”",
+  "final": {
+    "unlock": {"all": [{"case_done": "kha"}, {"case_done": "nefru"}, {"case_done": "hori"}]},
+    "title": "A Ház ítélete",
+    "intro": "A pecsét megtört. Az Elfeledett Szárny belső csarnokában sorakoznak azok a lelkek, akiknek a nevét valaki eltüntette. Kha, Nefru és Hori tekercsén ugyanaz a friss tinta állt – az ítélet, mielőtt bárki ítélt volna.\n\nMost a Ház maga áll a mérleg előtt.",
+    "actions": [
+      {"id": "sarcophagus", "label": "Megvizsgálod a kitörölt nevű szarkofágot", "requires": true,
+       "text": "A legbelső szarkofágon a név helyén vésőnyomok. Ferde fényben kiolvasható: Neferhotep, a Ma'at Házának Őrzője. A te elődöd.",
+       "effects": [{"clue": "CL_final_neferhotep"}]},
+      {"id": "ledger", "label": "Felnyitod az előző Őrző lepecsételt főkönyvét", "requires": {"clue": "CL_final_neferhotep"},
+       "text": "A főkönyv minden évében ugyanaz a sor: „A nekropolisz tekercseit ellenőrzés nélkül elfogadni.” Mellette arany kéz, és egy összeg debenben.",
+       "effects": [{"clue": "CL_final_ledger"}]}
+    ],
+    "questions": [
+      {"id": "q1", "text": "Ki írta be előre az ítéleteket a holtak tekercseibe?", "options": [
+        {"id": "djehuty", "label": "Djehuty, a kincstár felügyelője"},
+        {"id": "panehsy", "label": "Panehsy, a magtár felügyelője"},
+        {"id": "ptahmose", "label": "Ptahmose nemes háza"},
+        {"id": "amenemope", "label": "Amenemope, a nekropolisz írnoka"},
+        {"id": "thoth", "label": "Thot, az írás ura"}
+      ]},
+      {"id": "q2", "text": "Tudott-e róla a Ház?", "options": [
+        {"id": "victim", "label": "Nem – a Ház a hamis tekercsek áldozata volt"},
+        {"id": "neferhotep", "label": "Igen – az előző Őrző, Neferhotep, pénzért elfogadta őket"},
+        {"id": "maat", "label": "Igen – maga Ma'at akarta így"}
+      ]},
+      {"id": "q3", "text": "Mit teszel?", "options": [
+        {"id": "expose", "label": "Feltárom a hálózatot, és visszaírom a kitörölt neveket"},
+        {"id": "silence", "label": "Csendben kijavítom a tekercseket – a Ház tekintélye nem sérülhet"},
+        {"id": "close", "label": "Bezárom az Archívumot – egyetlen tekercsben sem lehet megbízni"}
+      ]}
+    ],
+    "endings": [
+      {"id": "F1", "title": "A megtisztított Ház",
+       "conditions": {"all": [{"answer": {"q1": "amenemope", "q2": "neferhotep", "q3": "expose"}}, {"clues_at_least": 8}]},
+       "effects": {"maat": 20, "ankh": 10, "duat": -25}, "flags": ["names_restored"], "just": true,
+       "narrative": "Kimondod a nevüket: Amenemope, aki pénzért írta át a holtak tekercseit. Neferhotep, aki pénzért elfogadta őket. Djehuty, Panehsy és Ptahmose háza, akik megfizették őket.\n\nA belső csarnokban a szarkofágokon egymás után kigyúlnak a kitörölt nevek. Lelkek, akiket évtizedek óta senki sem szólított, felemelik a fejüket.\n\nA Ma'at Háza nem hibátlan. De most már tudja, hol hibázott – és ez több, mint amit a legtöbb ház elmondhat magáról."},
+      {"id": "F2", "title": "A bizonyítatlan vád",
+       "conditions": {"all": [{"answer": {"q1": "amenemope", "q2": "neferhotep", "q3": "expose"}}]},
+       "effects": {"maat": 4, "ankh": 0, "duat": 4}, "flags": [],
+       "narrative": "Tudod, ki volt. Talán azt is, miért. De a nyomok, amelyeket összegyűjtöttél, nem elegendők ahhoz, hogy a Ház ítéletet mondjon a saját Őrzője felett.\n\nA kitörölt nevek egy része visszatér. A többi a sötétben marad, amíg valaki – talán te – be nem fejezi, amit elkezdtél."},
+      {"id": "F3", "title": "A hamis bűnbak",
+       "conditions": {"answer": {"q3": "expose"}},
+       "effects": {"maat": -12, "ankh": -4, "duat": 12}, "flags": [],
+       "narrative": "Nyilvánosan megnevezed a bűnöst – de nem azt, aki valóban írta a tekercseket. A hálózat elégedetten figyeli, ahogy a Ház a saját tévedését hirdeti ki igazságként.\n\nAmenemope tolla tovább serceg a nekropolisz írnokházában."},
+      {"id": "F4", "title": "A hallgatás ára",
+       "conditions": {"answer": {"q3": "silence"}},
+       "effects": {"maat": -15, "ankh": -5, "duat": 20}, "flags": [],
+       "narrative": "Csendben kijavítod a tekercseket. A Ház tekintélye megmarad – kívülről.\n\nDe a kitörölt nevű lelkek tudják, mi történt, és a Duat is tudja. Az Elfeledett Szárnyban a suttogás nem halkul el. Egy Ház, amely a saját bűnét eltitkolja, ugyanazt teszi, amit Neferhotep tett."},
+      {"id": "F5", "title": "A bezárt Archívum",
+       "conditions": {"answer": {"q3": "close"}},
+       "effects": {"maat": -6, "ankh": -10, "duat": 6}, "flags": ["archive_sealed"],
+       "narrative": "Bezárod az Archívumot. Ha egyetlen tekercsben sem lehet megbízni, egyiket sem olvashatja többé senki.\n\nA hamis bejegyzések eltűnnek – de velük együtt eltűnik minden igaz emlék is. A lelkek tekercs nélkül érkeznek, és az Őrzőnek mindent elölről kell kezdenie. Talán ez is egyfajta tisztaság. Talán csak a félelem egy másik neve."}
+    ],
+    "epilogue_just": "Az ítéleteid nagyrészt az igazságon alapultak: amikor a Ház tükörbe nézett, a te döntéseid nem az Arany Kéz írását erősítették meg.",
+    "epilogue_unjust": "De vedd észre: a te ítéleteid közül is több ugyanazt mondta, amit a hamis tekercsek. Az Arany Kéz írása rajtad keresztül is a Házba jutott."
+  }
 }

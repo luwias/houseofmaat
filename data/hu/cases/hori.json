@@ -1,0 +1,496 @@
+{
+  "id": "hori",
+  "name": "Hori",
+  "epithet": "az írnok",
+  "glyph": "𓏞",
+  "theme": "Korrupció, éhínség, hatalom, igazságosság és felelősség.",
+  "arrival": "Egy sovány férfi lép a Csarnokba. Az ujjai tintafoltosak, a ruhája börtönrongy. Ahogy meglátja a mérleget, keserűen elmosolyodik – mintha egy újabb hivatalos tekercset látna.\n\nA Ház tekercse szerint Hori királyi írnok négyszáz zsák gabonát lopott el a királyi magtárból egy aszályos évben, és a börtönben halt meg lázban. A vádat Panehsy, a magtár felügyelője tette.\n\nA tekercs számai pontosak. Talán túlságosan is.",
+  "biography": "Hori a királyi írnokiskolában tanult, és a magtár gabonakönyveinek vezetője lett. A második aszályos évben letartóztatták, és a börtönben meghalt. Felesége Tuya.",
+  "questions": [
+    {"text": "Valóban hiányzott gabona a magtárból?", "done": {"flag": "hoarding_found"}},
+    {"text": "Hová került a hiányzó gabona?", "done": {"any": [{"evidence": "H08"}, {"evidence": "H04"}]}},
+    {"text": "Mit csinált Panehsy a gabonával?", "done": {"any": [{"flag": "panehsy_smuggling"}, {"flag": "panehsy_exposed"}]}},
+    {"text": "Tartott-e meg Hori gabonát magának?", "done": {"evidence": "H06"}},
+    {"text": "Mennyit, és miért?", "done": {"evidence": "H10"}}
+  ],
+  "canonical_story": "Hori királyi írnok volt, a gabonakészletek és az adók feljegyzője. Egy súlyos aszály idején Panehsy, a magtár felügyelője visszatartotta a gabonát, hogy később magasabb áron adja el. Hori rájött a korrupcióra, meghamisította a hivatalos könyveket, és titokban gabonát osztott ki az éhező falvaknak. Eleinte minden gabona a rászorulókhoz került; később jelentős mennyiséget a saját családjának is félretett. Panehsy felfedezte a hamisítást, és lopással vádolta. Hori a börtönben halt meg betegségben. A hivatalos feljegyzések őt okolták a hiányért.",
+  "cards": [
+    {"id": "c_hori", "category": "character", "title": "Hori", "glyph": "𓀀", "desc": "Királyi írnok. A Házba érkezett lélek.", "unlock": true},
+    {"id": "c_panehsy", "category": "character", "title": "Panehsy", "glyph": "𓀀", "desc": "A királyi magtár felügyelője.", "unlock": true},
+    {"id": "c_tuya", "category": "character", "title": "Tuya", "glyph": "𓁐", "desc": "Hori felesége.", "unlock": {"node": "tuya.start"}},
+    {"id": "c_nakht", "category": "character", "title": "Nakht", "glyph": "𓀀", "desc": "Kemet falu öregje.", "unlock": {"node": "nakht.start"}},
+    {"id": "c_villagers", "category": "character", "title": "Az éhező falvak", "glyph": "𓀀𓀀", "desc": "Az aszály sújtotta falvak népe.", "unlock": {"any": [{"evidence": "H04"}, {"evidence": "H08"}]}},
+
+    {"id": "e_scribe_school", "category": "event", "title": "Az írnokiskola", "glyph": "𓏞", "desc": "Nádtoll, tinta és fegyelem.", "unlock": true},
+    {"id": "e_appointment", "category": "event", "title": "Királyi kinevezés", "glyph": "𓋴", "desc": "A magtár könyveinek vezetője.", "unlock": true},
+    {"id": "e_greed", "category": "event", "title": "Gazdagodás", "glyph": "𓋞", "desc": "Hivatal, amely meghízlal.", "unlock": true},
+    {"id": "e_drought", "category": "event", "title": "Aszály", "glyph": "𓇳", "desc": "Két év, amikor a folyó nem áradt.", "unlock": true},
+    {"id": "e_theft_accusation", "category": "event", "title": "Lopás vádja", "glyph": "𓂋", "desc": "Négyszáz zsák „hiány”.", "unlock": true},
+    {"id": "e_hoarding", "category": "event", "title": "A gabona visszatartása", "glyph": "𓉐", "desc": "Gabona, amelyet a drágulásig rejtenek.", "unlock": {"any": [{"flag": "hoarding_found"}, {"evidence": "H07"}]}},
+    {"id": "e_altered_records", "category": "event", "title": "A könyvek meghamisítása", "glyph": "𓏞", "desc": "Számok, amelyek mást mondanak, mint a raktár.", "unlock": {"evidence": "H03"}},
+    {"id": "e_distribution", "category": "event", "title": "Gabonaosztás", "glyph": "𓏏", "desc": "Éjjel, titokban, a falvaknak.", "unlock": {"any": [{"evidence": "H04"}, {"evidence": "H08"}]}},
+    {"id": "e_family_share", "category": "event", "title": "A család része", "glyph": "𓉐", "desc": "Gabona a saját pincében.", "unlock": {"evidence": "H06"}},
+    {"id": "e_imprisonment", "category": "event", "title": "Bebörtönzés", "glyph": "𓍿", "desc": "Lánc és sötétség.", "unlock": {"any": [{"evidence": "H09"}, {"node": "tuya.start"}]}},
+    {"id": "e_illness_death", "category": "event", "title": "Halál a börtönben", "glyph": "𓇳", "desc": "A börtönláz.", "unlock": {"any": [{"evidence": "H09"}, {"evidence": "H10"}]}},
+
+    {"id": "o_grain", "category": "object", "title": "A királyi gabona", "glyph": "𓏏", "desc": "Pecsétes zsákok a királyi magtárból.", "unlock": true},
+    {"id": "o_palette", "category": "object", "title": "Írnokpaletta", "glyph": "𓏞", "desc": "Hori nádtolla és tintái.", "unlock": true},
+
+    {"id": "l_granary", "category": "location", "title": "A királyi magtár", "glyph": "𓉐", "desc": "Hatalmas silók a város szélén.", "unlock": true},
+    {"id": "l_villages", "category": "location", "title": "Az aszályos falvak", "glyph": "𓈗", "desc": "Kemet és a déli falvak.", "unlock": {"node": "nakht.start"}},
+    {"id": "l_hori_house", "category": "location", "title": "Hori háza", "glyph": "𓉐", "desc": "Írnokház a magtár közelében.", "unlock": {"node": "tuya.start"}},
+    {"id": "l_prison", "category": "location", "title": "A börtön", "glyph": "𓍿", "desc": "A magtár alatti tömlöc.", "unlock": {"evidence": "H09"}}
+  ],
+  "evidence": [
+    {
+      "id": "H01", "title": "Írnokportré", "type": "image", "illustration": "portrait",
+      "description": "Festett mészkőtábla: egy fiatal írnok törökülésben, ölében papirusszal.",
+      "text": "Az írnok tekintete komoly, a nádtolla a füle mögött. Mellette a felesége és két kisgyermek.",
+      "reliability": 90, "start": true, "required": false,
+      "associated": ["c_hori", "e_scribe_school", "o_palette", "e_appointment"],
+      "implication": "Hori családos ember volt, aki büszke volt a mesterségére.",
+      "param": {"compassion": 3},
+      "inspect": [
+        {"id": "flip", "tool": "flip", "label": "Megfordítod a táblát",
+         "text": "A hátoldalon a tanítója vésett mondása: „Az írnok keze a fáraó keze – de a szíve a népé legyen.”",
+         "effects": [{"unlock_memory": "HM1"}]}
+      ]
+    },
+    {
+      "id": "H02", "title": "Hivatalos gabonakönyv", "type": "document", "illustration": "ledger",
+      "description": "A királyi magtár hivatalos könyve az aszály második évéből.",
+      "text": "Aszály 2. éve, a királyi magtár (𓏏):\nKészlet: 1200 zsák. Kiosztva a templomoknak: 200 zsák.\nHiány: 400 zsák.\nA hiányért felelős: Hori, a könyvek írnoka.\nHitelesítette: Panehsy, a magtár felügyelője.",
+      "reliability": 75, "start": true, "required": true,
+      "associated": ["c_hori", "c_panehsy", "o_grain", "l_granary", "e_theft_accusation", "e_drought"],
+      "implication": "A hivatalos könyv szerint Hori négyszáz zsák gabonával nem tud elszámolni.",
+      "inspect": [
+        {"id": "grain", "tool": "magnify", "label": "Megnézed a gabona jelét",
+         "text": "𓏏 – a kenyér és a gabona jele. Megtanultad.",
+         "effects": [{"lexicon": "grain"}]}
+      ]
+    },
+    {
+      "id": "H03", "title": "Meghamisított könyv", "type": "document", "illustration": "ledger",
+      "description": "Hori titkos másolata ugyanarról az évről, a magtár levéltárában elrejtve.",
+      "text": "Valós készlet: 1600 zsák.\nPanehsy parancsára a déli raktárba zárva: 600 zsák – „a drágulásig”.\nKiosztva éjjel a déli falvaknak: 400 zsák.\nA hivatalos könyvbe: „hiány”.\n– Hori",
+      "reliability": 70, "required": true,
+      "associated": ["c_hori", "c_panehsy", "o_grain", "e_altered_records", "e_hoarding", "e_distribution"],
+      "implication": "Hori meghamisította a könyveket – hogy elrejtse, amit a falvaknak adott, és rögzítse, amit Panehsy elrejtett.",
+      "inspect": [
+        {"id": "lamp", "tool": "lamp", "label": "Lámpafénybe tartod az aláírásokat",
+         "text": "Hori aláírása alatt egy második, áthúzott név: Panehsy. Valaki megpróbálta kitörölni.",
+         "effects": [{"set_flag": "panehsy_name_scratched"}]}
+      ]
+    },
+    {
+      "id": "H04", "title": "Falusi kérvény", "type": "document", "illustration": "contract",
+      "description": "A déli falvak öregjeinek hálaadó kérvénye a fáraóhoz, Hori szabadon bocsátásáért.",
+      "text": "„Mi, Kemet, Ta-Seti és Per-Bastet falvak öregjei kérjük: engedjétek szabadon Hori írnokot. Az aszály második évében éjjelente gabonát hozott nekünk a királyi magtárból. Nélküle a gyermekeink meghaltak volna.”\nTizenkilenc jel és ujjlenyomat.",
+      "reliability": 80, "required": true,
+      "associated": ["c_hori", "c_villagers", "c_nakht", "e_distribution", "l_villages", "o_grain"],
+      "implication": "Hori sok életet mentett meg.",
+      "param": {"intent": 8, "compassion": 5}
+    },
+    {
+      "id": "H05", "title": "Raktárkulcsok", "type": "object", "illustration": "seal",
+      "model": "res://assets/models/prop_h05.glb",
+      "description": "A királyi magtár kulcskarikája: két bronzkulcs és egy fakulcs.",
+      "text": "A bronzkulcsok a fő silókat nyitják. A fakulcs a déli raktáré – azé, amelyet a hivatalos könyv üresnek mond.",
+      "reliability": 85, "required": false,
+      "associated": ["c_panehsy", "l_granary", "e_hoarding"],
+      "implication": "A déli raktár kulcsa Panehsynél volt.",
+      "inspect": [
+        {"id": "rotate", "tool": "rotate", "label": "Megforgatod a kulcsokat",
+         "text": "A fakulcs agyagtábláján Panehsy személyes jele. A déli raktárt csak ő nyithatta.",
+         "effects": [{"set_flag": "panehsy_keys"}]}
+      ]
+    },
+    {
+      "id": "H06", "title": "Családi leltár", "type": "record", "illustration": "ledger",
+      "description": "Hori házának háztartási leltára az aszály második évéből.",
+      "text": "Hori írnok háza:\nGabona a pincében: 40 zsák, királyi pecséttel.\nOlaj: 6 korsó. Len: 2 vég.",
+      "reliability": 85, "required": true,
+      "associated": ["c_hori", "c_tuya", "e_family_share", "o_grain", "l_hori_house"],
+      "implication": "Hori családjának pincéjében királyi gabona volt.",
+      "contradictions": [{"with": "H08", "text": "A tanú szerint Hori mindent a falvaknak adott – a leltár szerint 40 zsák a családnál maradt."}],
+      "param": {"responsibility": 6, "harm": 5}
+    },
+    {
+      "id": "H07", "title": "Titkos levél", "type": "document", "illustration": "letter_glyph",
+      "description": "Panehsy levele egy folyami kereskedőnek, jelekkel titkosítva.",
+      "text": "𓏏 · 𓉐 · 𓈗 · 𓂀\n\nA jelek mellett számok: „600”, „a harmadik áradás előtt”. A fordításhoz a Hieroglifák Kamrájában kell összevetni őket az ismert jelekkel.",
+      "reliability": 60, "required": false,
+      "associated": ["c_panehsy", "e_hoarding", "o_grain"],
+      "implication": "Panehsy titokban egyezkedett a gabonáról.",
+      "translation": "H07",
+      "inspect": [
+        {"id": "seal", "tool": "magnify", "label": "Megvizsgálod a pecsétet",
+         "text": "A levelet kinyújtott arany kéz pecsétje zárja – ugyanaz a jel, mint Djehuty gyűrűjén.",
+         "effects": [{"clue": "CL_hori_hand"}]}
+      ]
+    },
+    {
+      "id": "H08", "title": "Tanúvallomás", "type": "testimony", "illustration": "testimony",
+      "description": "Nakht, Kemet falu öregjének vallomása.",
+      "text": "„Hori írnok maga hozta a gabonát, éjjel, szamarakon. Királyi pecsétes zsákok voltak. Mindent nekünk adott, semmit sem tartott meg magának.”",
+      "reliability": 70, "required": true,
+      "associated": ["c_nakht", "c_hori", "c_villagers", "e_distribution", "o_grain", "l_villages"],
+      "implication": "A falu szerint Hori önzetlen volt.",
+      "contradictions": [{"with": "H06", "text": "A családi leltár szerint 40 zsák Hori pincéjében maradt."}]
+    },
+    {
+      "id": "H09", "title": "Börtönfeljegyzés", "type": "record", "illustration": "report",
+      "description": "A börtön feljegyzése Hori fogva tartásáról és haláláról.",
+      "text": "Hori írnok, gabonalopás miatt fogva tartva Panehsy felügyelő panaszára.\nMeghalt a börtönlázban, aszály 3. évének 2. hónapjában.\nA holtak tekercsébe lejegyezte: Amenemope, a nekropolisz írnoka.",
+      "reliability": 70, "start": true, "required": true,
+      "associated": ["c_hori", "c_panehsy", "e_imprisonment", "e_illness_death", "e_theft_accusation", "l_prison"],
+      "implication": "Hori a vád alatt, ítélet nélkül halt meg.",
+      "inspect": [
+        {"id": "hand", "tool": "magnify", "label": "Megvizsgálod a lejegyző kezét",
+         "text": "A „tolvaj” szót utólag írták be, ugyanazzal a kézzel: Amenemope. Ugyanez a kéz írta Kha halotti jelentését.",
+         "effects": [{"clue": "CL_hori_scribe"}]}
+      ]
+    },
+    {
+      "id": "H10", "title": "Utolsó üzenet", "type": "document", "illustration": "contract",
+      "description": "Hori utolsó üzenete a feleségének, a börtönből kicsempészve.",
+      "text": "„Tuya, a pincében lévő negyven zsák felét oszd szét a szomszédok között, ahogy megbeszéltük. A másik felét tartsd meg a gyermekeknek. Tudom, hogy ez lopás – akkor is, ha a király gabonája rothadt volna el. Bocsáss meg, hogy rád hagyom a döntést.”",
+      "reliability": 85, "required": true,
+      "associated": ["c_hori", "c_tuya", "e_family_share", "e_imprisonment", "e_illness_death"],
+      "implication": "Hori húsz zsákot a családjának tartott meg – és tudta, hogy ez bűn.",
+      "param": {"responsibility": 6, "intent": 4}
+    }
+  ],
+  "comparisons": [
+    {"pair": ["H02", "H03"], "text": "A két könyv közti különbség kiadja a teljes képet: a hivatalos „400 zsák hiány” valójában Hori titkos osztása volt – miközben Panehsy 600 zsákot zárt a déli raktárba, és az nem szerepel sehol.", "effects": [{"set_flag": "hoarding_found"}, {"reliability": {"H02": 30}}], "hint": "Két könyv, két szám, ugyanaz az év."},
+    {"pair": ["H06", "H08"], "text": "⚖ Ellentétes, de mindkettő részben igaz lehet: a falvak megkapták a gabona nagy részét, de Hori pincéjében is maradt negyven zsák. A tanú nem hazudik – csak nem tudott mindenről.", "effects": [{"set_flag": "both_partial"}, {"reliability": {"H08": 55}}], "hint": "A tanú és a leltár nem ugyanazt mondja – lehet mindkettő igaz?"},
+    {"pair": ["H06", "H10"], "text": "Az utolsó üzenet megmagyarázza a leltárt: a negyven zsák felét Hori a szomszédoknak szánta, a másik felét a gyermekeinek tartotta meg – és tudta, hogy ez lopás.", "effects": [{"set_flag": "family_extent_known"}], "hint": "A leltár számot mond – de mit szánt Hori a gabonának?"},
+    {"pair": ["H03", "H05"], "text": "A meghamisított könyv szerint a déli raktárban 600 zsák volt – a raktár egyetlen kulcsa Panehsynél. A gabonát ő rejtette el.", "effects": [{"set_flag": "panehsy_exposed"}]},
+    {"pair": ["H04", "H02"], "text": "A hivatalos könyv „hiánya” és a falvak kérvénye ugyanarról a négyszáz zsákról szól – csak az egyik lopásnak, a másik életmentésnek nevezi.", "effects": [{"set_flag": "distribution_matches"}]}
+  ],
+  "investigation": [
+    {"id": "ledger", "letter": "A", "title": "A gabonakönyv", "location": "A királyi magtár levéltára", "glyph": "𓏞", "desc": "Paser, a magtár másodírnoka őrzi a könyveket.", "dialogue": "paser", "unlock": true},
+    {"id": "village", "letter": "B", "title": "A falu", "location": "Kemet falu", "glyph": "𓈗", "desc": "Nakht, a falu öregje túlélte az aszályt. Tudja, kinek köszönheti.", "dialogue": "nakht", "unlock": true},
+    {"id": "family", "letter": "C", "title": "Hori családja", "location": "Hori háza", "glyph": "𓉐", "desc": "Tuya, Hori özvegye. A pincéje sokat elárulhat.", "dialogue": "tuya", "unlock": true},
+    {"id": "panehsy", "letter": "D", "title": "Panehsy kikérdezése", "location": "A magtár felügyelői háza", "glyph": "𓀀", "desc": "A magtár felügyelője, aki a vádat tette. Él és virul.", "dialogue": "panehsy", "unlock": true}
+  ],
+  "encounters": [],
+  "dialogues": {
+    "paser": {
+      "speaker": "Paser", "role": "a magtár másodírnoka", "glyph": "𓏞",
+      "nodes": {
+        "start": {
+          "text": "Porszag és poloskák. Paser, a magtár másodírnokának ka-ja tekercsek között ül.\n– Hori? A legjobb írnok volt, akit ismertem. Aztán tolvaj lett. Legalábbis ezt írja a könyv.",
+          "options": [
+            {"text": "Kérem az aszály évének összes gabonakönyvét.", "next": "rolls", "once": true},
+            {"text": "Hori aláírása szerepel a hivatalos könyvben?", "next": "signature", "once": true},
+            {"text": "Kinél volt a déli raktár kulcsa?", "next": "keys", "requires": {"flag": "hoarding_found"}, "hide_if": {"evidence": "H05"}},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "rolls": {
+          "text": "Paser hosszan keresgél, aztán megáll.\n– Ez furcsa… a lepecsételt tekercsek között van egy másolat ugyanarról az évről, Hori kezével. Más számokkal.",
+          "effects": [{"unlock_evidence": "H03"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "signature": {
+          "text": "– A hivatalos könyvet Panehsy hitelesítette, nem Hori. Hori a saját könyveit mindig maga írta alá. Ezt az egyet nem.",
+          "effects": [{"set_flag": "official_not_signed"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "keys": {
+          "text": "Paser lehalkítja a hangját.\n– A déli raktárét? Csak Panehsynél. Hori halála után a kulcskarikát ideadta, hogy zárjam el. Itt van.",
+          "effects": [{"unlock_evidence": "H05"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        }
+      }
+    },
+    "nakht": {
+      "speaker": "Nakht", "role": "Kemet falu öregje", "glyph": "𓀀",
+      "nodes": {
+        "start": {
+          "text": "Napcserzett arc, botra támaszkodó kéz. Nakht ka-ja a kiszáradt földeket nézi.\n– Az aszály második évében a gyermekeink már nem sírtak. Annyira gyengék voltak. Aztán jött az írnok.",
+          "options": [
+            {"text": "Ki hozta a gabonát?", "next": "who", "once": true},
+            {"text": "Honnan származott a gabona?", "next": "where", "requires": {"evidence": "H08"}, "once": true},
+            {"text": "Láttál éjjel hajókat a magtárnál?", "next": "boats", "requires": {"flag": "hoarding_found"}, "hide_if": {"evidence": "H07"}},
+            {"text": "[Bemutatod: Családi leltár] Hori pincéjében negyven zsák volt.", "next": "inventory", "requires": {"evidence": "H06"}, "once": true, "evidence": "H06"},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "who": {
+          "text": "– Hori írnok. Maga vezette a szamarakat, éjjel. Mindent nekünk adott. Mi kérvényt írtunk a fáraónak, amikor elvitték – itt van a másolata. És elmondom neked is, amit a fáraó írnokainak mondtam.",
+          "effects": [{"unlock_evidence": ["H08", "H04"]}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "where": {
+          "text": "– Királyi zsákok voltak, a magtár pecsétjével. Nem loptuk – ő hozta. Ha ez bűn, akkor a mi életünk is az.",
+          "effects": [{"set_flag": "royal_grain_confirmed"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "boats": {
+          "text": "– Hajókat? – Nakht összehúzza a szemét. – Igen. A harmadik áradás előtt, éjjel, a déli raktárnál. Kereskedők. Az egyik halász talált egy levelet a parton, amit elejtettek. Nem tudjuk elolvasni.",
+          "effects": [{"unlock_evidence": "H07"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "inventory": {
+          "text": "Nakht sokáig hallgat.\n– …Tuya asszony a felét elhozta nekünk, miután Horit elvitték. A másik felét nem tudom. Én azt mondtam, mindent nekünk adott. Talán nem mindent.",
+          "effects": [{"set_flag": "half_shared"}, {"reliability": {"H08": 55}}, {"param": {"responsibility": 4}}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        }
+      }
+    },
+    "tuya": {
+      "speaker": "Tuya", "role": "Hori özvegye", "glyph": "𓁐",
+      "nodes": {
+        "start": {
+          "text": "Egy fáradt asszony ka-ja, mellette két gyermek árnya.\n– A férjemet tolvajnak nevezik, Őrző. A gyermekeim ezt hallják a piacon. Mit akarsz tudni?",
+          "options": [
+            {"text": "Volt gabona a házatokban az aszály alatt?", "next": "cellar", "once": true},
+            {"text": "Mit üzent Hori a börtönből?", "next": "note", "requires": {"evidence": "H06"}, "once": true},
+            {"text": "Miért nem adtátok oda az egészet?", "next": "why", "requires": {"evidence": "H10"}, "once": true},
+            {"text": "Hogyan halt meg Hori?", "next": "death", "once": true},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "cellar": {
+          "text": "Tuya lesüti a szemét.\n– Volt. Negyven zsák, királyi pecséttel. Hori hozta, az utolsó hónapban. A háztartási leltárt én vezettem – nem hazudok a saját kezemmel.",
+          "effects": [{"unlock_evidence": "H06"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "note": {
+          "text": "– Egy őr kicsempészte. – Tuya egy gyűrött papiruszdarabot vesz elő. – Olvasd el. Ő mindig is jobban tudta, mi a helyes, mint ahogy tette.",
+          "effects": [{"unlock_evidence": "H10"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "why": {
+          "text": "– A gyermekeinknek is enni kellett. Hori ezt soha nem bocsátotta meg magának. Azt mondta: aki a király gabonáját osztja, nem tarthat meg belőle egy szemet sem. És mégis megtartottunk húsz zsákot.",
+          "effects": [{"set_flag": "family_motive"}, {"param": {"compassion": 5}}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "death": {
+          "text": "– Lázban. A börtönben. Ítélet nélkül. Panehsy nem akarta, hogy a fáraó elé kerüljön – ott kiderült volna, mi van a déli raktárban.",
+          "effects": [{"unlock_evidence": "H09"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        }
+      }
+    },
+    "panehsy": {
+      "speaker": "Panehsy", "role": "a magtár felügyelője (élő)", "glyph": "𓀀",
+      "nodes": {
+        "start": {
+          "text": "Hájas kezek, nehéz aranylánc. Panehsy ka-ja – álmában megidézve – unottan néz rád.\n– Hori lopott. A könyv bizonyítja. Mit akarsz még?",
+          "options": [
+            {"text": "Vádolod: – Te rejtetted el a gabonát, amíg a falvak éheztek!", "next": "accuse", "once": true},
+            {"text": "[Bemutatod: A hivatalos és a meghamisított könyv]", "next": "ledger", "requires": {"flag": "hoarding_found"}, "once": true, "evidence": "H03"},
+            {"text": "[Bemutatod: Tanúvallomás] A falvak tudják, honnan jött a gabona.", "next": "testimony", "requires": {"evidence": "H08"}, "once": true, "evidence": "H08"},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "accuse": {
+          "text": "Panehsy felnevet.\n– Nevetséges! Én őriztem a magtárat. Hori lopott – a börtönben meg is halt érte. Az istenek ítéltek.",
+          "effects": [{"set_flag": "panehsy_denied"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "ledger": {
+          "text": "Panehsy arca megkeményedik, ahogy a két könyvet nézi.\n– A déli raktár… tartalék volt. A szűk évekre. – Elhallgat, aztán gyorsan hozzáteszi: – A kulcs nálam volt, de ez nem jelent semmit.\nAz asztalán egy kulcskarika fekszik. Mielőtt utánanyúlna, elveszed.",
+          "effects": [{"unlock_evidence": "H05"}, {"set_flag": "panehsy_exposed"}, {"param": {"responsibility": -5}}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "testimony": {
+          "text": "– A parasztok mindent elmondanak, ha kenyeret kapnak. – Panehsy hangja élesebb lesz, a hitele inog.\nEgy szolga ka-ja odasúgja neked: „Az úr leveleket küldött a folyami kereskedőknek. Egyet elvesztett a parton.”",
+          "effects": [{"unlock_evidence": "H07"}, {"set_flag": "panehsy_discredited"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        }
+      }
+    }
+  },
+  "memories": [
+    {
+      "id": "HM1", "card": "m_school", "title": "Az írnokiskola", "glyph": "𓏞",
+      "unlock": {"revealed": "H01.flip"},
+      "fragments": [
+        {"text": "Agyagtáblák, nádtollak, a tanító botja. Egy fiú ezerszer leírja ugyanazt a jelet."},
+        {"text": "„Az írnok keze…”", "blurred": true, "clarify_with": "H02", "revealed": "„Az írnok keze a fáraó keze, Hori. De ha a fáraó keze éheztet, a szívednek kell írnia.”", "effects": [{"param": {"intent": 4}}]},
+        {"text": "Hori a legjobb tanuló. Királyi írnok lesz – a magtár könyveinek őre."}
+      ]
+    },
+    {
+      "id": "HM2", "card": "m_night_carts", "title": "Éjszakai szekerek", "glyph": "𓏏",
+      "unlock": {"evidence": "H08"},
+      "fragments": [
+        {"text": "Holdfény, szamarak, poros út a déli falvak felé. A zsákokon királyi pecsét."},
+        {"text": "„Az utolsó szekér…”", "blurred": true, "clarify_with": "H06", "revealed": "Az utolsó szekér nem a falvak felé fordul, hanem haza. Negyven zsák. „Csak a gyermekeknek” – mondja magának. A fele így is a szomszédoké lesz.", "effects": [{"set_flag": "family_memory"}, {"param": {"responsibility": 4}}]},
+        {"text": "Hajnalban egy gyermek kenyeret eszik Kemet faluban. Hori tintás ujjai remegnek."}
+      ]
+    },
+    {
+      "id": "HM3", "card": "m_prison", "title": "A börtön", "glyph": "𓍿",
+      "unlock": {"evidence": "H09"},
+      "fragments": [
+        {"text": "Sötétség, nedves kő, láz. Hori a falra karcolja a számokat: 1600, 600, 400."},
+        {"text": "„Panehsy embere…”", "blurred": true, "clarify_with": "H05", "revealed": "Panehsy embere jön, kezében a déli raktár fakulcsa. „Ha a fáraó elé kerülsz, a családod mindent elveszít.” A gyűrűjén arany kéz.", "effects": [{"clue": "CL_hori_hand"}]},
+        {"text": "Aztán csak a láz, és Tuya hangja, aki egy levelet olvas, amelyet ő írt."}
+      ]
+    }
+  ],
+  "lexicon": [
+    {"id": "grain", "glyph": "𓏏", "meaning": "gabona, kenyér"}
+  ],
+  "translations": [
+    {
+      "evidence": "H07", "title": "Panehsy levele",
+      "glyphs": [
+        {"g": "𓏏", "answer": "grain"},
+        {"g": "𓉐", "answer": "house"},
+        {"g": "𓈗", "answer": "water"},
+        {"g": "𓂀", "answer": "secret"}
+      ],
+      "success": "„A gabona a raktárban. Éjjel a folyón. Titok.” – Panehsy a déli raktár hatszáz zsákját a folyón akarta eladni, a drágulás idején.",
+      "effects": [{"set_flag": "panehsy_smuggling"}, {"reliability": {"H07": 85}}]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "childhood", "title": "Gyermekkor", "numeral": "I",
+      "desc": "Honnan indult Hori?",
+      "interpretations": [
+        {"id": "i_h_child_school", "title": "Az írnokiskola tanulója", "required": ["c_hori", "e_scribe_school"], "optional": ["o_palette", "H01", "m_school"], "support": ["H01", "m_school"], "truth": 100, "confirm": 150,
+         "narrative": "Hori az írnokiskolában tanult, és a tanítója arra intette, hogy a szíve a népé legyen.", "implications": {"intent": 4}}
+      ]
+    },
+    {
+      "id": "ambition", "title": "Ambíció", "numeral": "II",
+      "desc": "Mivé lett Hori?",
+      "interpretations": [
+        {"id": "i_h_amb_scribe", "title": "A királyi írnok", "required": ["c_hori", "e_appointment"], "optional": ["o_palette", "l_granary", "H01", "H02"], "support": ["H01", "H02"], "truth": 100, "confirm": 150,
+         "narrative": "Hori királyi írnok lett, a magtár gabonakönyveinek vezetője."},
+        {"id": "i_h_amb_greed", "title": "A kapzsi hivatalnok", "required": ["c_hori", "e_greed"], "optional": ["o_grain", "H02", "H06", "l_granary"], "support": ["H02", "H06"], "contradict": ["H04"], "truth": 20, "confirm": 140,
+         "narrative": "Hori a hivatalát a saját meggazdagodására használta.", "implications": {"responsibility": 20, "intent": -15}}
+      ]
+    },
+    {
+      "id": "corruption", "title": "Korrupció", "numeral": "III",
+      "desc": "Ki lopott az aszály idején?",
+      "interpretations": [
+        {"id": "i_h_corr_panehsy", "title": "Panehsy visszatartja a gabonát", "required": ["c_panehsy", "e_hoarding"], "optional": ["o_grain", "l_granary", "e_drought", "H03", "H05", "H07"], "support": ["H03", "H05", "H07"], "truth": 100, "confirm": 150,
+         "narrative": "Az aszály idején Panehsy hatszáz zsák gabonát zárt a déli raktárba, hogy a drágulás idején eladja.", "implications": {"intent": 8, "responsibility": -8}},
+        {"id": "i_h_corr_hori", "title": "Hori lopása", "required": ["c_hori", "e_theft_accusation", "o_grain"], "optional": ["H02", "H09", "l_granary"], "support": ["H02", "H09"], "contradict": ["H03", "H04"], "truth": 15, "confirm": 140,
+         "narrative": "Hori négyszáz zsák gabonát lopott el a királyi magtárból.", "implications": {"responsibility": 35, "harm": 30, "intent": -25}}
+      ]
+    },
+    {
+      "id": "rebellion", "title": "Lázadás", "numeral": "IV",
+      "desc": "Mit tett Hori a gabonával?",
+      "interpretations": [
+        {"id": "i_h_reb_both", "title": "Gabona a népnek – és a családnak", "required": ["c_hori", "e_distribution", "e_family_share"], "optional": ["e_altered_records", "c_villagers", "c_tuya", "H04", "H08", "H06", "H10", "m_night_carts"], "support": ["H04", "H06", "H10", "H08", "m_night_carts"], "truth": 100, "confirm": 200,
+         "narrative": "Hori meghamisította a könyveket, és négyszáz zsák gabonát osztott ki az éhező falvaknak – de negyven zsákot a saját pincéjébe vitt, és húszat a családjának tartott meg.", "implications": {"intent": 15, "harm": 10, "responsibility": 15, "compassion": 5}},
+        {"id": "i_h_reb_saint", "title": "Az önzetlen szabadító", "required": ["c_hori", "e_distribution"], "optional": ["c_villagers", "e_altered_records", "H04", "H08"], "support": ["H04", "H08"], "contradict": ["H06"], "truth": 55, "confirm": 150,
+         "narrative": "Hori mindent az éhezőknek adott, és semmit nem tartott meg magának.", "implications": {"intent": 20, "responsibility": -15}},
+        {"id": "i_h_reb_thief", "title": "A gabonatolvaj", "required": ["c_hori", "e_altered_records", "o_grain"], "optional": ["H02", "H06"], "support": ["H02", "H06"], "contradict": ["H04"], "truth": 20, "confirm": 140,
+         "narrative": "Hori meghamisította a könyveket, hogy eltüntesse a saját lopását.", "implications": {"responsibility": 30, "harm": 25, "intent": -20}}
+      ]
+    },
+    {
+      "id": "death", "title": "Halál", "numeral": "V",
+      "desc": "Hogyan halt meg Hori?",
+      "interpretations": [
+        {"id": "i_h_death_prison", "title": "Halál ítélet nélkül", "required": ["c_hori", "e_imprisonment", "e_illness_death"], "optional": ["c_panehsy", "l_prison", "H09", "H10", "m_prison"], "support": ["H09", "H10", "m_prison"], "truth": 100, "confirm": 150,
+         "narrative": "Panehsy vádja alapján Horit bebörtönözték, és ítélet nélkül halt meg a börtönlázban – mielőtt a fáraó elé kerülhetett volna.", "implications": {"compassion": 5}},
+        {"id": "i_h_death_justice", "title": "A tolvaj méltó büntetése", "required": ["c_hori", "e_theft_accusation", "e_imprisonment"], "optional": ["H09", "l_prison"], "support": ["H09"], "contradict": ["H03"], "truth": 20, "confirm": 140,
+         "narrative": "A gabonatolvaj írnok a börtönben, méltó büntetésként halt meg.", "implications": {"responsibility": 20}}
+      ]
+    }
+  ],
+  "judgment": {
+    "base": {"intent": 50, "harm": 35, "compassion": 50, "responsibility": 40},
+    "truth_needed": 65
+  },
+  "on_judged": [{"clue": "CL_hori_record"}],
+  "ideal": {
+    "verdicts": ["penance", "mercy"],
+    "text": "A legigazságosabb ítélet a Vezeklés, majd a Nádmező lett volna – a teljes igazság ismeretében a Felmentés is igazságos.\n\nHori meghamisította a királyi könyveket, és négyszáz zsák gabonát osztott ki az éhező falvaknak, miközben Panehsy hatszáz zsákot rejtett el a drágulásig. Hori sok életet mentett meg. De negyven zsákot a saját pincéjébe vitt, és húszat a családjának tartott meg – és tudta, hogy ez lopás.\n\nA hivatalos könyv csak a hiányt mutatja, a falu csak az önzetlenséget. Mindkettő részben igaz. Az elítélés Panehsy hazugságát erősítette volna meg; a feltétel nélküli felmentés elhallgatta volna Hori saját vétkét. A Ma'at azt kívánja, hogy a jó és a rossz is a mérlegre kerüljön.",
+    "keys": [
+      "A hivatalos (H02) és a meghamisított könyv (H03) összevetése feltárja Panehsy elrejtett hatszáz zsákját.",
+      "A raktárkulcsok (H05) és Panehsy levele (H07) bizonyítja, hogy a gabonát ő tartotta vissza.",
+      "A falusi kérvény (H04) és a tanúvallomás (H08) mutatja, hogy Hori életeket mentett.",
+      "A családi leltár (H06) és Hori utolsó üzenete (H10) feltárja, hogy a családjának is megtartott gabonát – és mennyit."
+    ]
+  },
+  "endings": [
+    {
+      "id": "A", "title": "A nép írnoka",
+      "conditions": {"all": [
+        {"verdict": ["mercy", "penance"]},
+        {"param": ["truth", ">=", 65]},
+        {"evidence": "H10"},
+        {"slot": ["corruption", "i_h_corr_panehsy", ["confirmed", "supported"]]},
+        {"slot": ["rebellion", "i_h_reb_both", ["confirmed", "supported", "uncertain"]]}
+      ]},
+      "category": {"mercy": "just_mercy", "penance": "just_accountability"},
+      "destination": "field_of_reeds",
+      "effects": [{"set_flag": "archive_restored"}],
+      "narrative": "A mérleg nyelve hosszan remeg, aztán megáll. Hori lehunyja a szemét.\n\nA Ház tekercsébe új sorok kerülnek: Hori meghamisította a királyi könyveket, hogy az éhezők éljenek, miközben Panehsy a drágulásra várt. És Hori a saját gyermekeinek is megtartott húsz zsákot – ezt sem hallgatja el a tekercs.\n\nAz Archívumban egy porlepte polc kitisztul. A falvak hálaadó kérvénye Hori tekercse mellé kerül.",
+      "variants": [
+        {"when": {"verdict": ["penance"]}, "text": "A vezeklés ideje alatt Hori minden ellopott zsákért egy sort ír le a Ház könyvébe: kinek jutott, és kinek nem. Amikor az utolsó sor is kész, a Nádmező kapuja megnyílik."},
+        {"when": {"verdict": ["mercy"]}, "text": "A felmentés nem törli el a húsz zsákot – a tekercs megőrzi. De a Ma'at elismeri, hogy Hori többet adott, mint amennyit elvett."}
+      ],
+      "explain": [
+        {"when": true, "text": "Feltártad, hogy a gabonát Panehsy tartotta vissza, és Hori a hamisítással életeket mentett."},
+        {"when": {"flag": "family_extent_known"}, "text": "Az ellentmondó bizonyítékokat összevetve azt is megállapítottad, mennyit tartott meg Hori a családjának."},
+        {"when": {"slot": ["rebellion", "i_h_reb_both"]}, "text": "A rekonstrukciód a jótettet és a vétket is a mérlegre tette."}
+      ]
+    },
+    {
+      "id": "B", "title": "A korrupt írnok",
+      "conditions": {"verdict": ["condemn"]},
+      "category": "unjust_condemnation",
+      "destination": "forgotten_wing",
+      "effects": [{"set_flag": "archive_decay"}],
+      "narrative": "A mérleg megbillen. Hori keserűen felnevet. – Hát persze. A könyv.\n\nA Ház tekercse változatlan marad: „Hori, a gabonatolvaj.” Az Elfeledett Szárnyban a neve lassan elhalványul.\n\nAz Archívumban aznap éjjel megreped egy polc. A tekercsek szélei porladni kezdenek – a Ház emlékezete sem bírja a hamis számokat.",
+      "variants": [
+        {"when": {"param": ["truth", ">=", 65]}, "text": "Tudtad, hogy Panehsy rejtette el a gabonát, és hogy Hori falvakat mentett meg. Mégis a hivatalos könyvnek adtál igazat."},
+        {"when": {"param": ["truth", "<", 65]}, "text": "A hivatalos könyv számai meggyőztek. De a számok mögött emberek voltak."}
+      ],
+      "explain": [
+        {"when": {"slot": ["corruption", "i_h_corr_hori"]}, "text": "A rekonstrukciód Horit tette meg tolvajnak a hivatalos könyv alapján."},
+        {"when": {"not": {"flag": "hoarding_found"}}, "text": "A két gabonakönyvet nem vetetted össze: a különbség Panehsy elrejtett gabonáját mutatta volna."}
+      ]
+    },
+    {
+      "id": "C", "title": "A megosztott igazság",
+      "conditions": {"verdict": ["unresolved"]},
+      "category": "unresolved",
+      "destination": "archive_unresolved",
+      "narrative": "A mérleg félúton megáll. Hori tekercse az Archívum lezáratlan polcára kerül.\n\nA tekercs egyik felén egy falu hálája, a másikon negyven zsák egy pincében. Egyik sem hazudik – és egyik sem a teljes igazság.",
+      "variants": [
+        {"when": {"all": [{"evidence": "H06"}, {"not": {"evidence": "H10"}}]}, "text": "Tudod, hogy Hori életeket mentett, és azt is, hogy a családjának is jutott. De hogy mennyi, és miért – azt nem tudtad megállapítani."},
+        {"when": {"not": {"evidence": "H06"}}, "text": "Túl kevés maradt a kezedben ahhoz, hogy ítélj."}
+      ],
+      "explain": [
+        {"when": true, "text": "A függő ítélet nem büntet és nem ment fel. A Ma'at alig mozdul – a Duat nyugtalansága kissé nő."}
+      ]
+    },
+    {
+      "id": "D", "title": "A féligazság kegyelme",
+      "conditions": {"verdict": ["mercy", "penance"]},
+      "category": "unjust_forgiveness",
+      "destination": "field_of_reeds",
+      "narrative": "Hori a Nádmezőre lép – de a tekercse csak a fél igazságot mondja el.\n\nA falu hálája igaz. A negyven zsák is igaz. Aki csak az egyiket látja, az a Ma'at felét látja.",
+      "explain": [
+        {"when": {"param": ["truth", "<", 65]}, "text": "A rekonstrukciód igazságtartalma túl alacsony volt egy megalapozott felmentéshez."},
+        {"when": {"not": {"slot": ["rebellion", "i_h_reb_both"]}}, "text": "A felmentés figyelmen kívül hagyta, hogy Hori a családjának is megtartott gabonát."},
+        {"when": {"not": {"evidence": "H10"}}, "text": "Nem tudtad meg, mennyit tartott meg Hori, és miért."}
+      ]
+    }
+  ],
+  "hints": [
+    {"deity": "thoth", "when": {"all": [{"evidence": "H02"}, {"evidence": "H03"}, {"not": {"flag": "hoarding_found"}}]}, "text": "Thot tolla két könyv fölött áll meg. „Ugyanaz az év, más számok. Tedd őket egymás mellé.”"},
+    {"deity": "thoth", "when": {"all": [{"evidence": "H06"}, {"evidence": "H08"}, {"not": {"flag": "both_partial"}}]}, "text": "„A tanú és a leltár ellentmond egymásnak. De két igazság is állhat egymás mellett.”"},
+    {"deity": "thoth", "when": {"all": [{"evidence": "H07"}, {"not": {"flag": "panehsy_smuggling"}}]}, "text": "„A levél jelei: kenyér, ház, víz, szem. A szótárad szinte teljes.”"},
+    {"deity": "thoth", "when": {"not": {"evidence": "H03"}}, "text": "„A levéltárban a lepecsételt tekercsek között több van, mint egy könyv.”"},
+    {"deity": "anubis", "when": {"not": {"evidence": "H06"}}, "text": "Anubisz Hori háza felé fordul. „Az özvegy pincéje többet tud, mint a falu.”"},
+    {"deity": "anubis", "when": {"all": [{"evidence": "H06"}, {"not": {"evidence": "H10"}}]}, "text": "„A börtönből is ki lehet üzenni. Kérdezd az özvegyet.”"},
+    {"deity": "anubis", "when": true, "text": "„Ennek a léleknek a halála tisztán áll előtted. A többi a szívedre tartozik.”"}
+  ]
+}

@@ -6,16 +6,14 @@
       "summary": "Kereskedő a thébai kikötőből. A Ház tekercse tolvajnak nevezi – de a teste három nappal a halála után érkezett a balzsamozóhoz."
     },
     {
-      "id": "nefru", "name": "Nefru", "epithet": "a bába", "glyph": "𓁐", "playable": false,
+      "id": "nefru", "name": "Nefru", "epithet": "a bába", "glyph": "𓁐", "playable": true,
       "unlock": {"case_done": "kha"},
-      "summary": "Falusi gyógyító és bába. Egy járvány éjszakáján két gyermek született…",
-      "coming": "A következő fejlesztési fázisban érkezik."
+      "summary": "Falusi gyógyító és bába. A Ház tekercse gyermekrablónak nevezi – egy járványos éjszakán két gyermek született…"
     },
     {
-      "id": "hori", "name": "Hori", "epithet": "az írnok", "glyph": "𓏞", "playable": false,
+      "id": "hori", "name": "Hori", "epithet": "az írnok", "glyph": "𓏞", "playable": true,
       "unlock": {"case_done": "nefru"},
-      "summary": "Királyi írnok egy aszályos évben. A hivatalos tekercsek tolvajnak nevezik.",
-      "coming": "A következő fejlesztési fázisban érkezik."
+      "summary": "Királyi írnok egy aszályos évben. A hivatalos könyv szerint négyszáz zsák gabonát lopott – egy falu szerint az életüket mentette meg."
     }
   ]
 }

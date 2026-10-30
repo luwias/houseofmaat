@@ -83,6 +83,20 @@ static func _check_key(key: String, v, gs, ctx: Dictionary) -> bool:
 			return compare(gs.get_reliability(str(v[0])), str(v[1]), float(v[2]))
 		"verdict":
 			return str(ctx.get("verdict", "")) in v
+		"answer":
+			var answers: Dictionary = ctx.get("answers", {})
+			for k in v:
+				if str(answers.get(str(k), "")) != str(v[k]):
+					return false
+			return true
+		"clues_at_least":
+			return gs.data.clues.size() >= int(v)
+		"just_verdicts":
+			var n := 0
+			for h in gs.data.history:
+				if str(h.get("category", "")).begins_with("just_"):
+					n += 1
+			return compare(float(n), str(v[0]), float(v[1]))
 		"param":
 			var params: Dictionary = ctx.get("params", {})
 			return compare(float(params.get(str(v[0]), 0.0)), str(v[1]), float(v[2]))

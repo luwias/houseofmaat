@@ -1,0 +1,526 @@
+{
+  "id": "nefru",
+  "name": "Nefru",
+  "epithet": "a bába",
+  "glyph": "𓁐",
+  "theme": "Együttérzés, család, áldozat, megtévesztés és erkölcsi kétértelműség.",
+  "arrival": "Egy idős asszony lép a Csarnokba. A kezei kérgesek, gyógyfüvek illata lengi körül. Nem néz a mérlegre – a kezeit nézi, mintha még mindig valakit tartana bennük.\n\nA Ház tekercse szerint Nefru bába gyermekrabló volt: egy nemesi ház újszülött örökösét lopta el, és egy szegény özvegy gyermekét tette a helyére. A vádat Ptahmose nemes háza tette.\n\nDe a tekercs nem mondja meg, miért tette. És azt sem, melyik gyermek kié volt.",
+  "biography": "Nefru Per-Hapi falu gyógyítója és bábája volt. A nagyanyjától tanulta a gyógyfüvek ismeretét. Egy járványos évben két gyermeket segített világra ugyanazon az éjszakán.",
+  "questions": [
+    {"text": "Kik születtek azon az éjszakán?", "done": {"any": [{"flag": "two_births_known"}, {"evidence": "N08"}]}},
+    {"text": "Valóban kicserélte Nefru a gyermekeket?", "done": {"any": [{"evidence": "N07"}, {"flag": "record_altered_by_nefru"}]}},
+    {"text": "Aranyért tette?", "done": {"any": [{"flag": "no_payment_witness"}, {"revealed": "N07.lamp"}]}},
+    {"text": "Ki követelte a cserét?", "done": {"any": [{"evidence": "N04"}, {"flag": "noble_exposed"}]}},
+    {"text": "Mit vallott Nefru a halála előtt?", "done": {"evidence": "N09"}}
+  ],
+  "canonical_story": "Nefru falusi gyógyító és bába volt. Egy járvány idején két gyermek született ugyanazon az éjjelen: egy beteg nemesi örökös és egy szegény özvegy egészséges fia. A nemesi család azt követelte, hogy az egészséges gyermeket adják nekik. Nefru titokban kicserélte a gyermekeket. Pénzt nem fogadott el: úgy hitte, megóvja a gyermekeket attól, ahogyan a nemesi ház a beteg örökössel bánt volna. Évekkel később a csere kiderült; az egyik gyermek egy járványban meghalt. Nefru röviddel a halála előtt bevallotta a cserét, de sosem árulta el, melyik gyermek melyik családé volt.",
+  "cards": [
+    {"id": "c_nefru", "category": "character", "title": "Nefru", "glyph": "𓁐", "desc": "Per-Hapi falu bábája és gyógyítója. A Házba érkezett lélek.", "unlock": true},
+    {"id": "c_satre", "category": "character", "title": "Szatré", "glyph": "𓁐", "desc": "Szegény özvegy Per-Hapi faluban.", "unlock": true},
+    {"id": "c_nebetta", "category": "character", "title": "Nebetta úrnő", "glyph": "𓁐", "desc": "Ptahmose nemes felesége.", "unlock": true},
+    {"id": "c_children", "category": "character", "title": "A két csecsemő", "glyph": "𓀔", "desc": "Két fiú, akik ugyanazon az éjjelen születtek.", "unlock": true},
+    {"id": "c_ptahmose", "category": "character", "title": "Ptahmose", "glyph": "𓀀", "desc": "Nemes, a kincstár hivatalnoka.", "unlock": {"any": [{"evidence": "N04"}, {"flag": "noble_cruelty"}]}},
+    {"id": "c_tia", "category": "character", "title": "Tia nagyanya", "glyph": "𓁐", "desc": "Nefru nagyanyja, aki a gyógyfüveket tanította neki.", "unlock": {"revealed": "N01.flip"}},
+    {"id": "c_henut", "category": "character", "title": "Henut", "glyph": "𓁐", "desc": "Szolgálólány Ptahmose házában.", "unlock": {"node": "henut.start"}},
+
+    {"id": "e_village_life", "category": "event", "title": "Falusi gyermekkor", "glyph": "𓉐", "desc": "Szegénység, munka, a folyó áradásai.", "unlock": true},
+    {"id": "e_herbs", "category": "event", "title": "A gyógyfüvek tudománya", "glyph": "𓆰", "desc": "A növények ereje, nagyanyáról unokára.", "unlock": true},
+    {"id": "e_midwifery", "category": "event", "title": "A bábaság", "glyph": "𓁐", "desc": "Életre segíteni az újszülötteket.", "unlock": true},
+    {"id": "e_epidemic", "category": "event", "title": "Járvány", "glyph": "𓇳", "desc": "A láz éve.", "unlock": true},
+    {"id": "e_two_births", "category": "event", "title": "Két születés", "glyph": "𓀔𓀔", "desc": "Két gyermek ugyanazon az éjszakán.", "unlock": true},
+    {"id": "e_accusation", "category": "event", "title": "Gyermekrablás vádja", "glyph": "𓂋", "desc": "A nemesi ház vádja.", "unlock": true},
+    {"id": "e_child_death", "category": "event", "title": "Egy gyermek halála", "glyph": "𓇳", "desc": "A láz elvitte az egyik fiút.", "unlock": {"node": "satre.start"}},
+    {"id": "e_noble_demand", "category": "event", "title": "A nemesek követelése", "glyph": "𓂝", "desc": "Egy parancs, amelyet aranyba csomagoltak.", "unlock": {"any": [{"evidence": "N04"}, {"evidence": "N07"}]}},
+    {"id": "e_exchange", "category": "event", "title": "A csere", "glyph": "𓂝𓂝", "desc": "Két gyermek, két karperec, egy titok.", "unlock": {"any": [{"evidence": "N07"}, {"flag": "bracelet_discrepancy"}, {"flag": "record_altered_by_nefru"}]}},
+    {"id": "e_care", "category": "event", "title": "Titkos gondoskodás", "glyph": "𓆰", "desc": "Évekig tartó, csendes gyógyítás.", "unlock": {"revealed": "N03.lamp"}},
+    {"id": "e_discovery", "category": "event", "title": "A csere lelepleződése", "glyph": "𓁹", "desc": "Évek múltán kiderül a titok.", "unlock": {"any": [{"evidence": "N09"}, {"evidence": "N05"}, {"flag": "noble_blame_revealed"}]}},
+    {"id": "e_confession", "category": "event", "title": "Vallomás", "glyph": "𓂋", "desc": "Az utolsó napon kimondott igazság.", "unlock": {"evidence": "N09"}},
+
+    {"id": "o_gold", "category": "object", "title": "Nemesi arany", "glyph": "𓋞", "desc": "Egy erszény arany Ptahmose házából.", "unlock": true},
+    {"id": "o_herb_pouch", "category": "object", "title": "Gyógyfüves erszény", "glyph": "𓆰", "desc": "Nefru szárított növényei.", "unlock": true},
+
+    {"id": "l_village", "category": "location", "title": "Per-Hapi falu", "glyph": "𓈗", "desc": "Nádkunyhók a folyó partján.", "unlock": true},
+    {"id": "l_noble_house", "category": "location", "title": "Ptahmose háza", "glyph": "𓉐", "desc": "Nemesi villa a város szélén.", "unlock": {"node": "henut.start"}},
+    {"id": "l_satre_hut", "category": "location", "title": "Szatré kunyhója", "glyph": "𓉐", "desc": "Szegény özvegy otthona.", "unlock": {"node": "satre.start"}},
+    {"id": "l_temple_healing", "category": "location", "title": "A gyógyító templom", "glyph": "𓋹", "desc": "Papi orvosok háza.", "unlock": {"node": "priest.start"}}
+  ],
+  "evidence": [
+    {
+      "id": "N01", "title": "Falusi portré", "type": "image", "illustration": "portrait",
+      "description": "Festett cserépdarab: egy idős asszony, egy lány és egy kisgyermek a falu kútja mellett.",
+      "text": "A lány kezében gyógyfüves erszény. Az idős asszony a gyermek homlokára teszi a kezét, mintha a lázát mérné.",
+      "reliability": 90, "start": true, "required": false,
+      "associated": ["c_nefru", "c_tia", "l_village", "e_herbs", "e_village_life"],
+      "implication": "Nefru gyermekkorától a gyógyítás mellett nőtt fel.",
+      "param": {"compassion": 3},
+      "inspect": [
+        {"id": "flip", "tool": "flip", "label": "Megfordítod a cserepet",
+         "text": "A hátoldalon karcolt felirat: „Tia, a gyógyító, és unokája, Nefru.”",
+         "effects": [{"unlock_memory": "NM1"}]}
+      ]
+    },
+    {
+      "id": "N02", "title": "Születési nyilvántartás", "type": "document", "illustration": "ledger",
+      "description": "A falu születéseinek tekercse a járvány évéből.",
+      "text": "Peret 1. hónap 9. éjjele:\n– Nebetta úrnő, Ptahmose felesége: fiú. Karperec: kék-arany.\n– Szatré özvegy: fiú. Karperec: vörös.\nVilágra segítette: Nefru bába.",
+      "reliability": 75, "start": true, "required": true,
+      "associated": ["c_nefru", "c_satre", "c_nebetta", "c_children", "e_two_births", "e_midwifery"],
+      "implication": "Két gyermek született ugyanazon az éjszakán, mindkettőt Nefru segítette világra.",
+      "inspect": [
+        {"id": "magnify", "tool": "magnify", "label": "Nagyítóval vizsgálod a karperecek leírását",
+         "text": "A „kék-arany” és a „vörös” szavak alatt halvány, kivakart tinta: eredetileg fordítva állt.",
+         "effects": [{"set_flag": "bracelet_discrepancy"}]}
+      ]
+    },
+    {
+      "id": "N03", "title": "Gyógyfüves receptek", "type": "document", "illustration": "contract",
+      "description": "Nefru kézzel írt receptjei: lázcsillapítók, főzetek, borogatások.",
+      "text": "Fűzfakéreg, kamilla, méz. Lázra, gyermeknek: naponta háromszor, hét napig.\nÉs a margón, sok helyen ugyanaz a jel: egy kis karperec rajza.",
+      "reliability": 85, "required": false,
+      "associated": ["c_nefru", "e_herbs", "o_herb_pouch", "e_care"],
+      "implication": "Nefru évekig gyógyított valakit, akit egy karperec jelével jelölt.",
+      "inspect": [
+        {"id": "lamp", "tool": "lamp", "label": "Lámpafénybe tartod a margót",
+         "text": "A karperecjelek mellett halvány dátumok: hetente, kilenc éven át. „A kis Kennának – Szatré kunyhójában.”",
+         "effects": [{"set_flag": "care_found"}, {"param": {"compassion": 5, "intent": 5}}]}
+      ]
+    },
+    {
+      "id": "N04", "title": "A nemesi család levele", "type": "document", "illustration": "contract",
+      "description": "Levél Ptahmose házából Nefru bábának, a ház pecsétjével.",
+      "text": "„Bába! Az örökösnek élnie kell. Ha a fiú gyenge marad, hozd a házba a falu egészséges fiát, a beteget vidd, ahová akarod. Arany vár rád a hallgatásodért.”\n– Ptahmose háza",
+      "reliability": 85, "required": true,
+      "associated": ["c_ptahmose", "c_nebetta", "c_nefru", "e_noble_demand", "o_gold", "l_noble_house"],
+      "implication": "A cserét a nemesi ház követelte, és aranyat ígért érte.",
+      "inspect": [
+        {"id": "seal", "tool": "magnify", "label": "Nagyítóval vizsgálod a pecsétet",
+         "text": "A pecsét nem a nemesi ház szokásos jele: kinyújtott arany kéz.",
+         "effects": [{"clue": "CL_nefru_seal"}]}
+      ]
+    },
+    {
+      "id": "N05", "title": "Az anya vallomása", "type": "testimony", "illustration": "testimony",
+      "description": "Szatré beszámolója a fiáról.",
+      "text": "Szatré még nem tett vallomást.",
+      "variants": [
+        {"when": {"choice": {"mother_approach": "accuse"}}, "text": "„Ő az én fiam volt! Nem tudok semmiféle cseréről. Hagyj békén.”"},
+        {"when": {"flag": "mother_truth"}, "text": "„A fiam erős volt, amikor megszületett – hallottam a sírását. Akit reggel a karomba adtak, gyenge volt és lázas. Tudtam. És mégis szerettem. Nefru minden héten eljött, gyógyfüvekkel, és soha egy rézdarabot sem kért. Kilenc évig élt. Aztán a láz elvitte.”"}
+      ],
+      "reliability": 60, "required": true,
+      "associated": ["c_satre", "c_nefru", "c_children", "e_exchange", "e_care", "e_child_death"],
+      "implication": "Az anya tudta – és mégis szerette a gyermeket."
+    },
+    {
+      "id": "N06", "title": "Két karperec", "type": "object", "illustration": "seal",
+      "model": "res://assets/models/prop_n06.glb",
+      "description": "Két apró születési karperec, bőrbe csomagolva.",
+      "text": "Egy türkiz–lapis és egy vörös–arany karperec, mindkettőn agyagtábla a család jelével. Túl kicsik – újszülöttek csuklójára készültek.",
+      "reliability": 90, "required": true,
+      "associated": ["c_children", "c_nefru", "e_exchange", "e_two_births"],
+      "implication": "Nefru megőrizte az eredeti karpereceket.",
+      "inspect": [
+        {"id": "rotate", "tool": "rotate", "label": "Megforgatod a karpereceket",
+         "text": "A vörös karperec tábláján a családjelet átkarcolták, és alatta egy másik jel sejlik. A karperecek gazdát cseréltek.",
+         "effects": [{"set_flag": "bracelets_swapped"}]}
+      ]
+    },
+    {
+      "id": "N07", "title": "Rejtett napló", "type": "document", "illustration": "ledger",
+      "description": "Nefru naplója, egy laza tégla alól.",
+      "text": "„A nemes fia lázban született. Ptahmose emberei azt mondták: ha nem erősödik meg, a sivatagba viszik, ahogy az elsőt is. Követelték, hogy hozzam el Szatré fiát.\nAz éjjel kicseréltem őket. A beteg kicsi Szatréhoz került – ott szeretni fogják, és én meggyógyítom. Az erős fiú a palotába – ott nem esik bántódása.\nAz aranyat visszaküldtem. A gyermek nem áru.”",
+      "reliability": 85, "required": true,
+      "associated": ["c_nefru", "c_ptahmose", "c_satre", "c_children", "e_exchange", "e_noble_demand"],
+      "implication": "Nefru a gyermekek védelmében cselekedett – de két anyától vette el a választás jogát.",
+      "param": {"intent": 10},
+      "inspect": [
+        {"id": "lamp", "tool": "lamp", "label": "Lámpafénybe tartod az utolsó lapot",
+         "text": "Az utolsó lap halvány írása: „Ha a csere kiderül, a nemesek mindkét gyermeket elveszik. Ezért senkinek sem mondom meg, melyik kié. Ez az én bűnöm, és én viszem el.”",
+         "effects": [{"set_flag": "secret_reason"}, {"param": {"intent": 5, "responsibility": 5}}]}
+      ]
+    },
+    {
+      "id": "N08", "title": "Templomi orvosi feljegyzés", "type": "record", "illustration": "report",
+      "description": "A gyógyító templom feljegyzése a két újszülöttről.",
+      "text": "Peret 1. hónap 10. napja. A nemes Ptahmose fia: láz, gyenge légzés. Az özvegy fia: erős, egészséges.\nPtahmose üzente: a beteg gyermeket ne kezeljük, „bízzuk az istenekre”.",
+      "reliability": 85, "required": true,
+      "associated": ["c_children", "c_ptahmose", "c_nebetta", "e_two_births", "e_epidemic", "l_temple_healing"],
+      "implication": "A nemesi ház nem akarta gyógyíttatni a beteg örököst.",
+      "param": {"compassion": 4}
+    },
+    {
+      "id": "N09", "title": "Végső vallomás", "type": "testimony", "illustration": "testimony",
+      "description": "Nefru vallomása a halála előtti napon, Hesi-Ra feljegyzésében.",
+      "text": "„Kicseréltem a gyermekeket. Nem aranyért – az aranyat visszaküldtem. Azért, hogy mindkettő éljen. Azt, hogy melyik kié, magammal viszem. Ha megmondanám, valamelyiküket elvennék attól, aki felnevelte. Bocsássanak meg az anyák – én nem tudtam mindkettejüknek igazat adni.”",
+      "reliability": 85, "required": true,
+      "associated": ["c_nefru", "c_children", "e_confession", "e_exchange", "e_discovery"],
+      "implication": "Nefru vállalta a tettét, de az igazság egy részét örökre eltitkolta."
+    },
+    {
+      "id": "N10", "title": "Temetési feljegyzés", "type": "record", "illustration": "report",
+      "description": "Nefru temetési bejegyzése a nekropolisz tekercsében.",
+      "text": "Nefru, bába, Per-Hapi faluból. Elhunyt öregségben.\nMegjegyzés: Ptahmose nemes háza vádja szerint gyermekrabló, aki aranyért cserélte el a ház örökösét.\nLejegyezte: Amenemope, a nekropolisz írnoka.",
+      "reliability": 65, "start": true, "required": false,
+      "associated": ["c_nefru", "c_ptahmose", "e_accusation"],
+      "implication": "A hivatalos feljegyzés gyermekrablónak nevezi Nefrut – a nemesi ház vádja alapján.",
+      "contradictions": [{"with": "N07", "text": "A napló szerint Nefru visszaküldte az aranyat."}],
+      "inspect": [
+        {"id": "hand", "tool": "magnify", "label": "Megvizsgálod a lejegyző kezét",
+         "text": "A „gyermekrabló” szót más tintával, utólag írták a sorok közé – ugyanaz a kéz, amely az egész bejegyzést írta: Amenemope.",
+         "effects": [{"clue": "CL_nefru_scribe"}]}
+      ]
+    }
+  ],
+  "comparisons": [
+    {"pair": ["N02", "N06"], "text": "A nyilvántartásban utólag felcserélt színek és a karperecek átkarcolt jelei ugyanarról árulkodnak: a két gyermek karperece gazdát cserélt.", "effects": [{"set_flag": "bracelet_discrepancy"}, {"set_flag": "record_altered_by_nefru"}], "hint": "A tekercs színei és a karperecek jelei nem egyeznek."},
+    {"pair": ["N04", "N07"], "text": "A levél aranyat ígér – a napló szerint Nefru visszaküldte. A cserét a nemesek követelték, de Nefru nem az ő akaratuk szerint hajtotta végre: a beteg gyermeket nem hagyta magára.", "effects": [{"set_flag": "no_payment_proven"}, {"reliability": {"N10": 30}}], "hint": "Kövesd az aranyat."},
+    {"pair": ["N08", "N07"], "text": "A templom feljegyzése megerősíti a naplót: a nemesi ház a beteg örököst nem akarta gyógyíttatni.", "effects": [{"set_flag": "noble_cruelty"}]},
+    {"pair": ["N10", "N09"], "text": "A temetési bejegyzés aranyért elkövetett rablásról beszél; Nefru vallomása szerint az aranyat visszaküldte. A „gyermekrabló” szó a nemesi ház vádja, nem a tények leírása.", "effects": [{"reliability": {"N10": 30}}]},
+    {"pair": ["N03", "N05"], "text": "A receptek dátumai és az anya szavai egybevágnak: Nefru kilenc éven át gyógyította a gyermeket, fizetség nélkül.", "effects": [{"set_flag": "no_payment_witness"}]}
+  ],
+  "investigation": [
+    {"id": "records", "letter": "A", "title": "A születési nyilvántartás", "location": "A gyógyító templom", "glyph": "𓋹", "desc": "Hesi-Ra papi orvos őrzi a járvány évének feljegyzéseit.", "dialogue": "priest", "unlock": true},
+    {"id": "mother", "letter": "B", "title": "A szegény anya", "location": "Szatré kunyhója", "glyph": "𓁐", "desc": "Szatré fia kilencévesen halt meg lázban. Vajon tudta, kit nevelt?", "dialogue": "satre", "unlock": true},
+    {"id": "diary", "letter": "C", "title": "Nefru kunyhója", "location": "Per-Hapi falu", "glyph": "𓉐", "desc": "A bába elhagyott kunyhója. A helyek is emlékeznek.", "dialogue": "hut", "unlock": true},
+    {"id": "noble", "letter": "D", "title": "A nemesi ház", "location": "Ptahmose háza", "glyph": "𓂝", "desc": "Henut, a szolgálólány mindent látott – ha mer beszélni.", "dialogue": "henut", "unlock": true}
+  ],
+  "encounters": [
+    {"id": "nebetta", "title": "Nebetta úrnő", "glyph": "𓁐", "desc": "Ptahmose felesége, az élők világából megidézve.", "dialogue": "nebetta", "unlock": {"node": "henut.start"}}
+  ],
+  "dialogues": {
+    "priest": {
+      "speaker": "Hesi-Ra", "role": "papi orvos", "glyph": "𓋹",
+      "nodes": {
+        "start": {
+          "text": "Mirha és kamilla illata. Hesi-Ra, a gyógyító templom papi orvosának ka-ja tekercseket rendez.\n– A járvány évében minden születést feljegyeztünk. Mit keresel, Őrző?",
+          "options": [
+            {"text": "Ki született Peret 1. hónapjának 9. éjjelén?", "next": "births", "once": true},
+            {"text": "Milyen állapotban volt a két gyermek?", "next": "health", "requires": {"flag": "two_births_known"}, "once": true},
+            {"text": "A karperecek leírását utólag átírták a tekercsben.", "next": "discrepancy", "requires": {"flag": "bracelet_discrepancy"}, "hide_if": {"flag": "record_altered_by_nefru"}},
+            {"text": "Gyónt-e valakinek Nefru a halála előtt?", "next": "confession", "requires": {"any": [{"evidence": "N07"}, {"flag": "record_altered_by_nefru"}]}, "once": true},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "births": {
+          "text": "– Két fiú. Az egyik Nebetta úrnőé, Ptahmose nemes feleségéé. A másik Szatré özvegyé. Mindkettőt Nefru bába segítette világra, ugyanazon a lázas éjszakán.",
+          "effects": [{"set_flag": "two_births_known"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "health": {
+          "text": "Hesi-Ra elővesz egy tekercset.\n– A nemes fia lázban született, gyenge volt. Az özvegyé erős. Ptahmose azt üzente, hogy a beteg gyermeket ne kezeljük. Sosem felejtem el.",
+          "effects": [{"unlock_evidence": "N08"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "discrepancy": {
+          "text": "Hesi-Ra a tekercsre hajol.\n– Ez Nefru keze… de a tinta frissebb. Utólag írta át a színeket. Miért tett volna ilyet?",
+          "effects": [{"set_flag": "record_altered_by_nefru"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        },
+        "confession": {
+          "text": "– Nekem gyónt, az utolsó napján. Leírtam, amit mondott – szóról szóra. – Hesi-Ra egy összetekert papiruszt nyújt át. – Egyetlen dolgot nem mondott ki: melyik gyermek kié.",
+          "effects": [{"unlock_evidence": "N09"}],
+          "options": [{"text": "Folytatod a kérdezést.", "next": "start"}]
+        }
+      }
+    },
+    "satre": {
+      "speaker": "Szatré", "role": "szegény özvegy", "glyph": "𓁐",
+      "nodes": {
+        "start": {
+          "text": "Szatré ka-ja egy apró agyagszobrocskát szorongat.\n– A fiam… kilencéves volt, amikor elvitte a láz. Mit akarsz még tőlem, Őrző?",
+          "options": [
+            {"text": "Leülsz mellé. – Mesélj a fiadról. Nem azért jöttem, hogy vádoljalak.", "next": "compassion", "group": "mother_approach", "value": "compassion", "effects": [{"unlock_evidence": "N05"}, {"reliability": {"N05": 80}}, {"set_flag": "mother_truth"}]},
+            {"text": "– Tudtad, hogy a gyermek nem a tiéd, és hallgattál!", "next": "accuse", "group": "mother_approach", "value": "accuse", "effects": [{"unlock_evidence": "N05"}, {"reliability": {"N05": 40}}, {"set_flag": "mother_defensive"}]},
+            {"text": "[Bemutatod: Két karperec és Nefru naplója]", "next": "evidence", "group": "mother_approach", "value": "evidence", "requires": {"all": [{"evidence": "N06"}, {"evidence": "N07"}]}, "evidence": "N06", "effects": [{"unlock_evidence": ["N05", "N09"]}, {"reliability": {"N05": 90}}, {"set_flag": "mother_truth"}]},
+            {"text": "[Bemutatod: Két karperec és Nefru naplója] – Nem vádollak. Csak az igazságot keresem.", "next": "evidence", "requires": {"all": [{"evidence": "N06"}, {"evidence": "N07"}, {"choice": {"mother_approach": "accuse"}}]}, "hide_if": {"flag": "mother_truth"}, "evidence": "N06", "effects": [{"unlock_evidence": "N09"}, {"reliability": {"N05": 75}}, {"set_flag": "mother_truth"}, {"clear_flag": "mother_defensive"}]},
+            {"text": "Mit mondott neked Nefru a halála előtt?", "next": "last_words", "requires": {"flag": "mother_truth"}, "once": true},
+            {"text": "Kapott Nefru valaha fizetséget?", "next": "payment", "requires": {"flag": "mother_truth"}, "once": true},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "compassion": {
+          "text": "Szatré sokáig hallgat, aztán halkan beszélni kezd.\n– Az én fiam erős volt, amikor megszületett. Hallottam a sírását. Akit reggel a karomba adtak, gyenge volt és lázas. Tudtam. És mégis szerettem. Nefru minden héten eljött gyógyfüvekkel. Kilenc évig élt – a nemesek házában egy hétig sem élt volna.\nElővesz egy kopott erszényt. – Ezt hagyta itt. A receptjei.",
+          "effects": [{"unlock_evidence": "N03"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "accuse": {
+          "text": "Szatré felugrik.\n– Hazugság! Ő az én fiam volt! Nem tudok semmiféle cseréről!\nA ka elfordul. Csak egy bizonyíték törheti meg a hallgatását – és a bizalmát.",
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "evidence": {
+          "text": "Szatré a karperecekre néz, és a keze remegni kezd.\n– Ez… ez az ő karperece. A vörös. – Elsírja magát. – Igen. Tudtam. A fiam erős volt, akit kaptam, beteg. Nefru minden héten eljött, gyógyfüvekkel, és soha semmit nem kért. A halála előtt elmondta, hogy kicserélte őket. Azt nem, hogy a másik fiú… az enyém-e. Azt mondta: így egyiket sem vehetik el.",
+          "effects": [{"unlock_evidence": "N03"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "last_words": {
+          "text": "– Hogy a gyermeket megmentette. És hogy bocsássak meg neki, amiért nem kérdezett meg. – Szatré lehunyja a szemét. – Megbocsátottam. De a másik anyának is joga lett volna tudni.",
+          "effects": [{"unlock_evidence": "N09"}, {"param": {"harm": 5}}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "payment": {
+          "text": "– Soha. Még a lisztet is ő hozta nekünk a szűk években. Egyszer láttam, hogy a nemesek embere aranyat hoz neki. Visszaküldte.",
+          "effects": [{"set_flag": "no_payment_witness"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        }
+      }
+    },
+    "hut": {
+      "speaker": "Nefru kunyhója", "role": "a hely emlékezete", "glyph": "𓉐",
+      "nodes": {
+        "start": {
+          "text": "Az Őrző nemcsak a ka-kat, a helyeket is megidézheti. Nefru kunyhója csendes: szárított gyógyfüvek a gerendán, hamu a tűzhelyben, egy gyermekágyacska, amelyet sosem vittek el.",
+          "options": [
+            {"text": "Átkutatod a gyógyfüves polcot.", "next": "herbs", "once": true},
+            {"text": "Megvizsgálod a padlót a tűzhely mellett.", "next": "floor", "once": true},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "herbs": {
+          "text": "A polcon agyagedények, mindegyiken gondos felirat. Közöttük egy összetekert papirusz: receptek, sűrű, apró írással.",
+          "effects": [{"unlock_evidence": "N03"}],
+          "options": [{"text": "Folytatod a keresést.", "next": "start"}]
+        },
+        "floor": {
+          "text": "A tűzhely mellett az egyik tégla laza. Alatta bőrbe csomagolva: egy kopott napló és két apró, újszülöttnek való karperec.",
+          "effects": [{"unlock_evidence": ["N07", "N06"]}],
+          "options": [{"text": "Folytatod a keresést.", "next": "start"}]
+        }
+      }
+    },
+    "henut": {
+      "speaker": "Henut", "role": "szolgálólány Ptahmose házában", "glyph": "𓁐",
+      "nodes": {
+        "start": {
+          "text": "Henut, a szolgálólány ka-ja lesütött szemmel áll.\n– Az úrnő nem szereti, ha rólunk beszélnek, Őrző. De a holtaknak nem kell félniük, ugye?",
+          "options": [
+            {"text": "Mi történt a nemes fiával a születése után?", "next": "sick", "once": true},
+            {"text": "Ki küldött üzenetet Nefru bábának?", "next": "letter", "once": true},
+            {"text": "Miért vádolták Nefrut gyermekrablással?", "next": "blame", "requires": {"evidence": "N04"}, "once": true},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "sick": {
+          "text": "– Lázas volt és gyenge. Az úr azt mondta, a gyenge örökös szégyen a háznak. Az első fiukat… – elcsuklik a hangja – én vittem ki a sivatag szélére. Az istenekre bízták.",
+          "effects": [{"set_flag": "noble_cruelty"}, {"param": {"compassion": 5}}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "letter": {
+          "text": "– Én vittem a levelet a bábának, az úr pecsétjével. Lemásoltam, mielőtt átadtam – féltem, hogy egyszer engem okolnak. Itt van.",
+          "effects": [{"unlock_evidence": "N04"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "blame": {
+          "text": "– Évekkel később az úr megtudta, hogy a fia nem az ő vére. Ha bevallja, hogy ő követelte a cserét, a fáraó előtt is szégyen. Könnyebb volt egy halott bábát vádolni. Az írnoknak, Amenemopénak, egy erszény aranyat küldött.",
+          "effects": [{"set_flag": "noble_blame_revealed"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        }
+      }
+    },
+    "nebetta": {
+      "speaker": "Nebetta úrnő", "role": "Ptahmose felesége (élő)", "glyph": "𓁐",
+      "nodes": {
+        "start": {
+          "text": "Arany karperecek csörögnek. Nebetta úrnő ka-ja – álmában megidézve – hidegen néz rád.\n– Az a bába ellopta a fiamat. Ennyi az egész.",
+          "options": [
+            {"text": "Ki kérte a cserét?", "next": "lie", "once": true},
+            {"text": "[Bemutatod: A nemesi család levele] A férjed pecsétje áll rajta.", "next": "exposed", "requires": {"evidence": "N04"}, "once": true, "evidence": "N04"},
+            {"text": "[Bemutatod: Templomi orvosi feljegyzés] Azt kértétek, hogy a beteg gyermeket ne kezeljék.", "next": "cruel", "requires": {"evidence": "N08"}, "once": true, "evidence": "N08"},
+            {"text": "Távozol.", "next": "end"}
+          ]
+        },
+        "lie": {
+          "text": "– Senki! A bába magától tette, aranyért. Mindenki tudja.",
+          "effects": [{"set_flag": "nebetta_lied"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "exposed": {
+          "text": "Nebetta elsápad.\n– Ptahmose… ő akarta. Én csak egy fiút akartam, aki él. – Ahogy a kezét a szájához emeli, a pecsétgyűrűjén megcsillan egy kinyújtott arany kéz.",
+          "effects": [{"set_flag": "noble_exposed"}, {"clue": "CL_nefru_seal"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        },
+        "cruel": {
+          "text": "– A gyengéknek nincs helyük Ptahmose házában. – Nebetta hangja nem remeg. – Így mondta. Én… hallgattam.",
+          "effects": [{"set_flag": "noble_cruelty"}],
+          "options": [{"text": "Folytatod.", "next": "start"}]
+        }
+      }
+    }
+  },
+  "memories": [
+    {
+      "id": "NM1", "card": "m_grandmother", "title": "A nagyanya kertje", "glyph": "𓆰",
+      "unlock": {"revealed": "N01.flip"},
+      "fragments": [
+        {"text": "Kamilla és fűzfakéreg illata. Egy kislány térdel a kertben, és egy idős asszony kezét figyeli."},
+        {"text": "„A gyógyító nem kérdezi…”", "blurred": true, "clarify_with": "N03", "revealed": "„A gyógyító nem kérdezi, kié a gyermek, Nefru. Csak azt, hogy él-e.”", "effects": [{"param": {"compassion": 4}}]},
+        {"text": "A folyó árad, a falu éhezik, és a kislány megtanulja, hogy a láz éjjel a legerősebb."}
+      ]
+    },
+    {
+      "id": "NM2", "card": "m_ninth_night", "title": "A kilencedik éjszaka", "glyph": "𓇳",
+      "unlock": {"evidence": "N07"},
+      "fragments": [
+        {"text": "Két sírás ugyanabban az órában. Az egyik erős, a másik halk, mint a nád susogása."},
+        {"text": "„A ház előtt valaki vár…”", "blurred": true, "clarify_with": "N04", "revealed": "A ház előtt Ptahmose embere vár, és egy erszényt csörget. „A beteget vidd, ahová akarod.” Nefru keze nem remeg, amikor a karpereceket kicseréli.", "effects": [{"set_flag": "demand_memory"}]},
+        {"text": "Hajnalban két anya két gyermeket tart a karjában. Egyikük sem tudja, mi történt az éjjel."}
+      ]
+    },
+    {
+      "id": "NM3", "card": "m_last_confession", "title": "Az utolsó gyónás", "glyph": "𓂋",
+      "unlock": {"evidence": "N09"},
+      "fragments": [
+        {"text": "Mécsesfény, Hesi-Ra nádtolla serceg. Nefru keze hideg."},
+        {"text": "„Két karperec a tenyeremben…”", "blurred": true, "clarify_with": "N06", "revealed": "Két karperec a tenyeremben. Ha megmondom, melyik kié, valamelyik anyától elveszik a gyermekét – vagy az emlékét. Inkább viszem a terhet.", "effects": [{"param": {"intent": 5}}]},
+        {"text": "Aztán csend, és a szoba sarkában egy gyermekágyacska, amelyet sosem vittek el."}
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "id": "childhood", "title": "Gyermekkor", "numeral": "I",
+      "desc": "Honnan jött Nefru?",
+      "interpretations": [
+        {"id": "i_n_child_healer", "title": "A gyógyító unokája", "required": ["c_nefru", "e_herbs"], "optional": ["c_tia", "l_village", "N01", "m_grandmother", "o_herb_pouch"], "support": ["N01", "N03", "m_grandmother"], "truth": 100, "confirm": 150,
+         "narrative": "Nefru a nagyanyjától, Tia gyógyítótól tanulta meg a gyógyfüvek ismeretét Per-Hapi faluban.", "implications": {"compassion": 5}},
+        {"id": "i_n_child_poor", "title": "Szegény falusi lány", "required": ["c_nefru", "e_village_life"], "optional": ["l_village", "N01"], "support": ["N01"], "truth": 55, "confirm": 200,
+         "narrative": "Nefru szegény falusi családban nőtt fel, a folyó áradásai és a szűk évek között."}
+      ]
+    },
+    {
+      "id": "calling", "title": "Hivatás", "numeral": "II",
+      "desc": "Mivé lett Nefru?",
+      "interpretations": [
+        {"id": "i_n_call_midwife", "title": "A falu bábája", "required": ["c_nefru", "e_midwifery"], "optional": ["l_village", "e_epidemic", "N02", "N03", "l_temple_healing", "o_herb_pouch"], "support": ["N02", "N03", "N08"], "truth": 100, "confirm": 150,
+         "narrative": "Nefru a falu bábája és gyógyítója lett; a járvány évében is ő segítette világra a gyermekeket.", "implications": {"compassion": 5}},
+        {"id": "i_n_call_paid", "title": "A nemesek fizetett szolgája", "required": ["c_nefru", "c_ptahmose", "o_gold"], "optional": ["l_noble_house", "N04"], "support": ["N04"], "contradict": ["N07"], "truth": 10, "confirm": 140,
+         "narrative": "Nefru a nemesi ház fizetett embere volt, aki aranyért bármit megtett.", "implications": {"intent": -25, "responsibility": 15}}
+      ]
+    },
+    {
+      "id": "births", "title": "A két születés", "numeral": "III",
+      "desc": "Mi történt azon az éjszakán?",
+      "interpretations": [
+        {"id": "i_n_births_two", "title": "Két születés egy éjjel", "required": ["c_satre", "c_nebetta", "e_two_births"], "optional": ["c_nefru", "c_children", "N02", "N06", "N08", "l_village", "e_epidemic"], "support": ["N02", "N08", "N06"], "truth": 100, "confirm": 150,
+         "narrative": "Ugyanazon a lázas éjszakán két fiú született: Nebetta úrnő beteg örököse és Szatré özvegy egészséges fia.", "implications": {"compassion": 3}},
+        {"id": "i_n_births_heir", "title": "A beteg örökös", "required": ["c_nebetta", "c_children", "e_epidemic"], "optional": ["c_ptahmose", "N08"], "support": ["N08"], "truth": 50, "confirm": 200,
+         "narrative": "A járvány évében a nemesi ház örököse betegen született."}
+      ]
+    },
+    {
+      "id": "secret", "title": "A titok", "numeral": "IV",
+      "desc": "Mit tett Nefru – és miért?",
+      "interpretations": [
+        {"id": "i_n_secret_protect", "title": "Csere oltalomból", "required": ["c_nefru", "e_exchange", "e_noble_demand"], "optional": ["c_ptahmose", "c_satre", "c_children", "N07", "N06", "N04", "N05", "m_ninth_night"], "support": ["N07", "N06", "N05", "N04", "m_ninth_night"], "truth": 100, "confirm": 170,
+         "narrative": "A nemesek követelésére Nefru kicserélte a gyermekeket – de úgy, hogy a beteg örökös egy szerető anyához kerüljön, és ő maga gyógyíthassa. Aranyat nem fogadott el. Két anyától vette el a választás jogát.", "implications": {"intent": 20, "harm": 15, "responsibility": 12}},
+        {"id": "i_n_secret_gold", "title": "Csere aranyért", "required": ["c_nefru", "e_exchange", "o_gold"], "optional": ["c_ptahmose", "N04"], "support": ["N04"], "contradict": ["N07"], "truth": 15, "confirm": 140,
+         "narrative": "Nefru aranyért cserélte ki a gyermekeket a nemesi ház kérésére.", "implications": {"intent": -30, "harm": 20, "responsibility": 30}},
+        {"id": "i_n_secret_theft", "title": "Gyermekrablás", "required": ["c_nefru", "e_accusation"], "optional": ["c_nebetta", "N10", "c_children"], "support": ["N10"], "contradict": ["N04", "N07"], "truth": 5, "confirm": 140,
+         "narrative": "Nefru ellopta a nemesi ház örökösét.", "implications": {"intent": -35, "harm": 35, "responsibility": 35}},
+        {"id": "i_n_secret_noble", "title": "A nemesek bűne", "required": ["c_ptahmose", "e_noble_demand"], "optional": ["c_nebetta", "N04", "N08", "o_gold"], "support": ["N04", "N08"], "truth": 65, "confirm": 150,
+         "narrative": "A cserét Ptahmose háza követelte, aranyat ígérve érte – Nefru csak eszköz volt.", "implications": {"responsibility": -15}}
+      ]
+    },
+    {
+      "id": "death", "title": "Halál", "numeral": "V",
+      "desc": "Hogyan zárult Nefru élete?",
+      "interpretations": [
+        {"id": "i_n_death_confess", "title": "Vallomás a halál előtt", "required": ["c_nefru", "e_confession"], "optional": ["e_child_death", "e_discovery", "c_satre", "N09", "m_last_confession"], "support": ["N09", "m_last_confession", "N05"], "truth": 100, "confirm": 150,
+         "narrative": "A csere kiderült, egy gyermek meghalt a járványban. Nefru halála előtt bevallotta a cserét, de sosem árulta el, melyik gyermek kié.", "implications": {"intent": 5, "responsibility": 5}},
+        {"id": "i_n_death_thief", "title": "A gyermekrabló halála", "required": ["c_nefru", "e_accusation", "e_discovery"], "optional": ["N10", "c_nebetta"], "support": ["N10"], "contradict": ["N09"], "truth": 15, "confirm": 140,
+         "narrative": "A gyermekrabló bába bűnhődés nélkül, szégyenben halt meg.", "implications": {"responsibility": 20}}
+      ]
+    }
+  ],
+  "judgment": {
+    "base": {"intent": 55, "harm": 35, "compassion": 55, "responsibility": 40},
+    "truth_needed": 65
+  },
+  "on_judged": [{"clue": "CL_nefru_record"}],
+  "ideal": {
+    "verdicts": ["penance", "mercy"],
+    "text": "A legigazságosabb ítélet a Vezeklés, majd a Nádmező lett volna – a teljes igazság ismeretében a Felmentés is igazságos.\n\nNefru valóban kicserélte a gyermekeket, és ezzel két anyától vette el a választás jogát: ez valódi ártalom, amelyet a jó szándék nem töröl el. De nem aranyért tette – az aranyat visszaküldte –, hanem azért, mert a nemesi ház a beteg örököst a sivatagban hagyta volna, ahogy az első fiukat is. Kilenc évig titokban, fizetség nélkül gyógyította a gyermeket, és a halála előtt bevallotta a tettét.\n\nA gyermekrablás vádja a nemesi ház hazugsága volt. Az elítélés egy védelmezőt büntetett volna; a bizonyítékok nélküli felmentés pedig elhallgatta volna az anyáknak okozott sebet. A Ma'at a szándékot és a tettet egyszerre méri.",
+    "keys": [
+      "A születési nyilvántartás (N02) átírt színei és a két karperec (N06) bizonyítja a cserét.",
+      "Nefru naplója (N07) és végső vallomása (N09) feltárja a motivációt – és hogy az aranyat visszaküldte.",
+      "A nemesi család levele (N04) és a templomi feljegyzés (N08) mutatja, hogy a cserét a nemesek követelték, és a beteg gyermeket hagyták volna meghalni.",
+      "Az anya vallomása (N05) szerint Nefru kilenc évig gyógyította a gyermeket."
+    ]
+  },
+  "endings": [
+    {
+      "id": "A", "title": "A védelmező",
+      "conditions": {"all": [
+        {"verdict": ["mercy", "penance"]},
+        {"param": ["truth", ">=", 65]},
+        {"slot": ["secret", "i_n_secret_protect", ["confirmed", "supported"]]},
+        {"slot": ["births", "i_n_births_two", ["confirmed", "supported", "uncertain"]]}
+      ]},
+      "category": {"mercy": "just_mercy", "penance": "just_accountability"},
+      "destination": "field_of_reeds",
+      "effects": [{"set_flag": "healing_garden"}],
+      "narrative": "A mérleg lassan egyensúlyba kerül. Nefru végre felemeli a fejét.\n\nA Ház tekercsébe új sorok kerülnek: Nefru kicserélte a gyermekeket, és ezzel két anyától vette el a választást. De nem aranyért tette, hanem hogy mindkét gyermek éljen. A nemesi ház vádja hamis volt.\n\nA Nádmező Kertjében aznap éjjel új ágyások sarjadnak: gyógyfüvek, kamilla, fűzfa. A gyógyító kert az övé.",
+      "variants": [
+        {"when": {"verdict": ["penance"]}, "text": "A vezeklés ideje alatt Nefru minden éjjel két mécsest gyújt – egyet minden anyáért. Amikor a második is kialszik, a Nádmező kapuja megnyílik."},
+        {"when": {"verdict": ["mercy"]}, "text": "A felmentés nem törli el a sebet, amelyet az anyáknak okozott – a tekercs megőrzi. De a Ma'at elismeri, hogy Nefru az életet választotta."}
+      ],
+      "explain": [
+        {"when": true, "text": "Feltártad, hogy a cserét a nemesi ház követelte, de Nefru a gyermekek védelmében hajtotta végre."},
+        {"when": {"slot": ["secret", "i_n_secret_protect"]}, "text": "A rekonstrukciód a szándékot és az okozott ártalmat egyszerre ismerte el."},
+        {"when": {"flag": "no_payment_witness"}, "text": "Bizonyítottad, hogy Nefru nem fogadott el fizetséget."},
+        {"when": {"choice": {"mother_approach": "accuse"}}, "text": "Az anyát vádlón közelítetted meg – az igazsághoz csak bizonyítékokkal jutottál el."}
+      ]
+    },
+    {
+      "id": "B", "title": "A gyermekrabló",
+      "conditions": {"verdict": ["condemn"]},
+      "category": "unjust_condemnation",
+      "destination": "forgotten_wing",
+      "effects": [{"set_flag": "garden_wither"}],
+      "narrative": "A mérleg megbillen. Nefru nem tiltakozik. Csak a kezeit nézi.\n\nA Ház tekercse változatlan marad: „Nefru, a gyermekrabló.” Az Elfeledett Szárnyban a neve lassan elhalványul.\n\nA Nádmező Kertjében a kamilla aznap éjjel elhervad. A gyógyfüvek, amelyeket senki nem gondoz, kiszáradnak.",
+      "variants": [
+        {"when": {"param": ["truth", ">=", 65]}, "text": "Tudtad, hogy a nemesek követelték a cserét, és hogy Nefru visszaküldte az aranyat. Mégis az ő vádjukat erősítetted meg."},
+        {"when": {"param": ["truth", "<", 65]}, "text": "Csak a tettet láttad, a szándékot nem. A Ma'at nem a tett felét méri."}
+      ],
+      "explain": [
+        {"when": {"slot": ["secret", "i_n_secret_theft"]}, "text": "A rekonstrukciód a nemesi ház vádját fogadta el: gyermekrablást, ahol valójában oltalom volt."},
+        {"when": {"slot": ["secret", "i_n_secret_gold"]}, "text": "Aranyért elkövetett cserének láttad, bár Nefru visszaküldte az aranyat."},
+        {"when": {"not": {"evidence": "N07"}}, "text": "Nefru kunyhóját nem kutattad át alaposan: a napló ott várt a tégla alatt."}
+      ]
+    },
+    {
+      "id": "C", "title": "A megválaszolatlan anya",
+      "conditions": {"verdict": ["unresolved"]},
+      "category": "unresolved",
+      "destination": "chamber_of_memories",
+      "narrative": "A mérleg félúton megáll. Nefru története az Emlékek Kamrájába kerül.\n\nEgy új gömb gyúl ki benne: két sírás ugyanabban az órában – és egy kérdés, amelyre senki sem felel.",
+      "variants": [
+        {"when": {"evidence": "N07"}, "text": "Tudod, hogy Nefru kicserélte a gyermekeket, és talán azt is, miért. De azt, hogy melyik anyának mit vett el, sosem tudhatod meg. Talán ez a legőszintébb ítélet – talán csak a legkönnyebb."},
+        {"when": {"not": {"evidence": "N07"}}, "text": "Túl kevés maradt a kezedben ahhoz, hogy ítélj."}
+      ],
+      "explain": [
+        {"when": true, "text": "A függő ítélet nem büntet és nem ment fel. A Ma'at alig mozdul – a Duat nyugtalansága kissé nő."}
+      ]
+    },
+    {
+      "id": "D", "title": "A vak kegyelem",
+      "conditions": {"verdict": ["mercy", "penance"]},
+      "category": "unjust_forgiveness",
+      "destination": "field_of_reeds",
+      "narrative": "Nefru a Nádmezőre lép – de nem az igazság nyitotta meg előtte a kaput.\n\nA jó szándék nem törli el a tettet. Ha a mérleg csak a szándékot látja, a két anya sebe mérlegelés nélkül marad – és a Ma'at ezt sem bocsátja meg.",
+      "explain": [
+        {"when": {"param": ["truth", "<", 65]}, "text": "A rekonstrukciód igazságtartalma túl alacsony volt egy megalapozott felmentéshez."},
+        {"when": {"not": {"slot": ["secret", "i_n_secret_protect"]}}, "text": "A felmentés nem mérte fel, mit tett Nefru valójában: a cserét és az okozott ártalmat."},
+        {"when": {"not": {"slot": ["births", "i_n_births_two"]}}, "text": "Nem rekonstruáltad a két születés éjszakáját."}
+      ]
+    }
+  ],
+  "hints": [
+    {"deity": "thoth", "when": {"all": [{"evidence": "N02"}, {"not": {"flag": "bracelet_discrepancy"}}]}, "text": "Thot tolla a születési tekercs fölött áll meg. „A színek alatt régebbi tinta alszik.”"},
+    {"deity": "thoth", "when": {"all": [{"evidence": "N04"}, {"evidence": "N07"}, {"not": {"compared": "N04+N07"}}]}, "text": "„Az egyik tekercs aranyat ígér, a másik visszaküldi. Tedd őket egymás mellé.”"},
+    {"deity": "thoth", "when": {"all": [{"evidence": "N07"}, {"not": {"revealed": "N07.lamp"}}]}, "text": "„A napló utolsó lapja többet mond, mint amit a nappali fény mutat.”"},
+    {"deity": "thoth", "when": {"not": {"evidence": "N07"}}, "text": "„A helyek is emlékeznek. A bába kunyhója még nem mondta el, amit tud.”"},
+    {"deity": "anubis", "when": {"not": {"node": "satre.start"}}, "text": "Anubisz az özvegy kunyhója felé fordul. „Egy gyermek meghalt. Az anyja tudja, kit temetett el.”"},
+    {"deity": "anubis", "when": {"all": [{"choice": {"mother_approach": "accuse"}}, {"not": {"flag": "mother_truth"}}]}, "text": "„Az anya bezárkózott. Csak az nyitja meg, ami a gyermekhez tartozott.”"},
+    {"deity": "anubis", "when": {"not": {"evidence": "N09"}}, "text": "„A haldoklók igazat szólnak. Kinek gyónt a bába?”"},
+    {"deity": "anubis", "when": true, "text": "„Ennek a léleknek a halála tisztán áll előtted. A többi a szívedre tartozik.”"}
+  ]
+}

@@ -4,9 +4,12 @@ Narratív nyomozós-rekonstrukciós játék az egyiptomi túlvilágon. A játék
 Őrzője: minden lélek életét bizonyítékokból, kihallgatásokból és emlékekből kell újraépítenie
 egy papirusz-storyboardon, majd ítéletet mondania. A templom maga is reagál az ítéletekre.
 
-**Jelenlegi állapot – 1. fázis:** teljes, végigjátszható **Kha-eset** (14 bizonyíték, 4 nyomozási
-ág, kihallgatások kizáró döntésekkel, 5 jelenetes storyboard, 4 befejezés), mind a 7 terem,
-templom-állapotrendszer, mentés. Nefru és Hori esete, valamint a végső rejtély a következő fázis.
+**Tartalom:** három teljes, végigjátszható eset – **Kha, a kereskedő** (14 bizonyíték),
+**Nefru, a bába** és **Hori, az írnok** (10–10 bizonyíték) –, mindegyikben 4 nyomozási ág,
+kihallgatás kizáró döntésekkel, emlékek, fordítás, 5 jelenetes storyboard és 4 befejezés.
+A három esetet az „Arany Kéz” hálózat köti össze; a nyomokból a **Ház ítélete** (5 befejezés)
+dönti el, mi lesz magával a Ma'at Házával. Mind a 7 terem, templom-állapotrendszer, mentés,
+Windows- és Android-export.
 
 ## Futtatás
 

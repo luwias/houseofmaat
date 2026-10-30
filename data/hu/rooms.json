@@ -17,6 +17,8 @@
       "purpose": "Itt őrzik az összes feltárt bizonyítékot és az ügyeken átívelő nyomokat.",
       "unlock": true,
       "states": [
+        {"when": {"flag": "archive_sealed"}, "text": "Az Archívum lepecsételve. A tekercsek a sötétben porladnak."},
+        {"when": {"all": [{"flag": "archive_decay"}, {"not": {"flag": "archive_restored"}}]}, "text": "Egy polc megrepedt, a tekercsek széle porlik – a Ház emlékezete nem bírja a hamis számokat."},
         {"when": {"stat": ["maat", "<", 40]}, "text": "A tekercsek széle porlik. Néhány polc megdőlt."},
         {"when": {"stat": ["duat", ">=", 60]}, "text": "Egyes tekercseken a tinta magától mozdul – a Duat hozzáfér a feljegyzésekhez."},
         {"when": true, "text": "Mécsesfény, papiruszillat. Minden tekercs a helyén."}
@@ -38,6 +40,8 @@
       "purpose": "A Ház életereje, az Ankh tükre. A gyógyító forrás megtisztíthatja a Duat által megrontott bizonyítékokat.",
       "unlock": true,
       "states": [
+        {"when": {"flag": "healing_garden"}, "text": "Nefru gyógyító kertje virágzik: kamilla, fűzfa és gyógyfüvek ágyásai a medence körül."},
+        {"when": {"flag": "garden_wither"}, "text": "A kamilla elhervadt, a gyógyfüvek kiszáradtak – senki nem gondozza őket."},
         {"when": {"stat": ["ankh", ">=", 75]}, "text": "A nád dúsan zöldell, lótuszok nyílnak, gyógyító szellemek lebegnek a víz fölött."},
         {"when": {"stat": ["ankh", "<", 30]}, "text": "A medence kiszáradt, a nád megbarnult és letört."},
         {"when": {"stat": ["ankh", "<", 50]}, "text": "A növények fonnyadnak, a víz szintje lejjebb szállt."},
@@ -61,6 +65,8 @@
       "unlock": {"any": [{"flag": "first_judgment"}, {"stat": ["duat", ">=", 50]}]},
       "hint": "Az első ítélet után – vagy ha a Duat nyugtalansága túl nagy lesz – a pecsét megtörik.",
       "states": [
+        {"when": {"flag": "names_restored"}, "text": "A szarkofágokon aranyszínben izzanak a visszaírt nevek. A suttogás elhallgatott."},
+        {"when": {"all": [{"flag": "mystery_open"}, {"not": {"flag": "final_judged"}}]}, "text": "A belső kapu pecsétje megtört. A Ház titka vár."},
         {"when": {"stat": ["duat", ">=", 50]}, "text": "A szárny felébredt: a szarkofágok nevei lilán izzanak, suttogás tölti be a csarnokot."},
         {"when": true, "text": "Törött oszlopok, kitörölt nevek. A belső kapu lepecsételve."}
       ]

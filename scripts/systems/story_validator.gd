@@ -73,7 +73,8 @@ static func validate(case_data: Dictionary, scene: Dictionary, cards: Array, gs)
 	res.truth = float(best.get("truth", 0))
 	res.implications = best.get("implications", {})
 
-	var allowed: Array = best.get("required", []) + best.get("optional", [])
+	# ami alátámasztja az értelmezést, az mindig a jelenetbe illik
+	var allowed: Array = best.get("required", []) + best.get("optional", []) + best.get("support", [])
 	for c in cards:
 		if not c in allowed:
 			res.extras.append(c)

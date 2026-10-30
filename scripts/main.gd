@@ -22,6 +22,7 @@ const ForgottenScreen = preload("res://scripts/ui/screens/forgotten_screen.gd")
 const AstralScreen = preload("res://scripts/ui/screens/astral_screen.gd")
 const HelpScreen = preload("res://scripts/ui/screens/help_screen.gd")
 const NotesScreen = preload("res://scripts/ui/screens/notes_screen.gd")
+const FinalScreen = preload("res://scripts/ui/screens/final_screen.gd")
 const ConfirmDialog = preload("res://scripts/ui/screens/confirm_dialog.gd")
 
 var temple: Node3D
@@ -221,7 +222,12 @@ func _on_interact(id: String, room: String) -> void:
 			open_room_screen("memories" if room == "memories" else "garden")
 		"obelisk", "tablets":
 			open_room_screen("hieroglyphs")
-		"sarcophagi", "mystery_door":
+		"mystery_door":
+			if GameState.has_flag("mystery_open"):
+				open_final()
+			else:
+				open_room_screen("forgotten", id)
+		"sarcophagi":
 			open_room_screen("forgotten", id)
 		"altar", "thoth", "anubis", "maat":
 			open_room_screen("astral", id)
@@ -291,6 +297,14 @@ func open_room_screen(room: String, extra := "") -> void:
 			open_soul_board()
 
 
+func open_final() -> void:
+	if not GameState.has_flag("mystery_open"):
+		return
+	for ov in overlays.duplicate():
+		ov.close()
+	open_overlay(FinalScreen.new())
+
+
 func open_notes(page := "") -> void:
 	if page == "":
 		var cid := str(GameState.data.get("active_case", ""))
@@ -342,4 +356,4 @@ func _sync_temple() -> void:
 			if GameState.memory_unlocked(m.id):
 				mem += 1
 	temple.set_progress(mem, GameState.data.clues.size(), GameState.room_status("forgotten").open,
-		GameState.has_flag("mystery_open"))
+		GameState.has_flag("mystery_open"), GameState.data.flags)

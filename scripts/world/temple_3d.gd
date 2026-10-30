@@ -267,7 +267,7 @@ func _collect() -> void:
 			var id := m.get_string(1) if m else nm.substr(9)
 			_make_interactable(n, id, room)
 		elif nm.begins_with("Crack_") and n is MeshInstance3D:
-			cracks.append({"node": n, "th": 15.0 + float(absi(hash(nm)) % 46)})
+			cracks.append({"node": n, "th": 15.0 + float(absi(hash(nm)) % 46), "room": room})
 		elif nm.begins_with("Rubble_") and n is MeshInstance3D:
 			rubble.append({"node": n, "th": 10.0 + float(absi(hash(nm)) % 36)})
 		elif nm.begins_with("Plant_") and n is MeshInstance3D:
@@ -541,7 +541,12 @@ func set_values(values: Dictionary, animate := true) -> void:
 				vis[k] = target[k]
 
 
-func set_progress(p_memories: int, p_clues: int, p_forgotten_open: bool, p_mystery_open: bool) -> void:
+var story_flags: Dictionary = {}
+
+
+func set_progress(p_memories: int, p_clues: int, p_forgotten_open: bool, p_mystery_open: bool,
+		p_flags: Dictionary = {}) -> void:
+	story_flags = p_flags
 	memories_lit = p_memories
 	clues_found = p_clues
 	forgotten_open = p_forgotten_open
@@ -575,12 +580,20 @@ func _apply_visuals(delta: float) -> void:
 	glyph.set_shader_parameter("glow", smoothstep(62.0, 100.0, maat) * 0.6 * (0.8 + 0.2 * sin(_t * 1.3)))
 	glyph.set_shader_parameter("decay", 1.0 - smoothstep(20.0, 60.0, maat))
 	# repedések és törmelék
+	var decay: bool = story_flags.has("archive_decay") and not story_flags.has("archive_restored")
 	for c in cracks:
-		(c.node as Node3D).visible = maat < c.th
+		(c.node as Node3D).visible = maat < c.th or (decay and c.room == "archive")
 	for r in rubble:
 		(r.node as Node3D).visible = maat < r.th
 	# növények
 	var plant: StandardMaterial3D = mats["Plant"]
+	# a történet nyomai a kertben: Nefru gyógyító kertje vagy az elhervadt kamilla
+	var healing: bool = story_flags.has("healing_garden")
+	var wither: bool = story_flags.has("garden_wither") and not healing
+	if healing:
+		ka = minf(1.0, ka + 0.25)
+	elif wither:
+		ka = maxf(0.0, ka - 0.25)
 	plant.albedo_color = Color(0.45, 0.33, 0.15).lerp(Color(0.22, 0.5, 0.17), ka)
 	var sy := lerpf(0.45, 1.06, ka)
 	for p in plants:
@@ -597,9 +610,9 @@ func _apply_visuals(delta: float) -> void:
 		wn.position.y = w.y - drop
 		wn.visible = ankh >= 18.0 or not w.channel
 	for l in lotus:
-		(l as Node3D).visible = ankh >= 45.0
-	for s in spirits:
-		s.emitting = ankh >= 70.0
+		(l as Node3D).visible = ankh >= 45.0 or healing
+	for i in spirits.size():
+		spirits[i].emitting = ankh >= 70.0 or (healing and spirit_rooms[i] == "garden")
 	# fények
 	var lf := lerpf(0.5, 1.15, km)
 	var flick := lerpf(0.22, 0.06, km)
@@ -625,9 +638,13 @@ func _apply_visuals(delta: float) -> void:
 	env.adjustment_saturation = lerpf(0.75, 1.08, km)
 	# Elfeledett Szárny
 	var forgotten_active := duat >= 50.0
-	sarc_mat.emission_energy_multiplier = 2.5 if forgotten_active else 0.0
+	var restored: bool = story_flags.has("names_restored")
+	if restored:
+		sarc_mat.albedo_color = Color(1.0, 0.8, 0.35)
+		sarc_mat.emission = Color(1.0, 0.75, 0.3)
+	sarc_mat.emission_energy_multiplier = 2.5 if (forgotten_active or restored) else 0.0
 	for sn in sarc_names:
-		(sn as MeshInstance3D).material_override = sarc_mat if forgotten_active else null
+		(sn as MeshInstance3D).material_override = sarc_mat if (forgotten_active or restored) else null
 	if seals.has("forgotten"):
 		(seals["forgotten"] as Node3D).visible = not forgotten_open
 	if seals.has("mystery"):

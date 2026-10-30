@@ -47,4 +47,10 @@ func refresh() -> void:
 			found += 1
 	box.add_child(UI.label(str(GameData.mystery.get("door_text", "")), 16, T.GOLD_L, true))
 	box.add_child(UI.label(Loc.t("fw_clues", [found, total]), 15, T.SAND))
-	box.add_child(UI.label(Loc.t("fw_door_locked"), 14, T.MUTED, true))
+	if GameState.has_flag("mystery_open"):
+		var b := UI.button(Loc.t("fw_enter") if not GameState.has_flag("final_judged") else Loc.t("fw_view_final"),
+			func(): main.open_final())
+		b.add_theme_font_size_override("font_size", 20)
+		box.add_child(b)
+	else:
+		box.add_child(UI.label(Loc.t("fw_door_locked"), 14, T.MUTED, true))

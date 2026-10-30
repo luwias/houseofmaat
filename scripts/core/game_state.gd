@@ -492,6 +492,11 @@ func record_judgment(cid: String, result: Dictionary) -> void:
 		"verdict": result.verdict, "destination": result.destination, "before": before, "after": data.temple.duplicate()})
 	set_flag("first_judgment")
 	Cond.apply(GameData.get_case(cid).get("on_judged", []), self, cid)
+	Cond.apply(result.get("effects", []), self, cid)
+	var fin: Dictionary = GameData.mystery.get("final", {})
+	if not fin.is_empty() and not has_flag("mystery_open") and Cond.check(fin.get("unlock", false), self):
+		set_flag("mystery_open")
+		_toast(Loc.t("toast_mystery_open"), "clue")
 	if data.active_case == cid:
 		data.active_case = ""
 	_mark()
@@ -515,7 +520,11 @@ func set_temple(values: Dictionary) -> void:
 
 
 func apply_outcome(category: String) -> Dictionary:
-	var eff: Dictionary = GameData.category(category).get("effects", {})
+	return apply_delta(GameData.category(category).get("effects", {}))
+
+
+## Templom-értékek eltolása (ítélet, végső ítélet, áldozat).
+func apply_delta(eff: Dictionary) -> Dictionary:
 	var old := temple_values()
 	var th := float(GameData.temple.get("corruption_duat", 60))
 	for k in eff:

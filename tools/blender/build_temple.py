@@ -831,6 +831,43 @@ def build_props():
     export_selected(ship, "prop_ship.glb")
     ship.hide_set(True)
 
+    # N06 – két születési karperec (Nefru esete)
+    objs = []
+    for k, (x, m, mark) in enumerate([(-0.7, TURQ, LAPIS), (0.7, REDOCHRE, GOLD)]):
+        objs.append(torus(f"Prop_N06_band{k}", (x, 0, 0), 0.5, 0.05, LINEN, major_seg=48, minor_seg=8))
+        for i in range(14):
+            a2 = i / 14 * math.tau
+            objs.append(ico(f"Prop_N06_bead{k}_{i}", (x + math.cos(a2) * 0.5, math.sin(a2) * 0.5, 0), 0.07,
+                            m if i % 3 else GOLD, sub=1))
+        # a családjelek: kis agyagtáblácska – az egyiken a jel utólag átkarcolva
+        objs.append(box(f"Prop_N06_tag{k}", (x, -0.62, -0.02), (0.26, 0.18, 0.05), CLAY))
+        objs.append(box(f"Prop_N06_mark{k}", (x, -0.62, 0.012), (0.14, 0.04, 0.02), mark))
+        if k == 1:
+            objs.append(box("Prop_N06_scratch", (x, -0.62, 0.02), (0.2, 0.015, 0.02), BASALT, rot=(0, 0, 0.6)))
+    n06 = join(objs, "Prop_N06")
+    export_selected(n06, "prop_n06.glb")
+    n06.hide_set(True)
+
+    # H05 – a magtár kulcsai (Hori esete)
+    objs = [torus("Prop_H05_ring", (0, 0, 0), 0.45, 0.04, GOLD, major_seg=48)]
+    for k in range(3):
+        a2 = -math.pi / 2 + (k - 1) * 0.45
+        cx, cy = math.cos(a2) * 0.45, math.sin(a2) * 0.45
+        ln = 1.1 + k * 0.15
+        dx, dy = math.cos(a2), math.sin(a2)
+        objs.append(cyl(f"Prop_H05_shaft{k}", (cx + dx * ln / 2, cy + dy * ln / 2, 0), 0.045, ln, GOLD if k != 1 else WOOD,
+                        verts=10, rot=(0, math.pi / 2, a2)))
+        tx, ty = cx + dx * ln, cy + dy * ln
+        for t in range(2 + k):
+            objs.append(box(f"Prop_H05_tooth{k}_{t}", (tx - dx * 0.12 * t + dy * 0.08, ty - dy * 0.12 * t - dx * 0.08, 0),
+                            (0.06, 0.06, 0.06), GOLD if k != 1 else WOOD))
+    # a középső, fa kulcson Panehsy jele
+    objs.append(box("Prop_H05_tag", (0.0, -1.1, 0.0), (0.22, 0.14, 0.04), CLAY))
+    objs.append(box("Prop_H05_tagmark", (0.0, -1.1, 0.025), (0.12, 0.03, 0.02), GOLD))
+    h05 = join(objs, "Prop_H05")
+    export_selected(h05, "prop_h05.glb")
+    h05.hide_set(True)
+
 
 def export_selected(obj, filename):
     bpy.ops.object.select_all(action='DESELECT')
@@ -847,6 +884,9 @@ build_props()
 for o in list(bpy.data.objects):
     if o.name.startswith("Prop_"):
         bpy.data.objects.remove(o, do_unlink=True)
+
+if "props" in argv:
+    sys.exit(0)
 
 build_hall()
 build_archive()
