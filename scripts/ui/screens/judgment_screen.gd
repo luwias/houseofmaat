@@ -9,7 +9,6 @@ var case_data: Dictionary
 var comp: Dictionary
 var selected := ""
 var verdict_buttons := {}
-var confirm_btn: Button
 var verdict_desc: Label
 
 
@@ -80,12 +79,6 @@ func build() -> void:
 	verdict_desc = UI.label(Loc.t("jd_pick"), 15, T.SAND, true)
 	verdict_desc.custom_minimum_size.y = T.px(90)
 	right.add_child(verdict_desc)
-	right.add_child(UI.spacer(false))
-	confirm_btn = UI.button(Loc.t("jd_pronounce"), _pronounce)
-	confirm_btn.disabled = true
-	confirm_btn.add_theme_font_size_override("font_size", 21)
-	confirm_btn.custom_minimum_size.y = T.px(58)
-	right.add_child(confirm_btn)
 	h.add_child(right)
 
 
@@ -122,14 +115,17 @@ func _select(vid: String) -> void:
 			b.remove_theme_stylebox_override("normal")
 	var vd := GameData.verdict(vid)
 	verdict_desc.text = str(vd.get("desc", ""))
-	confirm_btn.disabled = false
+	# azonnali megerősítés: mit jelent ez az ítélet a lélek számára
+	var soul := GameData.soul(cid)
+	var text := Loc.t("jd_confirm_full", [vd.label, soul.get("name", ""), str(vd.get("consequence", ""))])
+	main.confirm(text, _do_pronounce, Loc.t("jd_pronounce"), _clear_selection)
 
 
-func _pronounce() -> void:
-	if selected == "":
-		return
-	var vd := GameData.verdict(selected)
-	main.confirm(Loc.t("jd_confirm", [vd.label]), _do_pronounce, Loc.t("jd_pronounce"))
+func _clear_selection() -> void:
+	selected = ""
+	for k in verdict_buttons:
+		(verdict_buttons[k] as Button).remove_theme_stylebox_override("normal")
+	verdict_desc.text = Loc.t("jd_pick")
 
 
 func _do_pronounce() -> void:

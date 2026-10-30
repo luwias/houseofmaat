@@ -208,12 +208,24 @@
   "jd_reconstruction": "A rekonstrukciód",
   "jd_warning": "Az ítélet nem a kegyességet és nem a szigort jutalmazza, hanem az igazságot. Egy jogos számonkérés ugyanúgy szolgálhatja a Ma'atot, mint egy jogos felmentés.",
   "jd_verdicts": "Ítélet",
-  "jd_pick": "Válassz ítéletet.",
+  "jd_pick": "Válassz ítéletet – kiválasztás után még megerősítheted vagy visszaléphetsz.",
   "jd_pronounce": "Kimondom az ítéletet",
   "jd_confirm": "Kimondod az ítéletet: „%s”? Ez nem vonható vissza.",
+  "jd_confirm_full": "[b]Biztosan ezt az ítéletet választod: „%s”?[/b]
+
+Ez azt jelenti, hogy %s esetében %s.
+
+Az ítélet végleges, és a Ház is reagálni fog rá.",
   "scales_heart": "szív",
 
   "res_why": "Miért született ez az ítélet?",
+  "res_ideal_title": "Mit kellett volna választanod?",
+  "res_ideal_right": "Helyesen döntöttél. Az általad választott ítélet („%s”) igazságos volt.",
+  "res_ideal_wrong": "A helyes ítélet: %s.",
+  "res_ideal_or": " vagy ",
+  "res_ideal_keys": "A kulcsbizonyítékok, amelyek a teljes igazsághoz vezettek:",
+  "res_ideal_story": "A valódi történet jelenetenként:",
+  "res_ideal_yours": "a te változatod: „%s”",
   "res_reconstruction": "A rekonstrukció",
   "res_params": "A mérleg",
   "res_temple": "A Ház változásai",

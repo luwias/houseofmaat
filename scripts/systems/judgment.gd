@@ -99,8 +99,8 @@ static func resolve(case_data: Dictionary, verdict: String, gs) -> Dictionary:
 	var reconstruction: Array = []
 	for scene in case_data.get("scenes", []):
 		var r: Dictionary = comp.slots[scene.id]
-		reconstruction.append({"scene": scene.title, "title": r.title if r.title != "" else Loc.t("res_no_interp"),
-			"state": r.state})
+		reconstruction.append({"scene": scene.title, "scene_id": scene.id, "interp": r.interp,
+			"title": r.title if r.title != "" else Loc.t("res_no_interp"), "state": r.state})
 
 	return {"ending": ending.id, "title": ending.title, "category": str(category),
 		"destination": ending.get("destination", ""), "narrative": narrative, "explain": explain,

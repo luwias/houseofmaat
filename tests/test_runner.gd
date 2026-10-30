@@ -314,6 +314,11 @@ func test_best_route() -> void:
 	var c := Judgment.resolve(case_data, "unresolved", GS)
 	ok(c.ending == "C", "felfüggesztés → C")
 	ok(not a.explain.is_empty(), "az ítélethez magyarázat tartozik")
+	for v in case_data.ideal.verdicts:
+		var iv := Judgment.resolve(case_data, str(v), GS)
+		ok(str(iv.category).begins_with("just_"), "a „helyes ítéletként” megadott %s valóban igazságos" % v)
+	for v in GameData.temple.verdicts:
+		ok(str(v.get("consequence", "")) != "", "a(z) %s ítéletnek van leírt következménye" % v.id)
 	# a bűnrészesség elhallgatása nem vezethet igazságos felmentéshez
 	GS.set_board_slot("kha", "wealth", ["c_kha", "e_treasury_deal", "o_gold"])
 	GS.flush()

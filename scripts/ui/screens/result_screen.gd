@@ -47,6 +47,7 @@ func build() -> void:
 		rh.add_child(UI.label("%s – „%s”" % [r.scene, r.title], 15, T.INK, true))
 		rh.add_child(UI.state_badge(str(r.state), 12))
 		pv.add_child(rh)
+	_ideal_section(pv)
 	paper.add_child(UI.scroll(pv))
 	h.add_child(paper)
 
@@ -81,3 +82,52 @@ func build() -> void:
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		side.add_child(b)
 	h.add_child(side)
+
+
+## „Mit kellett volna választanod?” – a helyes ítélet, indoklással és a valódi történettel.
+func _ideal_section(pv: VBoxContainer) -> void:
+	var case_data := GameData.get_case(cid)
+	var ideal: Dictionary = case_data.get("ideal", {})
+	if ideal.is_empty():
+		return
+	pv.add_child(UI.separator(T.INK_L))
+	pv.add_child(UI.title(Loc.t("res_ideal_title"), 22, T.RED_INK))
+	var good: Array = ideal.get("verdicts", [])
+	var just := str(result.get("category", "")).begins_with("just_")
+	var verdict := str(result.get("verdict", ""))
+	if just:
+		pv.add_child(UI.rich("[color=#2f6f45][b]✓ %s[/b][/color]" % Loc.t("res_ideal_right",
+			[GameData.verdict(verdict).get("label", verdict)]), 17))
+	else:
+		var names := []
+		for v in good:
+			names.append("„%s”" % GameData.verdict(str(v)).get("label", v))
+		pv.add_child(UI.rich("[color=#8a2a14][b]✗ %s[/b][/color]" % Loc.t("res_ideal_wrong",
+			[Loc.t("res_ideal_or").join(names)]), 17))
+	pv.add_child(UI.rich(str(ideal.get("text", "")), 16))
+	# a valódi történet jelenetenként, a játékos változatával összevetve
+	pv.add_child(UI.title(Loc.t("res_ideal_story"), 17, T.RED_INK))
+	var mine := {}
+	for r in result.get("reconstruction", []):
+		mine[str(r.get("scene_id", ""))] = r
+	for sc in case_data.get("scenes", []):
+		var best: Dictionary = {}
+		for it in sc.get("interpretations", []):
+			if best.is_empty() or float(it.get("truth", 0)) > float(best.get("truth", 0)):
+				best = it
+		var r: Dictionary = mine.get(str(sc.id), {})
+		var hit := str(r.get("interp", "")) == str(best.get("id", ""))
+		var line := "[b]%s. %s:[/b] „%s” – %s" % [sc.get("numeral", ""), sc.title, best.get("title", ""),
+			best.get("narrative", "")]
+		if hit:
+			line = "[color=#2f6f45]✓[/color] " + line
+		else:
+			line = "[color=#8a2a14]✗[/color] " + line
+			if not r.is_empty():
+				line += "\n[i][color=#6a5030](%s)[/color][/i]" % Loc.t("res_ideal_yours", [r.get("title", "")])
+		pv.add_child(UI.rich(line, 15))
+	var keys: Array = ideal.get("keys", [])
+	if not keys.is_empty():
+		pv.add_child(UI.title(Loc.t("res_ideal_keys"), 17, T.RED_INK))
+		for k in keys:
+			pv.add_child(UI.ink("• " + str(k), 15))

@@ -13,10 +13,14 @@
       "desc": "Az igazság nem tárult fel teljesen. A lélek története nyitva marad."}
   },
   "verdicts": [
-    {"id": "mercy", "label": "Felmentés", "glyph": "𓆄", "desc": "A lélek büntetés nélkül halad tovább a Nádmezőre. A tekercs a tetteit megőrzi, de nem rója fel."},
-    {"id": "penance", "label": "Vezeklés, majd Nádmező", "glyph": "𓋹", "desc": "A bűnt rögzítik és számon kérik: a lélek vezeklés után haladhat tovább."},
-    {"id": "condemn", "label": "Elítélés", "glyph": "𓃀", "desc": "A lélek nem haladhat tovább. A neve az Elfeledett Szárnyba kerül."},
-    {"id": "unresolved", "label": "Az ítélet felfüggesztése", "glyph": "𓂀", "desc": "A Ház nem mond ítéletet. A lélek története nyitva marad, amíg új igazság nem kerül elő."}
+    {"id": "mercy", "label": "Felmentés", "glyph": "𓆄", "desc": "A lélek büntetés nélkül halad tovább a Nádmezőre. A tekercs a tetteit megőrzi, de nem rója fel.",
+     "consequence": "a lélek azonnal a Nádmezőre lép, és bűneit nem rójátok fel"},
+    {"id": "penance", "label": "Vezeklés, majd Nádmező", "glyph": "𓋹", "desc": "A bűnt rögzítik és számon kérik: a lélek vezeklés után haladhat tovább.",
+     "consequence": "a lélek bűneit rögzítik, vezekelnie kell, majd a Nádmezőre léphet"},
+    {"id": "condemn", "label": "Elítélés", "glyph": "𓃀", "desc": "A lélek nem haladhat tovább. A neve az Elfeledett Szárnyba kerül.",
+     "consequence": "a lélek nem haladhat tovább: a neve az Elfeledett Szárnyba kerül, és lassan feledésbe merül"},
+    {"id": "unresolved", "label": "Az ítélet felfüggesztése", "glyph": "𓂀", "desc": "A Ház nem mond ítéletet. A lélek története nyitva marad, amíg új igazság nem kerül elő.",
+     "consequence": "a Ház nem mond ítéletet: a lélek az Emlékek Kamrájában várakozik, a története nyitva marad"}
   ],
   "destinations": {
     "field_of_reeds": "A Nádmező",

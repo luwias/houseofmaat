@@ -302,8 +302,8 @@ func open_help() -> void:
 	open_overlay(HelpScreen.new(false))
 
 
-func confirm(text: String, on_yes: Callable, yes_label := "") -> void:
-	open_overlay(ConfirmDialog.new(text, on_yes, yes_label))
+func confirm(text: String, on_yes: Callable, yes_label := "", on_no: Callable = Callable()) -> void:
+	open_overlay(ConfirmDialog.new(text, on_yes, yes_label, on_no))
 
 
 # ------------------------------------------------------------ állapot → világ

@@ -609,6 +609,20 @@
     "truth_needed": 65
   },
   "on_judged": [{"clue": "CL_kha_record"}],
+  "ideal": {
+    "verdicts": ["penance", "mercy"],
+    "text": "A legigazságosabb ítélet a Vezeklés, majd a Nádmező lett volna – a teljes igazság ismeretében a Felmentés is igazságos.
+
+Kha eleinte valóban részt vett Djehuty sikkasztásában, és elfogadta a részét: ezért felelősség terheli. Később azonban szembefordult a tolvajokkal, bizonyítékot gyűjtött ellenük, és megrendezte a saját halálát, hogy a vezírhez juthasson. Djehuty megvesztegette Hapu kapitányt, és Kha a szökés első éjjelén meghalt. A kincstári tekercs kettős pecsétje és Djehuty ellenjegyzése bizonyítja, hogy a Kha elleni vádat utólag koholták.
+
+Az elítélés tehát egy áldozatot büntetett volna a gyilkosa helyett. A bizonyítékok nélküli felmentés pedig elhallgatta volna, hogy Kha maga is vétkes volt. A Ma'at azt kívánja, hogy mindkettő a mérlegre kerüljön: a bűnrészesség és az áldozat sorsa is.",
+    "keys": [
+      "A halotti jelentés (K04) és a balzsamozó naplója (K06) között három nap eltérés van – Kha később halt meg, mint ahogy bejegyezték.",
+      "A kereskedelmi nyilvántartás (K02) kettős pecsétje (K08) és Djehuty második aláírása (K11) leleplezi a hamis vádat.",
+      "Merit vallomása (K10) feltárja a megrendezett halált és Kha korábbi bűnrészességét.",
+      "A hajójegyzék (K12), a rejtett kifizetés (K07), a kapitány vallomása (K13) és a test azonosítása (K14) bizonyítja a gyilkosságot."
+    ]
+  },
   "endings": [
     {
       "id": "A", "title": "Az elárult kereskedő",
