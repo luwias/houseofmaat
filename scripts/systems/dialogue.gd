@@ -56,6 +56,24 @@ static func choose(case_data: Dictionary, did: String, nid: String, idx: int, gs
 	return str(opt.get("next", "end"))
 
 
+## A már meghallgatott kérdések és válaszok (újrakérdezéshez). Csak olvas,
+## semmilyen hatást nem futtat. Minden válasz csak egyszer szerepel.
+static func heard(case_data: Dictionary, did: String, gs) -> Array:
+	var out := []
+	var seen := {}
+	var nodes: Dictionary = get_dialogue(case_data, did).get("nodes", {})
+	for nid in nodes:
+		var opts: Array = nodes[nid].get("options", [])
+		for i in opts.size():
+			var nx := str(opts[i].get("next", "end"))
+			if nx in ["end", "start"] or seen.has(nx):
+				continue
+			if gs.option_used(option_key(did, str(nid), i)) and gs.node_visited("%s.%s" % [did, nx]):
+				seen[nx] = true
+				out.append({"question": str(opts[i].text), "node": nx})
+	return out
+
+
 ## Van-e még fel nem fedezett beszédtéma a kezdő csomópontban?
 static func has_new(case_data: Dictionary, did: String, gs) -> bool:
 	if not gs.node_visited("%s.start" % did):

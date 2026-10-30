@@ -29,6 +29,7 @@ func _ready() -> void:
 	test_misleading_evidence()
 	test_save_load()
 	test_card_copies()
+	test_dialogue_replay()
 	test_temple_effects()
 	print("\n==== %d sikeres, %d hibás ====" % [passes, fails])
 	get_tree().quit(1 if fails > 0 else 0)
@@ -451,6 +452,24 @@ func test_card_copies() -> void:
 	best_board()
 	ok(board_within_copies(), "a teljes igazság kirakható a rendelkezésre álló példányokból")
 	ok(Judgment.resolve(case_data, "mercy", GS).ending == "A", "és A befejezéshez vezet")
+
+
+func test_dialogue_replay() -> void:
+	print("
+[újrakérdezés]")
+	fresh()
+	ok(Dlg.heard(case_data, "ipy", GS).is_empty(), "meghallgatás előtt nincs mit újrakérdezni")
+	talk("ipy", ["Kha kereskedőéről", "Folytatod"])
+	talk("ipy", ["Ki hozta be", "Folytatod"])
+	var h := Dlg.heard(case_data, "ipy", GS)
+	ok(h.size() == 2, "két meghallgatott válasz (%d)" % h.size())
+	ok(h[0].node == "ledger" and str(h[0].question).contains("Kha kereskedőéről"), "a kérdés és a válasz-csomópont párban")
+	ok(not Dlg.options(case_data, "ipy", "start", GS).any(func(o): return str(o.opt.text).contains("Kha kereskedőéről")),
+		"az egyszeri kérdés a rendes beszélgetésből eltűnt – ezért kell az újrakérdezés")
+	var before := JSON.stringify(GS.data)
+	Dlg.heard(case_data, "ipy", GS)
+	Dlg.node(case_data, "ipy", "ledger")
+	ok(JSON.stringify(GS.data) == before, "az újrakérdezés semmit nem változtat az állapoton")
 
 
 func test_temple_effects() -> void:

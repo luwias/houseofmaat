@@ -219,8 +219,8 @@ func open_compare(cid: String, eid_a := "") -> void:
 	open_overlay(CompareView.new(cid, eid_a))
 
 
-func open_dialogue(cid: String, did: String) -> void:
-	open_overlay(DialoguePanel.new(cid, did))
+func open_dialogue(cid: String, did: String, replay := false) -> void:
+	open_overlay(DialoguePanel.new(cid, did, replay))
 
 
 func open_judgment(cid: String) -> void:

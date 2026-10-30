@@ -11,11 +11,14 @@ var dlg: Dictionary
 var text_label: RichTextLabel
 var options_box: VBoxContainer
 var _tw: Tween
+## Újrakérdezés: a már elhangzott válaszok visszaidézése, hatások nélkül.
+var replay := false
 
 
-func _init(p_cid := "", p_did := "") -> void:
+func _init(p_cid := "", p_did := "", p_replay := false) -> void:
 	cid = p_cid
 	did = p_did
+	replay = p_replay
 	dim = 0.5
 
 
@@ -43,7 +46,8 @@ func build() -> void:
 	port.add_child(circle)
 	port.add_child(UI.title(str(dlg.get("speaker", "")), 24, T.GOLD, HORIZONTAL_ALIGNMENT_CENTER))
 	port.add_child(UI.label(str(dlg.get("role", "")), 14, T.SAND, true, HORIZONTAL_ALIGNMENT_CENTER))
-	port.add_child(UI.label(Loc.t("dlg_ka_note"), 12, T.MUTED, true, HORIZONTAL_ALIGNMENT_CENTER))
+	port.add_child(UI.label(Loc.t("dlg_replay_note") if replay else Loc.t("dlg_ka_note"), 12, T.MUTED, true,
+		HORIZONTAL_ALIGNMENT_CENTER))
 	h.add_child(port)
 	var right := UI.vbox(14)
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -56,7 +60,10 @@ func build() -> void:
 	right.add_child(UI.separator())
 	options_box = UI.vbox(8)
 	right.add_child(UI.scroll(options_box))
-	_enter(nid)
+	if replay:
+		_replay_menu()
+	else:
+		_enter(nid)
 
 
 func _on_text_input(e: InputEvent) -> void:
@@ -103,6 +110,45 @@ func _build_options() -> void:
 		if opt.has("group"):
 			b.tooltip_text = Loc.t("dlg_exclusive")
 		options_box.add_child(b)
+
+
+# ------------------------------------------------------------ újrakérdezés
+func _show_text(t: String) -> void:
+	text_label.text = t
+	text_label.visible_ratio = 0.0
+	if _tw:
+		_tw.kill()
+	_tw = create_tween()
+	_tw.tween_property(text_label, "visible_ratio", 1.0, clampf(t.length() / 120.0, 0.3, 2.0))
+
+
+func _replay_menu() -> void:
+	_show_text(Loc.t("dlg_replay_intro"))
+	_build_replay_options("")
+
+
+func _replay_node(node_id: String, question: String) -> void:
+	_show_text("[color=#d4a640][i]%s[/i][/color]
+
+%s" % [question, str(Dlg.node(case_data, did, node_id).get("text", ""))])
+	_build_replay_options(node_id)
+
+
+func _build_replay_options(current: String) -> void:
+	UI.clear(options_box)
+	for e in Dlg.heard(case_data, did, GameState):
+		var b := UI.button("↺  " + str(e.question), _replay_node.bind(str(e.node), str(e.question)))
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		b.custom_minimum_size.x = 600
+		b.add_theme_font_size_override("font_size", 16)
+		if e.node == current:
+			b.add_theme_stylebox_override("normal", T.flat(Color(T.LAPIS_L, 0.95), T.GOLD_L, 2, 6, 10))
+		options_box.add_child(b)
+	var close_b := UI.button(Loc.t("dlg_replay_close"), close)
+	close_b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	close_b.add_theme_color_override("font_color", T.SAND)
+	options_box.add_child(close_b)
 
 
 func _choose(idx: int) -> void:

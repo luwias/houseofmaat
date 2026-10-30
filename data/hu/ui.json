@@ -126,6 +126,8 @@
   "inv_encounters": "Megidézhető ka-k",
   "inv_no_encounters": "A nyomozás során újabb szereplők ka-ja válhat megidézhetővé.",
   "inv_summon": "Megidézés",
+  "inv_replay": "↺  Újrakérdezés",
+  "inv_replay_tip": "A már elhangzott válaszok újraolvasása. Ez semmit nem változtat az ügyön.",
 
   "ev_found": "Feltárt bizonyítékok: %d / %d",
   "ev_compare": "𓂀  Összevetés",
@@ -167,6 +169,9 @@
   "cmp_corrupted": "Az egyik bizonyítékot megrontotta a Duat – nem vethető össze.",
 
   "dlg_ka_note": "megidézett ka",
+  "dlg_replay_note": "felidézett emlék – a ka ugyanazt mondja, amit korábban",
+  "dlg_replay_intro": "[i]A ka szavai a Ház emlékezetében maradtak. Válaszd ki, melyik választ szeretnéd újra hallani.[/i]",
+  "dlg_replay_close": "Visszatérés",
   "dlg_exclusive": "Kizáró döntés: ha ezt választod, a többi megközelítés elvész.",
 
   "sb_hint": "Húzd a kártyákat a tálcáról a jelenetekbe. Egy jelenethez legalább két elem kell. Minden kártya csak annyiszor használható, ahány példány van belőle – a lehelyezett kártya eltűnik a tálcáról. Dupla kattintással eltávolíthatod, vagy húzd vissza a tálcára. Az értelmezés állapota a feltárt bizonyítékokon múlik – nem a helyes válaszon.",

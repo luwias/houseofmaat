@@ -213,9 +213,14 @@ func _branch_card(br: Dictionary, letter: String) -> Control:
 	if br.has("location"):
 		v.add_child(UI.label(br.location, 14, T.INK_L))
 	v.add_child(UI.ink(br.desc, 15))
+	var bh := UI.hbox(8)
 	var b := UI.ink_button(Loc.t("inv_summon"), func(): main.open_dialogue(cid, br.dialogue))
-	b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-	v.add_child(b)
+	bh.add_child(b)
+	if not Dlg.heard(case_data, br.dialogue, GameState).is_empty():
+		var rb := UI.ink_button(Loc.t("inv_replay"), func(): main.open_dialogue(cid, br.dialogue, true))
+		rb.tooltip_text = Loc.t("inv_replay_tip")
+		bh.add_child(rb)
+	v.add_child(bh)
 	h.add_child(v)
 	return p
 
