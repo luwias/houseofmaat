@@ -52,6 +52,11 @@ func build() -> void:
 		b.add_theme_font_size_override("font_size", 18)
 		tab_buttons[t] = b
 		tabs.add_child(b)
+	var nb := UI.button(Loc.t("btn_notes"), func(): main.open_notes(cid))
+	nb.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	nb.add_theme_font_size_override("font_size", 18)
+	tabs.add_child(UI.gap(6))
+	tabs.add_child(nb)
 	tabs.add_child(UI.spacer(false))
 	questions_holder = UI.vbox(0)
 	tabs.add_child(questions_holder)

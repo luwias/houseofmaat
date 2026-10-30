@@ -58,6 +58,7 @@ func _ready() -> void:
 	th.add_child(active_case_btn)
 	th.add_child(UI.button(Loc.t("btn_souls"), func(): main.open_soul_board()))
 	th.add_child(UI.button(Loc.t("btn_archive"), func(): main.open_room_screen("archive", "evidence")))
+	th.add_child(UI.button(Loc.t("btn_notes"), func(): main.open_notes()))
 	th.add_child(UI.button("?", func(): main.open_help()))
 	th.add_child(UI.button(Loc.t("btn_menu"), func(): main.confirm(Loc.t("confirm_to_menu"), main.show_menu)))
 

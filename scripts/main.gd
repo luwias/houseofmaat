@@ -21,6 +21,7 @@ const GardenScreen = preload("res://scripts/ui/screens/garden_screen.gd")
 const ForgottenScreen = preload("res://scripts/ui/screens/forgotten_screen.gd")
 const AstralScreen = preload("res://scripts/ui/screens/astral_screen.gd")
 const HelpScreen = preload("res://scripts/ui/screens/help_screen.gd")
+const NotesScreen = preload("res://scripts/ui/screens/notes_screen.gd")
 const ConfirmDialog = preload("res://scripts/ui/screens/confirm_dialog.gd")
 
 var temple: Node3D
@@ -259,6 +260,13 @@ func open_room_screen(room: String, extra := "") -> void:
 			open_overlay(AstralScreen.new(extra))
 		"hall":
 			open_soul_board()
+
+
+func open_notes(page := "") -> void:
+	if page == "":
+		var cid := str(GameState.data.get("active_case", ""))
+		page = cid if cid != "" and not GameState.case_done(cid) else "general"
+	open_overlay(NotesScreen.new(page))
 
 
 func open_help() -> void:

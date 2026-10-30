@@ -64,7 +64,7 @@ func reset_state() -> void:
 		"nodes": {}, "options": {}, "choices": {}, "lexicon": {}, "memories": {}, "clarified": {},
 		"compared": {}, "clues": {}, "corrupted": {}, "cases": {}, "history": [],
 		"active_case": "", "room": "hall", "consults": {}, "restored": {}, "playtime": 0.0,
-		"seen_intro": false
+		"seen_intro": false, "notes": {}
 	}
 	for e in GameData.temple.get("base_lexicon", []):
 		data.lexicon[e.id] = true
@@ -380,6 +380,20 @@ func card_available(card_id: String) -> bool:
 		"memory":
 			return memory_unlocked(str(card.memory))
 	return Cond.check(card.get("unlock", true), self)
+
+
+# ------------------------------------------------------------ jegyzetek
+func get_note(key: String) -> String:
+	return str(data.get("notes", {}).get(key, ""))
+
+
+func set_note(key: String, text: String) -> void:
+	if not data.has("notes"):
+		data["notes"] = {}
+	if str(data.notes.get(key, "")) == text:
+		return
+	data.notes[key] = text
+	_mark()
 
 
 ## Hányszor van már lehelyezve a kártya a storyboardon.

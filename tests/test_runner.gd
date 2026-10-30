@@ -417,6 +417,12 @@ func test_save_load() -> void:
 	ok(GS.node_visited("harbor.manifest"), "a párbeszéd-előzmény megmaradt")
 	ok(GS.board("kha").childhood == ["c_kha", "e_poverty"], "a rekonstrukció megmaradt")
 	ok(is_equal_approx(GS.get_stat("maat"), 60.0), "a templom-értékek megmaradtak")
+	GS.set_note("kha", "Ipy hazudik a dátumról?")
+	GS.save_game()
+	GS.reset_state()
+	ok(GS.get_note("kha") == "", "új játékban üres a jegyzetfüzet")
+	GS.load_game()
+	ok(GS.get_note("kha") == "Ipy hazudik a dátumról?", "a saját jegyzetek megmaradnak mentés után")
 	GS.delete_save()
 
 
