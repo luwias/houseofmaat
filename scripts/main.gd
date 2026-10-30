@@ -80,7 +80,8 @@ func show_menu() -> void:
 		menu = MainMenu.new()
 		menu.main = self
 		root.add_child(menu)
-		root.move_child(menu, root.get_child_count() - 2)
+		# a menü az átfedő ablakok ALÁ kerül, hogy a megerősítés és a súgó látható legyen
+		root.move_child(menu, overlay_host.get_index())
 
 
 func _leave_menu() -> void:
@@ -100,6 +101,7 @@ func new_game() -> void:
 	go_room("hall", true)
 	if not GameState.data.seen_intro:
 		GameState.data.seen_intro = true
+		GameState.save_game()
 		open_overlay(HelpScreen.new(true))
 
 
