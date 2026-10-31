@@ -143,3 +143,11 @@ A leírás magyarul van – fordítsd le a prompthoz, vagy írd le a jelenetet s
 - `cards/m_night_carts.png` – emlék: Éjszakai szekerek
 - `cards/m_prison.png` – emlék: A börtön
 
+
+## Párbeszéd-hátterek – `backgrounds/bg_<lélek>_<párbeszéd>.png`
+
+16:9 (pl. 1920×1080), keret nélkül; a szereplő a kép bal harmadában, a jobb kétharmad sötétebb, nyugodt háttér.
+Ha a kép létezik, a párbeszéd teljes képernyős jelenetes nézetben nyílik meg (idézet jobbra fent,
+kérdések alul); ha nincs, marad a sima nézet a portréval.
+
+- `backgrounds/bg_kha_ipy.png`, `bg_kha_harbor.png`, `bg_kha_treasury.png`, `bg_kha_merit.png`, `bg_kha_hapu.png`, `bg_kha_djehuty.png`

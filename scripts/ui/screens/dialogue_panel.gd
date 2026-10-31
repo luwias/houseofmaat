@@ -14,6 +14,7 @@ var options_box: VBoxContainer
 var _tw: Tween
 ## Újrakérdezés: a már elhangzott válaszok visszaidézése, hatások nélkül.
 var replay := false
+var _scene := false
 
 
 func _init(p_cid := "", p_did := "", p_replay := false) -> void:
@@ -26,6 +27,127 @@ func _init(p_cid := "", p_did := "", p_replay := false) -> void:
 func build() -> void:
 	case_data = GameData.get_case(cid)
 	dlg = Dlg.get_dialogue(case_data, did)
+	if ArtFrame.find("backgrounds", _bg_id()) != null:
+		_build_scene()
+	else:
+		_build_classic()
+	if replay:
+		_replay_menu()
+	else:
+		_enter(nid)
+
+
+func _bg_id() -> String:
+	return "bg_%s_%s" % [cid, did]
+
+
+## Jelenetes nézet: teljes képernyős háttérkép (a szereplő a bal harmadban),
+## jobbra fent az idézet, alul a beszélő és a kérdések.
+func _build_scene() -> void:
+	_scene = true
+	var art := ArtFrame.new()
+	art.setup("backgrounds", _bg_id())
+	art.frame = false
+	art.fade_bottom = 0.0
+	UI.full_rect(art)
+	add_child(art)
+	# sötétítés jobbra (a szöveg alá) és alul (a panel alá)
+	add_child(_shade(Vector2(0, 0), Vector2(1, 0), [0.0, 0.4, 1.0], [0.0, 0.25, 0.8]))
+	add_child(_shade(Vector2(0, 0), Vector2(0, 1), [0.0, 0.55, 1.0], [0.0, 0.15, 0.9]))
+	var panel_h := T.px(330) + (40 if T.compact else 0)
+	# idézet
+	var q := UI.margin(null, 0, 40 if T.compact else 70, 24 if T.compact else 110, 20)
+	q.anchor_left = 0.42
+	q.anchor_right = 1.0
+	q.anchor_top = 0.0
+	q.anchor_bottom = 1.0
+	q.offset_left = 0
+	q.offset_top = 0
+	q.offset_right = 0
+	q.offset_bottom = -panel_h - (12 if T.compact else 60)
+	q.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(q)
+	var qv := UI.vbox(0)
+	qv.alignment = BoxContainer.ALIGNMENT_CENTER
+	qv.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	q.add_child(qv)
+	text_label = UI.rich("", 24, T.PAPYRUS)
+	text_label.add_theme_font_override("italics_font", T.font_italic)
+	text_label.add_theme_constant_override("outline_size", 6)
+	text_label.add_theme_color_override("font_outline_color", Color(0.02, 0.03, 0.08, 0.75))
+	text_label.mouse_filter = Control.MOUSE_FILTER_STOP
+	text_label.gui_input.connect(_on_text_input)
+	qv.add_child(text_label)
+	# alsó panel: beszélő + kérdések
+	var side := 12 if T.compact else 120
+	var m := UI.margin(null, side, 0, side, 12 if T.compact else 40)
+	m.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	m.offset_top = -panel_h - (12 if T.compact else 40)
+	m.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(m)
+	var p := UI.dark_panel(18, 0.9, T.GOLD)
+	m.add_child(p)
+	var h := UI.hbox(24)
+	p.add_child(h)
+	h.add_child(_speaker_column(false))
+	options_box = UI.vbox(8)
+	h.add_child(UI.scroll(options_box))
+
+
+func _shade(from: Vector2, to: Vector2, offsets: Array, alphas: Array) -> TextureRect:
+	var g := Gradient.new()
+	g.offsets = PackedFloat32Array(offsets)
+	var cols := PackedColorArray()
+	for a in alphas:
+		cols.append(Color(Color("0a0f1f"), float(a)))
+	g.colors = cols
+	var gt := GradientTexture2D.new()
+	gt.gradient = g
+	gt.fill_from = from
+	gt.fill_to = to
+	gt.width = 256
+	gt.height = 256
+	var tr := TextureRect.new()
+	tr.texture = gt
+	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tr.stretch_mode = TextureRect.STRETCH_SCALE
+	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	UI.full_rect(tr)
+	return tr
+
+
+## Bal oszlop: portré (vagy jel körben), név, szerep, megjegyzés.
+func _speaker_column(with_art: bool) -> VBoxContainer:
+	var port := UI.vbox(8)
+	port.custom_minimum_size.x = T.px(210)
+	var circle := UI.box_panel(Color("101830"), T.GOLD, 2, 10, 90)
+	var cs := T.px(130 if _scene else 170)
+	circle.custom_minimum_size = Vector2(cs, cs)
+	circle.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	if with_art and ArtFrame.find("portraits", "%s_%s" % [cid, did]) != null:
+		var art := ArtFrame.new()
+		art.setup("portraits", "%s_%s" % [cid, did])
+		art.fade_bottom = 0.25
+		art.custom_minimum_size = T.v2(190, 230)
+		port.add_child(art)
+	else:
+		var g := UI.glyphs(str(dlg.get("glyph", "𓂓")), 64 if _scene else 84, T.GOLD_L)
+		g.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		circle.add_child(g)
+		port.add_child(circle)
+	port.add_child(UI.title(str(dlg.get("speaker", "")), 24, T.GOLD, HORIZONTAL_ALIGNMENT_CENTER))
+	port.add_child(UI.label(str(dlg.get("role", "")), 14, T.SAND, true, HORIZONTAL_ALIGNMENT_CENTER))
+	port.add_child(UI.label(Loc.t("dlg_replay_note") if replay else Loc.t("dlg_ka_note"), 12, T.MUTED, true,
+		HORIZONTAL_ALIGNMENT_CENTER))
+	return port
+
+
+## A jelenetes nézetben az idézet dőlt, idézőjelek között.
+func _fmt(t: String) -> String:
+	return "[i]„%s”[/i]" % t if _scene else t
+
+
+func _build_classic() -> void:
 	var side := 12 if T.compact else 120
 	var m := UI.margin(null, side, 0, side, 12 if T.compact else 60)
 	m.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
@@ -36,29 +158,7 @@ func build() -> void:
 	m.add_child(p)
 	var h := UI.hbox(24)
 	p.add_child(h)
-	# portré
-	var port := UI.vbox(8)
-	port.custom_minimum_size.x = T.px(210)
-	var circle := UI.box_panel(Color("101830"), T.GOLD, 2, 10, 90)
-	circle.custom_minimum_size = T.v2(170, 170)
-	circle.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var tex := ArtFrame.find("portraits", "%s_%s" % [cid, did])
-	if tex != null:
-		var art := ArtFrame.new()
-		art.setup("portraits", "%s_%s" % [cid, did])
-		art.fade_bottom = 0.25
-		art.custom_minimum_size = T.v2(190, 230)
-		port.add_child(art)
-	else:
-		var g := UI.glyphs(str(dlg.get("glyph", "𓂓")), 84, T.GOLD_L)
-		g.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		circle.add_child(g)
-		port.add_child(circle)
-	port.add_child(UI.title(str(dlg.get("speaker", "")), 24, T.GOLD, HORIZONTAL_ALIGNMENT_CENTER))
-	port.add_child(UI.label(str(dlg.get("role", "")), 14, T.SAND, true, HORIZONTAL_ALIGNMENT_CENTER))
-	port.add_child(UI.label(Loc.t("dlg_replay_note") if replay else Loc.t("dlg_ka_note"), 12, T.MUTED, true,
-		HORIZONTAL_ALIGNMENT_CENTER))
-	h.add_child(port)
+	h.add_child(_speaker_column(true))
 	var right := UI.vbox(14)
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(right)
@@ -70,10 +170,6 @@ func build() -> void:
 	right.add_child(UI.separator())
 	options_box = UI.vbox(8)
 	right.add_child(UI.scroll(options_box))
-	if replay:
-		_replay_menu()
-	else:
-		_enter(nid)
 
 
 func _on_text_input(e: InputEvent) -> void:
@@ -87,7 +183,7 @@ func _enter(node_id: String) -> void:
 	Dlg.enter(case_data, did, nid, GameState)
 	GameState.flush()
 	var node := Dlg.node(case_data, did, nid)
-	text_label.text = str(node.get("text", ""))
+	text_label.text = _fmt(str(node.get("text", "")))
 	text_label.visible_ratio = 0.0
 	if _tw:
 		_tw.kill()
@@ -140,7 +236,7 @@ func _replay_menu() -> void:
 func _replay_node(node_id: String, question: String) -> void:
 	_show_text("[color=#d4a640][i]%s[/i][/color]
 
-%s" % [question, str(Dlg.node(case_data, did, node_id).get("text", ""))])
+%s" % [question, _fmt(str(Dlg.node(case_data, did, node_id).get("text", "")))])
 	_build_replay_options(node_id)
 
 
