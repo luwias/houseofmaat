@@ -3,6 +3,7 @@ extends RefCounted
 
 const T = preload("res://scripts/ui/theme.gd")
 const PapyrusPanel = preload("res://scripts/ui/widgets/papyrus_panel.gd")
+const FriezeStrip = preload("res://scripts/ui/widgets/frieze_strip.gd")
 
 const ORNAMENT := "𓋹  𓆄  𓂀  𓊽  𓋹  𓆄  𓂀  𓊽  𓋹"
 
@@ -84,12 +85,13 @@ static func ghost_button(text: String, cb: Callable = Callable(), color: Color =
 	return b
 
 
+## Papiruszon / vakolaton használt világos festett tábla.
 static func ink_button(text: String, cb: Callable = Callable()) -> Button:
 	var b := button(text, cb)
-	b.add_theme_stylebox_override("normal", T.flat(Color(T.INK, 0.08), Color(T.INK_L, 0.6), 1, 4, 8))
-	b.add_theme_stylebox_override("hover", T.flat(Color(T.INK, 0.16), T.INK_L, 1, 4, 8))
-	b.add_theme_stylebox_override("pressed", T.flat(Color(T.INK, 0.24), T.INK, 1, 4, 8))
-	b.add_theme_stylebox_override("disabled", T.flat(Color(T.INK, 0.03), Color(T.INK_L, 0.25), 1, 4, 8))
+	b.add_theme_stylebox_override("normal", T.tablet("plaster"))
+	b.add_theme_stylebox_override("hover", T.tablet("plaster_hover"))
+	b.add_theme_stylebox_override("pressed", T.tablet("plaster_pressed"))
+	b.add_theme_stylebox_override("disabled", T.tablet("plaster_disabled"))
 	b.add_theme_color_override("font_color", T.INK)
 	b.add_theme_color_override("font_hover_color", T.RED_INK)
 	b.add_theme_color_override("font_pressed_color", T.RED_INK)
@@ -101,10 +103,17 @@ static func papyrus(margin: int = 22) -> PanelContainer:
 	return PapyrusPanel.new(margin)
 
 
-static func dark_panel(margin: int = 16, alpha: float = 0.94, border: Color = T.GOLD_D) -> PanelContainer:
-	var p := PanelContainer.new()
-	p.add_theme_stylebox_override("panel", T.flat(Color(T.NAVY, alpha), border, 2, 6, margin))
-	return p
+## Sötét festett panel: csillagos sírmennyezet színes sávkerettel.
+static func dark_panel(margin: int = 16, _alpha: float = 0.94, _border: Color = T.GOLD_D, kheker := false) -> PanelContainer:
+	return PapyrusPanel.new(margin, "night", kheker)
+
+
+## Kiemelt, piros festett tábla (fő művelet).
+static func primary_button(text: String, cb: Callable = Callable(), min_w: int = 0) -> Button:
+	var b := button(text, cb, min_w)
+	b.add_theme_stylebox_override("normal", T.tablet("red"))
+	b.add_theme_stylebox_override("hover", T.tablet("red_hover"))
+	return b
 
 
 static func box_panel(bg: Color, border: Color, bw: int = 1, margin: int = 10, radius: int = 6) -> PanelContainer:
@@ -173,7 +182,7 @@ static func scroll(child: Control, horizontal: bool = false) -> ScrollContainer:
 
 
 static func badge(text: String, color: Color, size: int = 14) -> PanelContainer:
-	var p := box_panel(color.darkened(0.2), color.darkened(0.5), 1, 4, 3)
+	var p := box_panel(color.darkened(0.1), T.BLACK, 1, 4, 1)
 	var st: StyleBoxFlat = p.get_theme_stylebox("panel")
 	st.content_margin_left = 8
 	st.content_margin_right = 8
@@ -187,7 +196,7 @@ static func badge(text: String, color: Color, size: int = 14) -> PanelContainer:
 
 static func state_badge(state: String, size: int = 14) -> PanelContainer:
 	var col := T.state_color(state)
-	var p := box_panel(col.darkened(0.15), col.darkened(0.45), 1, 4, 3)
+	var p := box_panel(col, T.BLACK, 1, 4, 1)
 	var st: StyleBoxFlat = p.get_theme_stylebox("panel")
 	st.content_margin_left = 8
 	st.content_margin_right = 8
@@ -198,7 +207,9 @@ static func state_badge(state: String, size: int = 14) -> PanelContainer:
 	return p
 
 
-static func separator(color: Color = T.GOLD_D) -> ColorRect:
+static func separator(color: Color = T.GOLD_D) -> Control:
+	if color == T.GOLD_D:
+		return FriezeStrip.new(7.0)
 	var c := ColorRect.new()
 	c.color = Color(color, 0.7)
 	c.custom_minimum_size = Vector2(0, 1)

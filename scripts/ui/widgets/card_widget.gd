@@ -13,6 +13,12 @@ var category := ""
 var source_slot := ""
 var draggable := true
 var _card: Dictionary = {}
+var _band := Color.WHITE
+
+
+func _draw() -> void:
+	draw_rect(Rect2(2, 2, size.x - 4, 5), _band)
+	draw_line(Vector2(2, 7.5), Vector2(size.x - 2, 7.5), T.BLACK, 1.0)
 
 
 func setup(card: Dictionary, slot_id: String = "", compact: bool = false) -> void:
@@ -25,11 +31,12 @@ func setup(card: Dictionary, slot_id: String = "", compact: bool = false) -> voi
 	custom_minimum_size = Vector2(118, 74) if compact else Vector2(132, 88)
 	var col: Color = T.CATEGORY_COLORS.get(category, T.MUTED)
 	var is_ev := category == "evidence"
-	var bg := Color(T.LAPIS.darkened(0.35), 0.98) if is_ev else T.PAPYRUS
-	var border := T.GOLD if is_ev else col.darkened(0.15)
-	var sb := T.flat(bg, border, 2, 5, 6)
-	sb.border_width_top = 6 if not is_ev else 2
+	# festett csempe: fekete kontúr, felül a kategória színsávja; a bizonyíték sötét papirusz
+	var bg := Color("2b2016") if is_ev else T.PAPYRUS
+	var sb := T.flat(bg, T.BLACK, 2, 2, 6)
+	sb.content_margin_top = 12
 	add_theme_stylebox_override("panel", sb)
+	_band = col if not is_ev else T.RED
 
 	var v := UI.vbox(1)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -37,16 +44,16 @@ func setup(card: Dictionary, slot_id: String = "", compact: bool = false) -> voi
 	var top := UI.hbox(4)
 	top.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(top)
-	var g := UI.glyphs(str(card.get("glyph", "?")), 22 if not compact else 18, T.GOLD if is_ev else col.darkened(0.3))
+	var g := UI.glyphs(str(card.get("glyph", "?")), 22 if not compact else 18, T.GOLD if is_ev else T.INK)
 	g.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	top.add_child(g)
 	top.add_child(UI.spacer())
-	var cap := UI.label(card.id if is_ev else Loc.t("cat_" + category), 11, T.GOLD_L if is_ev else T.INK_L)
+	var cap := UI.label(card.id if is_ev else Loc.t("cat_" + category), 12, T.GOLD_L if is_ev else col.darkened(0.35))
 	cap.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	top.add_child(cap)
 	var t := UI.label(card.title, 15 if not compact else 13, T.PAPYRUS if is_ev else T.INK, true)
 	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	t.add_theme_font_override("font", T.font_title)
+	t.add_theme_font_override("font", T.font_body_bold)
 	v.add_child(t)
 
 

@@ -101,3 +101,8 @@ Godot_v4.7.2-stable_win64_console.exe --headless --path . --export-release "Andr
 ```
 
 A kiadási kulcstár nincs a repóban – őrizd meg, nélküle nem adható ki frissítés.
+
+## Felhasznált szabad anyagok
+
+- Betűk (SIL Open Font License): Cinzel, EB Garamond, Noto Sans Egyptian Hieroglyphs – `assets/fonts/OFL-*.txt`
+- Textúrák (CC0): Poly Haven – `assets/textures/LICENSE.txt`

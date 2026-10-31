@@ -21,7 +21,7 @@ func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	var bg := ColorRect.new()
-	bg.color = Color(0.01, 0.02, 0.05, dim)
+	bg.color = Color(0.03, 0.02, 0.012, dim)
 	bg.mouse_filter = Control.MOUSE_FILTER_STOP
 	UI.full_rect(bg)
 	add_child(bg)
@@ -63,7 +63,7 @@ func centered(min_size: Vector2, panel: PanelContainer = null) -> PanelContainer
 	UI.full_rect(cc)
 	cc.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(cc)
-	var p := panel if panel != null else UI.dark_panel(22)
+	var p := panel if panel != null else UI.dark_panel(22, 0.94, T.GOLD_D, true)
 	var want := T.v2(min_size.x, min_size.y)
 	var avail := get_viewport().get_visible_rect().size - Vector2(24, 24) if is_inside_tree() else want
 	p.custom_minimum_size = Vector2(minf(want.x, avail.x), minf(want.y, avail.y))
@@ -80,7 +80,7 @@ func framed(margin_px: int = 36, panel: PanelContainer = null) -> PanelContainer
 	UI.full_rect(m)
 	m.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(m)
-	var p := panel if panel != null else UI.dark_panel(20)
+	var p := panel if panel != null else UI.dark_panel(20, 0.94, T.GOLD_D, not T.compact)
 	m.add_child(p)
 	return p
 
@@ -88,7 +88,7 @@ func framed(margin_px: int = 36, panel: PanelContainer = null) -> PanelContainer
 ## Fejléc címmel és bezárógombbal.
 func header(title_text: String, glyph: String = "𓆄", subtitle: String = "") -> HBoxContainer:
 	var h := UI.hbox(14)
-	h.add_child(UI.glyphs(glyph, 34, T.GOLD))
+	h.add_child(UI.glyphs(glyph, 38, T.GOLD))
 	var tv := UI.vbox(0)
 	tv.add_child(UI.title(title_text, 28))
 	if subtitle != "":

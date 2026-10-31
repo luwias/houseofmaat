@@ -4,6 +4,7 @@ extends Control
 const T = preload("res://scripts/ui/theme.gd")
 const UI = preload("res://scripts/ui/ui.gd")
 const Meter = preload("res://scripts/ui/widgets/meter.gd")
+const FriezeStrip = preload("res://scripts/ui/widgets/frieze_strip.gd")
 
 const ROOM_ORDER := ["hall", "archive", "memories", "garden", "hieroglyphs", "forgotten", "astral"]
 
@@ -32,6 +33,11 @@ func _ready() -> void:
 	top.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
 	top.offset_bottom = 70
 	add_child(top)
+	var top_band := FriezeStrip.new(9.0)
+	top_band.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	top_band.offset_top = 70
+	top_band.offset_bottom = 79
+	add_child(top_band)
 	var th := UI.hbox(22)
 	top.add_child(th)
 	th.add_child(UI.glyphs("𓆄", 32, T.GOLD))
@@ -109,6 +115,11 @@ func _ready() -> void:
 	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	bottom.offset_top = -78
 	add_child(bottom)
+	var bottom_band := FriezeStrip.new(9.0)
+	bottom_band.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	bottom_band.offset_top = -87
+	bottom_band.offset_bottom = -78
+	add_child(bottom_band)
 	var bh := UI.hbox(8)
 	bh.alignment = BoxContainer.ALIGNMENT_CENTER
 	bottom.add_child(bh)
@@ -140,12 +151,8 @@ func _open_active_case() -> void:
 		main.open_case(cid)
 
 
-func _bar_style(top: bool) -> StyleBoxFlat:
-	var s := T.flat(Color(T.DEEP, 0.86), T.GOLD_D, 0, 0, 12)
-	if top:
-		s.border_width_bottom = 2
-	else:
-		s.border_width_top = 2
+func _bar_style(_top: bool) -> StyleBoxFlat:
+	var s := T.flat(Color(T.NAVY, 0.94), T.BLACK, 0, 0, 12)
 	s.content_margin_left = 22
 	s.content_margin_right = 22
 	return s
@@ -187,7 +194,7 @@ func refresh() -> void:
 		var cur: bool = rid == current_room
 		b.add_theme_color_override("font_color", T.GOLD_L if cur else T.PAPYRUS)
 		if cur:
-			b.add_theme_stylebox_override("normal", T.flat(Color(T.LAPIS_L, 0.9), T.GOLD, 2, 6, 8))
+			b.add_theme_stylebox_override("normal", T.tablet("selected"))
 		else:
 			b.remove_theme_stylebox_override("normal")
 	var cid := str(GameState.data.get("active_case", ""))

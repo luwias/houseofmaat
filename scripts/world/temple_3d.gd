@@ -12,6 +12,7 @@ const SHADOW_SHADER := preload("res://shaders/shadow_blob.gdshader")
 const HIGHLIGHT_SHADER := preload("res://shaders/highlight.gdshader")
 const GLYPH_SHADER := preload("res://shaders/glyph_wall.gdshader")
 const FLAME_SHADER := preload("res://shaders/flame.gdshader")
+const SLAB_SHADER := preload("res://shaders/slab_stone.gdshader")
 
 var input_enabled := true
 ## Gyengébb (mobil) hardver: nincs SSAO, térfogati köd és lámpaárnyék.
@@ -105,6 +106,26 @@ func _noise_tex(freq: float, normal: bool, seed_v: int) -> NoiseTexture2D:
 	return t
 
 
+## A vakolat-textúra világos, semleges szemcséje (a festék alá).
+func _grain_tex() -> Texture2D:
+	var img: Image = _tex("clay_plaster_diff").get_image()
+	img.decompress()
+	img.resize(256, 256)
+	var lo := 1.0
+	var hi := 0.0
+	for y in range(0, 256, 4):
+		for x in range(0, 256, 4):
+			var l := img.get_pixel(x, y).get_luminance()
+			lo = minf(lo, l)
+			hi = maxf(hi, l)
+	for y in 256:
+		for x in 256:
+			var l := (img.get_pixel(x, y).get_luminance() - lo) / maxf(0.001, hi - lo)
+			var v := 0.82 + l * 0.18
+			img.set_pixel(x, y, Color(v, v, v))
+	return ImageTexture.create_from_image(img)
+
+
 func _stone(color: Color, rough: float, scale: float, albedo_tex: Texture2D, normal_tex: Texture2D) -> StandardMaterial3D:
 	var m := StandardMaterial3D.new()
 	m.albedo_color = color
@@ -119,24 +140,72 @@ func _stone(color: Color, rough: float, scale: float, albedo_tex: Texture2D, nor
 	return m
 
 
+func _tex(name: String) -> Texture2D:
+	return load("res://assets/textures/%s.jpg" % name)
+
+
+## Valódi (CC0) PBR-textúra világtérbeli vetítéssel.
+func _pbr(prefix: String, tint: Color, scale: float, rough_mul := 1.0) -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.albedo_color = tint
+	m.albedo_texture = _tex(prefix + "_diff")
+	m.normal_enabled = true
+	m.normal_texture = _tex(prefix + "_nor_gl")
+	m.normal_scale = 1.0
+	m.roughness = rough_mul
+	m.roughness_texture = _tex(prefix + "_rough")
+	m.roughness_texture_channel = BaseMaterial3D.TEXTURE_CHANNEL_RED
+	m.uv1_triplanar = true
+	m.uv1_world_triplanar = true
+	m.uv1_scale = Vector3(scale, scale, scale)
+	return m
+
+
+## Festett vakolat: lapos festékszín, alatta a vakolat valódi felszíne.
+func _painted(color: Color, scale := 0.35) -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.albedo_color = color
+	m.albedo_texture = plaster_grain
+	m.normal_enabled = true
+	m.normal_texture = _tex("clay_plaster_nor_gl")
+	m.normal_scale = 0.8
+	m.roughness = 0.9
+	m.uv1_triplanar = true
+	m.uv1_world_triplanar = true
+	m.uv1_scale = Vector3(scale, scale, scale)
+	return m
+
+
+var plaster_grain: Texture2D
+
+
+func _slab(a: Color, b: Color, slab: Vector2, polish: float) -> ShaderMaterial:
+	var m := ShaderMaterial.new()
+	m.shader = SLAB_SHADER
+	m.set_shader_parameter("stone", a)
+	m.set_shader_parameter("stone_b", b)
+	m.set_shader_parameter("slab", slab)
+	m.set_shader_parameter("polish", polish)
+	m.set_shader_parameter("detail", _tex("clay_plaster_nor_gl"))
+	m.set_shader_parameter("grain", _tex("clay_plaster_diff"))
+	return m
+
+
 func _build_materials() -> void:
-	var a := _noise_tex(0.012, false, 3)
 	var nrm := _noise_tex(0.03, true, 7)
-	mats["Sandstone"] = _stone(Color(0.80, 0.63, 0.44), 0.92, 0.22, a, nrm)
-	mats["Limestone"] = _stone(Color(0.88, 0.84, 0.74), 0.9, 0.25, a, nrm)
-	mats["Basalt"] = _stone(Color(0.11, 0.11, 0.13), 0.55, 0.3, a, nrm)
-	mats["SandFloor"] = _stone(Color(0.80, 0.67, 0.45), 1.0, 0.18, a, nrm)
-	mats["Ochre"] = _stone(Color(0.72, 0.43, 0.17), 0.85, 0.3, a, nrm)
-	mats["RedOchre"] = _stone(Color(0.58, 0.2, 0.12), 0.8, 0.3, a, nrm)
-	mats["Clay"] = _stone(Color(0.62, 0.38, 0.24), 0.9, 0.5, a, nrm)
-	mats["Wood"] = _stone(Color(0.36, 0.22, 0.12), 0.8, 0.6, a, nrm)
-	mats["Papyrus"] = _stone(Color(0.86, 0.77, 0.56), 0.95, 0.8, a, nrm)
-	mats["Linen"] = _stone(Color(0.93, 0.9, 0.82), 0.95, 0.8, a, nrm)
-	var lapis := _stone(Color(0.11, 0.18, 0.5), 0.45, 0.4, a, nrm)
-	lapis.metallic = 0.1
-	mats["Lapis"] = lapis
-	var turq := _stone(Color(0.2, 0.62, 0.58), 0.45, 0.4, a, nrm)
-	mats["Turquoise"] = turq
+	plaster_grain = _grain_tex()
+	mats["Sandstone"] = _pbr("large_sandstone_blocks_01", Color(1.0, 0.9, 0.74), 0.24)
+	mats["Limestone"] = _painted(Color(0.93, 0.88, 0.76), 0.3)
+	mats["Basalt"] = _slab(Color(0.11, 0.105, 0.1), Color(0.17, 0.155, 0.135), Vector2(1.6, 1.1), 0.45)
+	mats["SandFloor"] = _pbr("coast_sand_01", Color(0.98, 0.9, 0.78), 0.3)
+	mats["Ochre"] = _painted(Color(0.78, 0.5, 0.2))
+	mats["RedOchre"] = _painted(Color(0.6, 0.22, 0.13))
+	mats["Clay"] = _painted(Color(0.62, 0.38, 0.24), 0.6)
+	mats["Wood"] = _pbr("dark_wood", Color(1.0, 0.85, 0.7), 0.7)
+	mats["Papyrus"] = _painted(Color(0.88, 0.79, 0.57), 0.8)
+	mats["Linen"] = _painted(Color(0.94, 0.91, 0.83), 0.8)
+	mats["Lapis"] = _painted(Color(0.13, 0.22, 0.55))
+	mats["Turquoise"] = _painted(Color(0.2, 0.6, 0.55))
 	var gold := StandardMaterial3D.new()
 	gold.albedo_color = Color(0.86, 0.64, 0.24)
 	gold.metallic = 1.0
@@ -147,6 +216,8 @@ func _build_materials() -> void:
 	mats["Gold"] = gold
 	var glyph := ShaderMaterial.new()
 	glyph.shader = GLYPH_SHADER
+	glyph.set_shader_parameter("plaster_tex", _tex("clay_plaster_diff"))
+	glyph.set_shader_parameter("plaster_nrm", _tex("clay_plaster_nor_gl"))
 	mats["Glyph"] = glyph
 	var water := StandardMaterial3D.new()
 	water.albedo_color = Color(0.06, 0.28, 0.42, 0.86)

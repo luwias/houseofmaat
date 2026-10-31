@@ -15,8 +15,10 @@ func setup(p_eid: String) -> void:
 	var corrupted := GameState.is_corrupted(eid)
 	custom_minimum_size = T.v2(200, 128)
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	var border := T.DUAT if corrupted else T.GOLD
-	add_theme_stylebox_override("panel", T.flat(Color(T.LAPIS.darkened(0.45), 0.97), border, 2, 6, 10))
+	var border := T.DUAT if corrupted else T.BLACK
+	var sb := T.flat(Color("2b2016"), border, 2, 2, 10)
+	sb.content_margin_top = 14
+	add_theme_stylebox_override("panel", sb)
 	tooltip_text = ev.get("description", "")
 	var v := UI.vbox(3)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -39,6 +41,14 @@ func setup(p_eid: String) -> void:
 	for c in v.get_children():
 		if c is Control:
 			c.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+
+func _draw() -> void:
+	# vörös pecsétsáv a tekercs tetején
+	draw_rect(Rect2(2, 2, size.x - 4, 6), T.RED)
+	draw_line(Vector2(2, 8.5), Vector2(size.x - 2, 8.5), T.BLACK, 1.0)
+	draw_circle(Vector2(size.x - 18, 16), 6, T.RED_INK)
+	draw_arc(Vector2(size.x - 18, 16), 6, 0, TAU, 16, T.BLACK, 1.0)
 
 
 func _gui_input(event: InputEvent) -> void:

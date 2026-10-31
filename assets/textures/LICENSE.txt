@@ -1,0 +1,5 @@
+Textúrák: Poly Haven (https://polyhaven.com), CC0 licenc.
+- large_sandstone_blocks_01
+- clay_plaster
+- coast_sand_01
+- dark_wood

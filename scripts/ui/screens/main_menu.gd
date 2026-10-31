@@ -3,6 +3,7 @@ extends Control
 
 const T = preload("res://scripts/ui/theme.gd")
 const UI = preload("res://scripts/ui/ui.gd")
+const FriezeStrip = preload("res://scripts/ui/widgets/frieze_strip.gd")
 
 var main: Node
 
@@ -41,6 +42,10 @@ func _ready() -> void:
 	t.add_theme_constant_override("shadow_offset_y", 3)
 	v.add_child(t)
 	v.add_child(UI.title(Loc.t("game_title_hu"), 30, T.GOLD_L))
+	var strip := FriezeStrip.new(10.0)
+	strip.custom_minimum_size.x = T.px(620)
+	strip.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	v.add_child(strip)
 	v.add_child(UI.gap(6))
 	var tag := UI.label(Loc.t("menu_tagline"), 20, T.SAND, true)
 	tag.custom_minimum_size.x = T.px(640)
@@ -48,9 +53,9 @@ func _ready() -> void:
 	v.add_child(UI.gap(10 if T.compact else 28))
 
 	var has_save := GameState.has_save()
-	var b_cont := UI.button(Loc.t("menu_continue"), func(): main.continue_game(), 320)
+	var b_cont := UI.primary_button(Loc.t("menu_continue"), func(): main.continue_game(), 320)
 	b_cont.disabled = not has_save
-	var b_new := UI.button(Loc.t("menu_new"), _on_new, 320)
+	var b_new := UI.primary_button(Loc.t("menu_new"), _on_new, 320) if not has_save else UI.button(Loc.t("menu_new"), _on_new, 320)
 	for b in [b_cont, b_new]:
 		b.add_theme_font_size_override("font_size", 22)
 		b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
