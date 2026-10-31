@@ -58,7 +58,10 @@ func _build_tile(card: Dictionary, ink: Color) -> void:
 	top_row.custom_minimum_size.y = 14
 	top_row.add_child(UI.spacer())
 	v.add_child(top_row)
-	var tex := ArtFrame.find("cards", card.id)
+	# ügyenkénti kép elsőbbséggel (pl. nefru_o_gold), mert egyes kártya-azonosítók több ügyben is szerepelnek
+	var tex := ArtFrame.find("cards", "%s_%s" % [card.get("_case", ""), card.id])
+	if tex == null:
+		tex = ArtFrame.find("cards", card.id)
 	if tex != null:
 		var tr := TextureRect.new()
 		tr.texture = tex
