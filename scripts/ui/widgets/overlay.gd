@@ -3,12 +3,15 @@ extends Control
 
 const T = preload("res://scripts/ui/theme.gd")
 const UI = preload("res://scripts/ui/ui.gd")
+const _BgArt = preload("res://scripts/ui/widgets/art_frame.gd")
 
 signal closed
 
 var main: Node
 var dim := 0.62
 var close_on_backdrop := false
+## Festett háttér (backgrounds/bg_hall) a legalsó ablak mögött. A felugró ablakok kikapcsolják.
+var backdrop_art := true
 
 
 func _init() -> void:
@@ -26,6 +29,18 @@ func _ready() -> void:
 	UI.full_rect(bg)
 	add_child(bg)
 	move_child(bg, 0)
+	# csak a legalsó ablak kap festett hátteret; a ráhúzott ablakok alatt az látszik tovább
+	var first: bool = main == null or main.get("overlays") == null or main.overlays.is_empty()
+	if backdrop_art and first and _BgArt.find("backgrounds", "bg_hall") != null:
+		var art := _BgArt.new()
+		art.setup("backgrounds", "bg_hall")
+		art.frame = false
+		art.fade_bottom = 0.0
+		art.mouse_filter = Control.MOUSE_FILTER_STOP
+		UI.full_rect(art)
+		add_child(art)
+		move_child(art, 0)
+		bg.color.a = minf(dim, 0.25)
 	if close_on_backdrop:
 		bg.gui_input.connect(_on_backdrop_input)
 	build()

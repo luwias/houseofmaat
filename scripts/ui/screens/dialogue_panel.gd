@@ -22,6 +22,7 @@ func _init(p_cid := "", p_did := "", p_replay := false) -> void:
 	did = p_did
 	replay = p_replay
 	dim = 0.5
+	backdrop_art = false
 
 
 func build() -> void:

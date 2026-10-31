@@ -4,6 +4,7 @@ extends Control
 const T = preload("res://scripts/ui/theme.gd")
 const UI = preload("res://scripts/ui/ui.gd")
 const FriezeStrip = preload("res://scripts/ui/widgets/frieze_strip.gd")
+const ArtFrame = preload("res://scripts/ui/widgets/art_frame.gd")
 
 var main: Node
 
@@ -14,6 +15,14 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	# festett háttér, ha van; különben a 3D csarnok látszik
+	if ArtFrame.find("backgrounds", "bg_menu") != null:
+		var art := ArtFrame.new()
+		art.setup("backgrounds", "bg_menu")
+		art.frame = false
+		art.fade_bottom = 0.0
+		UI.full_rect(art)
+		add_child(art)
 	var grad := Gradient.new()
 	grad.set_color(0, Color(T.DEEP, 0.96))
 	grad.set_color(1, Color(T.DEEP, 0.0))

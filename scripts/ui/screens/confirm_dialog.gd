@@ -13,6 +13,7 @@ func _init(p_text := "", p_on_yes: Callable = Callable(), p_yes := "", p_on_no: 
 	yes_label = p_yes
 	on_no = p_on_no
 	dim = 0.5
+	backdrop_art = false
 
 
 func build() -> void:
