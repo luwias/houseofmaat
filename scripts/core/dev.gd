@@ -42,6 +42,8 @@ func _run() -> void:
 			await _states(main)
 		"rooms2d":
 			await _rooms2d(main)
+		"case_art":
+			await _case_art(main, str(args.get("case", "nefru")))
 	get_tree().quit()
 
 
@@ -161,3 +163,26 @@ func _rooms2d(main) -> void:
 	await shot("32_transition")
 	await _wait(1.2)
 	await shot("33_archive")
+
+
+## Egy ügy képeinek gyors ellenőrzése: fejléc, nyomozás, bizonyítékok, papirusz, első párbeszéd.
+func _case_art(main, cid: String) -> void:
+	GameState.data.seen_intro = true
+	main.new_game()
+	main.close_all_overlays()
+	var c: Dictionary = GameData.get_case(cid)
+	for ev in c.evidence:
+		GameState.unlock_evidence(ev.id)
+	for m in c.get("memories", []):
+		GameState.unlock_memory(m.id)
+	GameState.flush()
+	main.open_case(cid)
+	await _wait(1.0)
+	var cs = main.top_overlay()
+	for tab in ["investigation", "evidence", "storyboard"]:
+		cs._on_tab(tab)
+		await _wait(0.8)
+		await shot("40_%s_%s" % [cid, tab])
+	main.open_dialogue(cid, str(c.investigation[0].dialogue))
+	await _wait(3.0)
+	await shot("41_%s_dialogue" % cid)
