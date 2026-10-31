@@ -40,6 +40,8 @@ func _run() -> void:
 			await _case(main)
 		"states":
 			await _states(main)
+		"rooms2d":
+			await _rooms2d(main)
 	get_tree().quit()
 
 
@@ -120,3 +122,42 @@ func _states(main) -> void:
 			main.hud.set_room(r)
 			await _wait(1.5)
 			await shot("20_%s_%s" % [preset[0], r])
+
+
+## Festett kamrák: parallax, kattintható hely, átlépés.
+func _rooms2d(main) -> void:
+	GameState.data.seen_intro = true
+	main.new_game()
+	main.close_all_overlays()
+	await _wait(1.5)
+	var vp := get_viewport().get_visible_rect().size
+	for side in [["left", Vector2(0, vp.y * 0.5)], ["right", Vector2(vp.x, vp.y * 0.5)]]:
+		var mm := InputEventMouseMotion.new()
+		mm.position = side[1]
+		Input.parse_input_event(mm)
+		await _wait(2.5)
+		await shot("30_parallax_" + side[0])
+	if main.temple.has_method("_spot_rect"):
+		var c: Vector2 = main.temple._spot_rect(main.temple.SPOTS.hall[0][1]).get_center()
+		var mv := InputEventMouseMotion.new()
+		mv.position = c
+		Input.parse_input_event(mv)
+		await _wait(0.4)
+		await shot("31_hover_scales")
+		var click := InputEventMouseButton.new()
+		click.button_index = MOUSE_BUTTON_LEFT
+		click.pressed = true
+		click.position = c
+		Input.parse_input_event(click)
+		var up := click.duplicate()
+		up.pressed = false
+		Input.parse_input_event(up)
+		await _wait(0.8)
+		var top = main.top_overlay()
+		print("CLICK_SCALES -> ", top.get_script().resource_path if top else "nincs ablak")
+		main.close_all_overlays()
+	main.go_room("archive")
+	await _wait(0.3)
+	await shot("32_transition")
+	await _wait(1.2)
+	await shot("33_archive")

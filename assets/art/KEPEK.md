@@ -151,3 +151,11 @@ Ha a kép létezik, a párbeszéd teljes képernyős jelenetes nézetben nyílik
 kérdések alul); ha nincs, marad a sima nézet a portréval.
 
 - `backgrounds/bg_kha_ipy.png`, `bg_kha_harbor.png`, `bg_kha_treasury.png`, `bg_kha_merit.png`, `bg_kha_hapu.png`, `bg_kha_djehuty.png`
+
+## Kamrák – `rooms/room_<kamra>.png` (+ `room_<kamra>_depth.png`)
+
+16:9 festett kamraképek; a játék térhatással mozgatja őket (egér, telefonon döntés). A mélységtérképet
+a `tools/make_depth.py` készíti a képből. Ha mind a hét kamra képe és mélységtérképe megvan, a játék a
+3D templom helyett ezeket használja (`-- --3d` indítási kapcsolóval a 3D templom is elérhető).
+
+- `room_hall`, `room_archive`, `room_memories`, `room_garden`, `room_hieroglyphs`, `room_forgotten`, `room_astral`

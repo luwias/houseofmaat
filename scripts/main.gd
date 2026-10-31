@@ -4,6 +4,7 @@ extends Node
 const T = preload("res://scripts/ui/theme.gd")
 const UI = preload("res://scripts/ui/ui.gd")
 const Temple3D = preload("res://scripts/world/temple_3d.gd")
+const TempleView2D = preload("res://scripts/world/temple_view_2d.gd")
 const HUD = preload("res://scripts/ui/hud.gd")
 const Toasts = preload("res://scripts/ui/widgets/toast_stack.gd")
 const MainMenu = preload("res://scripts/ui/screens/main_menu.gd")
@@ -25,7 +26,7 @@ const NotesScreen = preload("res://scripts/ui/screens/notes_screen.gd")
 const FinalScreen = preload("res://scripts/ui/screens/final_screen.gd")
 const ConfirmDialog = preload("res://scripts/ui/screens/confirm_dialog.gd")
 
-var temple: Node3D
+var temple: Node
 var layer: CanvasLayer
 var root: Control
 var hud: Control
@@ -43,7 +44,11 @@ func _ready() -> void:
 		T.compact = true
 		get_window().content_scale_factor = _mobile_scale()
 	T.build()
-	temple = Temple3D.new()
+	# festett, térhatású kamrák, ha minden kép megvan; különben a 3D templom
+	if TempleView2D.available() and not Dev.args.has("3d"):
+		temple = TempleView2D.new()
+	else:
+		temple = Temple3D.new()
 	temple.low_spec = mobile
 	add_child(temple)
 	layer = CanvasLayer.new()
