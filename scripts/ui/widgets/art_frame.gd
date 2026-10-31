@@ -22,6 +22,8 @@ var glyph := ""
 var mood := "dawn"
 var fade_bottom := 0.55
 var frame := true
+## A kivágás fókusza (0..1): hová essen a kép, ha a keret más arányú. Alapból kicsit a közép fölé.
+var focus := Vector2(0.5, 0.3)
 var _seed := 0
 
 
@@ -61,7 +63,7 @@ func _draw_cover(r: Rect2) -> void:
 	var ts := texture.get_size()
 	var scale := maxf(r.size.x / ts.x, r.size.y / ts.y)
 	var src := Vector2(r.size.x / scale, r.size.y / scale)
-	var off := (ts - src) * Vector2(0.5, 0.3)
+	var off := (ts - src) * focus
 	draw_texture_rect_region(texture, r, Rect2(off, src))
 
 

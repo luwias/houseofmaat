@@ -145,6 +145,7 @@ func _banner(soul: Dictionary) -> Control:
 	var art := ArtFrame.new()
 	art.setup("souls", cid, "", "gold")
 	art.fade_bottom = 0.0
+	art.focus = Vector2(0.5, 0.15)
 	UI.full_rect(art)
 	root.add_child(art)
 	var shade := TextureRect.new()
@@ -261,7 +262,24 @@ func _branch_card(br: Dictionary, letter: String) -> Control:
 	var gl := UI.glyphs(letter if letter != "" else str(br.get("glyph", "?")), 30, T.GOLD)
 	gl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	badge.add_child(gl)
-	h.add_child(badge)
+	var art_id := "%s_%s" % [cid, str(br.get("dialogue", ""))]
+	var kind := "spirits" if ArtFrame.find("spirits", art_id) != null else "portraits"
+	if ArtFrame.find(kind, art_id) != null:
+		# a megidézett ka képe, a sarkában az ág betűjele
+		var art := ArtFrame.new()
+		art.setup(kind, art_id)
+		art.fade_bottom = 0.0
+		var s := T.px(118)
+		art.custom_minimum_size = Vector2(s, s)
+		art.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		if letter != "":
+			badge.custom_minimum_size = T.v2(34, 34)
+			gl.add_theme_font_size_override("font_size", 18)
+			badge.position = Vector2(4, 4)
+			art.add_child(badge)
+		h.add_child(art)
+	else:
+		h.add_child(badge)
 	var v := UI.vbox(4)
 	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var th := UI.hbox(8)
