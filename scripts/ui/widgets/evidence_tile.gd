@@ -3,6 +3,7 @@ extends PanelContainer
 
 const T = preload("res://scripts/ui/theme.gd")
 const UI = preload("res://scripts/ui/ui.gd")
+const ArtFrame = preload("res://scripts/ui/widgets/art_frame.gd")
 
 signal pressed(eid: String)
 
@@ -33,6 +34,16 @@ func setup(p_eid: String) -> void:
 		top.add_child(UI.badge(Loc.t("tag_new"), T.TURQ, 11))
 	if corrupted:
 		top.add_child(UI.badge(Loc.t("tag_corrupted"), T.DUAT, 11))
+	if ArtFrame.find("cards", eid) != null:
+		# a bizonyíték illusztrációja a csempe tetején
+		custom_minimum_size = T.v2(200, 236)
+		var art := ArtFrame.new()
+		art.setup("cards", eid)
+		art.fade_bottom = 0.0
+		art.custom_minimum_size.y = T.px(104)
+		if corrupted:
+			art.modulate = Color(0.75, 0.65, 0.95)
+		v.add_child(art)
 	var t := UI.title(ev.get("title", eid), 17, T.PAPYRUS)
 	t.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	v.add_child(t)
