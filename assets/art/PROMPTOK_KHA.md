@@ -15,8 +15,7 @@
 
 1. **Először a Kha-portrét** (1. kép) készítsd el. Ha tetszik, minden további képnél töltsd fel referenciaként, és írd mellé: *„Keep the same character as in the reference image.”*
 2. Merit első képe után ugyanígy használd azt is referenciaként.
-3. Minden prompt végére másold oda a **közös stílusblokkot** (lent), és állítsd be a megadott **méretarányt**.
-   ChatGPT-ben ezt írd a prompt végére: *„Aspect ratio 16:9.”*; Midjourney-ben pedig: `--ar 16:9`.
+3. Minden prompt végére másold oda a **közös stílusblokkot** (lent), és állítsd be a megadott **méretarányt** – ChatGPT-ben ezt írd a prompt végére: *„Aspect ratio 16:9.”*, Midjourney-ben pedig: `--ar 16:9`.
 4. **PNG-ként** mentsd, **pontosan a megadott néven** (kisbetű, ékezet nélkül), a megadott mappába.
 5. Ha végeztél (vagy akár csak néhány képpel), szólj, és beépítem, illetve újraexportálom a játékot.
 
