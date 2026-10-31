@@ -5,6 +5,7 @@ const T = preload("res://scripts/ui/theme.gd")
 const UI = preload("res://scripts/ui/ui.gd")
 const CardWidget = preload("res://scripts/ui/widgets/card_widget.gd")
 const Validator = preload("res://scripts/systems/story_validator.gd")
+const ArtFrame = preload("res://scripts/ui/widgets/art_frame.gd")
 
 const CATS := ["all", "character", "event", "object", "location", "memory", "evidence"]
 
@@ -75,7 +76,7 @@ func _ready() -> void:
 	var tray := TrayDrop.new()
 	tray.sb = self
 	tray.add_theme_stylebox_override("panel", T.flat(Color(T.DEEP, 0.85), T.GOLD_D, 1, 6, 10))
-	tray.custom_minimum_size.y = T.px(210)
+	tray.custom_minimum_size.y = 128.0 if T.compact else 200.0
 	add_child(tray)
 	var tv := UI.vbox(8)
 	tray.add_child(tv)
@@ -90,7 +91,7 @@ func _ready() -> void:
 		fh.add_child(b)
 	tray_flow = UI.flow(8)
 	var sc := UI.scroll(tray_flow)
-	sc.custom_minimum_size.y = T.px(150)
+	sc.custom_minimum_size.y = 84.0 if T.compact else 136.0
 	tv.add_child(sc)
 	refresh()
 
@@ -226,16 +227,22 @@ func _build_slot(sc: Dictionary, flash := false) -> void:
 	var cards: Array = GameState.board(cid).get(sc.id, [])
 	var res := Validator.validate(case_data, sc, cards, GameState)
 	var col := T.state_color(res.state)
-	var sb := T.flat(Color(1, 1, 1, 0.12), Color(col, 0.9) if res.state != "empty" else Color(T.INK_L, 0.45), 2, 6, 10)
+	var sb := T.flat(Color(T.PAPYRUS, 0.55), Color(col, 0.95) if res.state != "empty" else Color(T.GOLD_D, 0.9), 2, 4, 8)
+	sb.content_margin_top = 0
+	sb.content_margin_left = 0
+	sb.content_margin_right = 0
 	slot.add_theme_stylebox_override("panel", sb)
 	var v := UI.vbox(6)
 	v.mouse_filter = Control.MOUSE_FILTER_PASS
 	slot.add_child(v)
-	var hh := UI.hbox(6)
-	hh.add_child(UI.title(str(sc.get("numeral", "")), 22, T.RED_INK))
-	hh.add_child(UI.title(sc.title, 20, T.INK))
-	v.add_child(hh)
-	v.add_child(UI.label(sc.get("desc", ""), 13, T.INK_L, true))
+	v.add_child(_scene_header(sc))
+	var body := UI.margin(null, 8, 0, 8, 0)
+	body.mouse_filter = Control.MOUSE_FILTER_PASS
+	var bv := UI.vbox(6)
+	bv.mouse_filter = Control.MOUSE_FILTER_PASS
+	body.add_child(bv)
+	v.add_child(body)
+	v = bv
 	v.add_child(UI.state_badge(res.state, 13))
 	var cards_box := UI.vbox(4)
 	cards_box.mouse_filter = Control.MOUSE_FILTER_PASS
@@ -279,6 +286,46 @@ func _build_slot(sc: Dictionary, flash := false) -> void:
 		slot.modulate = Color(1.25, 1.2, 1.0)
 		var tw := slot.create_tween()
 		tw.tween_property(slot, "modulate", Color.WHITE, 0.6)
+
+
+const MOODS := ["dawn", "gold", "amber", "night", "tomb"]
+
+
+## Képes jelenetfejléc: illusztráció (vagy hangulatos tartalékkép), rajta római szám, cím, kérdés.
+func _scene_header(sc: Dictionary) -> Control:
+	var idx: int = case_data.scenes.find(sc)
+	var root := Control.new()
+	root.custom_minimum_size = Vector2(0, 86.0 if T.compact else 150.0)
+	root.mouse_filter = Control.MOUSE_FILTER_PASS
+	var art := ArtFrame.new()
+	art.setup("scenes", "%s_%s" % [cid, sc.id], "", MOODS[idx % MOODS.size()])
+	art.fade_bottom = 0.0
+	UI.full_rect(art)
+	root.add_child(art)
+	var shade := ColorRect.new()
+	shade.color = Color(0.04, 0.05, 0.1, 0.35)
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	UI.full_rect(shade)
+	root.add_child(shade)
+	var v := UI.vbox(0)
+	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	v.alignment = BoxContainer.ALIGNMENT_BEGIN
+	UI.full_rect(v)
+	v.offset_top = 6
+	v.offset_left = 6
+	v.offset_right = -6
+	root.add_child(v)
+	var parts := [UI.title(str(sc.get("numeral", "")), 22 if T.compact else 30, T.GOLD_L, HORIZONTAL_ALIGNMENT_CENTER),
+			UI.title(sc.title, 16 if T.compact else 18, T.CREAM, HORIZONTAL_ALIGNMENT_CENTER)]
+	if not T.compact:
+		parts.append(UI.label(sc.get("desc", ""), 13, T.PAPYRUS, true, HORIZONTAL_ALIGNMENT_CENTER))
+	for l in parts:
+		l.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.95))
+		l.add_theme_constant_override("shadow_offset_x", 1)
+		l.add_theme_constant_override("shadow_offset_y", 2)
+		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		v.add_child(l)
+	return root
 
 
 func _names(ids: Array) -> String:

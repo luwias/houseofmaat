@@ -6,6 +6,8 @@ const Cond = preload("res://scripts/systems/conditions.gd")
 const Judgment = preload("res://scripts/systems/judgment.gd")
 const Storyboard = preload("res://scripts/ui/widgets/storyboard.gd")
 const EvidenceTile = preload("res://scripts/ui/widgets/evidence_tile.gd")
+const ArtFrame = preload("res://scripts/ui/widgets/art_frame.gd")
+const ProgressStrip = preload("res://scripts/ui/widgets/progress_strip.gd")
 
 const TABS := ["briefing", "investigation", "evidence", "storyboard", "judgment"]
 const TAB_GLYPHS := {"briefing": "𓊛", "investigation": "𓁹", "evidence": "𓏞", "storyboard": "𓏛", "judgment": "𓆄"}
@@ -15,7 +17,7 @@ var case_data: Dictionary
 var tab := "briefing"
 var content: PanelContainer
 var tab_buttons := {}
-var progress_label: Label
+var progress_strip: Control
 var storyboard: Control
 var questions_holder: VBoxContainer
 
@@ -36,10 +38,7 @@ func build() -> void:
 	var p := framed(26)
 	var v := UI.vbox(12)
 	p.add_child(v)
-	v.add_child(header("%s, %s" % [soul.name, soul.epithet], soul.glyph, "" if T.compact else Loc.t("case_subtitle")))
-	progress_label = UI.label("", 14, T.SAND)
-	v.add_child(progress_label)
-	v.add_child(UI.separator())
+	v.add_child(_banner(soul))
 	var body := UI.hbox(16)
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(body)
@@ -81,7 +80,7 @@ func _show_tab() -> void:
 	for t in tab_buttons:
 		var b: Button = tab_buttons[t]
 		if t == tab:
-			b.add_theme_stylebox_override("normal", T.flat(Color(T.LAPIS_L, 0.95), T.GOLD, 2, 6, 10))
+			b.add_theme_stylebox_override("normal", T.tablet("selected"))
 			b.add_theme_color_override("font_color", T.GOLD_L)
 		else:
 			b.remove_theme_stylebox_override("normal")
@@ -124,7 +123,7 @@ func _update_progress() -> void:
 	for sc in case_data.scenes:
 		if not board.get(sc.id, []).is_empty():
 			filled += 1
-	progress_label.text = Loc.t("case_progress", [found, case_data.evidence.size(), filled, case_data.scenes.size()])
+	progress_strip.set_values(found, case_data.evidence.size(), filled, case_data.scenes.size())
 	var new_inv := false
 	for br in case_data.get("investigation", []) + case_data.get("encounters", []):
 		if Cond.check(br.get("unlock", true), GameState) and Dlg.has_new(case_data, br.dialogue, GameState):
@@ -135,6 +134,56 @@ func _update_progress() -> void:
 			new_ev = true
 	tab_buttons.investigation.text = "%s   %s%s" % [TAB_GLYPHS.investigation, Loc.t("tab_investigation"), "  •" if new_inv else ""]
 	tab_buttons.evidence.text = "%s   %s%s" % [TAB_GLYPHS.evidence, Loc.t("tab_evidence"), "  •" if new_ev else ""]
+
+
+## Fejlécsáv: a lélek illusztrációja a háttérben, rajta cím, alcím, bezárás és haladásjelző.
+func _banner(soul: Dictionary) -> Control:
+	var h := T.px(190) if not T.compact else 150.0
+	var root := Control.new()
+	root.custom_minimum_size = Vector2(0, h)
+	root.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var art := ArtFrame.new()
+	art.setup("souls", cid, "", "gold")
+	art.fade_bottom = 0.0
+	UI.full_rect(art)
+	root.add_child(art)
+	var shade := TextureRect.new()
+	var grad := Gradient.new()
+	grad.set_color(0, Color(0.05, 0.07, 0.13, 0.95))
+	grad.set_color(1, Color(0.05, 0.07, 0.13, 0.0))
+	grad.add_point(0.55, Color(0.05, 0.07, 0.13, 0.75))
+	var gt := GradientTexture2D.new()
+	gt.gradient = grad
+	gt.fill_to = Vector2(1, 0)
+	shade.texture = gt
+	shade.stretch_mode = TextureRect.STRETCH_SCALE
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	UI.full_rect(shade)
+	root.add_child(shade)
+	var m := UI.margin(null, 28, 18, 18, 14)
+	UI.full_rect(m)
+	m.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(m)
+	var v := UI.vbox(4)
+	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	m.add_child(v)
+	var top := UI.hbox(12)
+	top.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var tv := UI.vbox(2)
+	tv.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	tv.add_child(UI.title("%s, %s" % [soul.name, soul.epithet], 34 if not T.compact else 28, T.GOLD_L))
+	if not T.compact:
+		tv.add_child(UI.label(Loc.t("case_subtitle"), 17, T.PAPYRUS, true))
+	top.add_child(tv)
+	top.add_child(UI.spacer())
+	var cb := UI.button(Loc.t("btn_close") + "  ✕", close)
+	cb.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	top.add_child(cb)
+	v.add_child(top)
+	v.add_child(UI.spacer(false))
+	progress_strip = ProgressStrip.new()
+	v.add_child(progress_strip)
+	return root
 
 
 func _questions_panel() -> Control:

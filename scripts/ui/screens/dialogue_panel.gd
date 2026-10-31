@@ -2,6 +2,7 @@ extends "res://scripts/ui/widgets/overlay.gd"
 ## Párbeszéd és kihallgatás egy megidézett ka-val.
 
 const Dlg = preload("res://scripts/systems/dialogue.gd")
+const ArtFrame = preload("res://scripts/ui/widgets/art_frame.gd")
 
 var cid := ""
 var did := ""
@@ -38,13 +39,21 @@ func build() -> void:
 	# portré
 	var port := UI.vbox(8)
 	port.custom_minimum_size.x = T.px(210)
-	var circle := UI.box_panel(T.LAPIS.darkened(0.3), T.GOLD, 3, 10, 90)
+	var circle := UI.box_panel(Color("101830"), T.GOLD, 2, 10, 90)
 	circle.custom_minimum_size = T.v2(170, 170)
 	circle.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	var g := UI.glyphs(str(dlg.get("glyph", "𓂓")), 84, T.GOLD_L)
-	g.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	circle.add_child(g)
-	port.add_child(circle)
+	var tex := ArtFrame.find("portraits", "%s_%s" % [cid, did])
+	if tex != null:
+		var art := ArtFrame.new()
+		art.setup("portraits", "%s_%s" % [cid, did])
+		art.fade_bottom = 0.25
+		art.custom_minimum_size = T.v2(190, 230)
+		port.add_child(art)
+	else:
+		var g := UI.glyphs(str(dlg.get("glyph", "𓂓")), 84, T.GOLD_L)
+		g.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		circle.add_child(g)
+		port.add_child(circle)
 	port.add_child(UI.title(str(dlg.get("speaker", "")), 24, T.GOLD, HORIZONTAL_ALIGNMENT_CENTER))
 	port.add_child(UI.label(str(dlg.get("role", "")), 14, T.SAND, true, HORIZONTAL_ALIGNMENT_CENTER))
 	port.add_child(UI.label(Loc.t("dlg_replay_note") if replay else Loc.t("dlg_ka_note"), 12, T.MUTED, true,

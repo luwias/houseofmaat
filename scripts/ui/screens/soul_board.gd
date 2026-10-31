@@ -2,6 +2,7 @@ extends "res://scripts/ui/widgets/overlay.gd"
 ## A Lelkek Táblája: a Házba érkezett lelkek és ügyeik állapota.
 
 const Cond = preload("res://scripts/systems/conditions.gd")
+const ArtFrame = preload("res://scripts/ui/widgets/art_frame.gd")
 
 var row: HBoxContainer
 
@@ -33,7 +34,11 @@ func _soul_card(s: Dictionary) -> Control:
 		p.modulate = Color(0.62, 0.62, 0.66)
 	var v := UI.vbox(10)
 	p.add_child(v)
-	v.add_child(UI.glyphs(s.glyph, 64, T.INK if unlocked else T.INK_L))
+	var portrait := ArtFrame.new()
+	portrait.setup("souls", str(s.id), str(s.glyph), ["gold", "teal", "amber"][GameData.souls.find(s) % 3])
+	portrait.fade_bottom = 0.35
+	portrait.custom_minimum_size = Vector2(0, T.px(190))
+	v.add_child(portrait)
 	v.add_child(UI.title(s.name, 30, T.RED_INK, HORIZONTAL_ALIGNMENT_CENTER))
 	v.add_child(UI.label(s.epithet, 17, T.INK_L, false, HORIZONTAL_ALIGNMENT_CENTER))
 	v.add_child(UI.separator(T.INK_L))

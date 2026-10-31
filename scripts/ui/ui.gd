@@ -92,10 +92,10 @@ static func ink_button(text: String, cb: Callable = Callable()) -> Button:
 	b.add_theme_stylebox_override("hover", T.tablet("plaster_hover"))
 	b.add_theme_stylebox_override("pressed", T.tablet("plaster_pressed"))
 	b.add_theme_stylebox_override("disabled", T.tablet("plaster_disabled"))
-	b.add_theme_color_override("font_color", T.INK)
-	b.add_theme_color_override("font_hover_color", T.RED_INK)
-	b.add_theme_color_override("font_pressed_color", T.RED_INK)
-	b.add_theme_color_override("font_disabled_color", Color(T.INK_L, 0.5))
+	b.add_theme_color_override("font_color", T.CREAM)
+	b.add_theme_color_override("font_hover_color", T.GOLD_L)
+	b.add_theme_color_override("font_pressed_color", T.GOLD)
+	b.add_theme_color_override("font_disabled_color", Color(0.75, 0.72, 0.66))
 	return b
 
 
@@ -182,7 +182,7 @@ static func scroll(child: Control, horizontal: bool = false) -> ScrollContainer:
 
 
 static func badge(text: String, color: Color, size: int = 14) -> PanelContainer:
-	var p := box_panel(color.darkened(0.1), T.BLACK, 1, 4, 1)
+	var p := box_panel(color.darkened(0.15), Color(color.lightened(0.25), 0.8), 1, 4, 3)
 	var st: StyleBoxFlat = p.get_theme_stylebox("panel")
 	st.content_margin_left = 8
 	st.content_margin_right = 8
@@ -196,7 +196,7 @@ static func badge(text: String, color: Color, size: int = 14) -> PanelContainer:
 
 static func state_badge(state: String, size: int = 14) -> PanelContainer:
 	var col := T.state_color(state)
-	var p := box_panel(col, T.BLACK, 1, 4, 1)
+	var p := box_panel(col.darkened(0.1), Color(col.lightened(0.3), 0.8), 1, 4, 3)
 	var st: StyleBoxFlat = p.get_theme_stylebox("panel")
 	st.content_margin_left = 8
 	st.content_margin_right = 8

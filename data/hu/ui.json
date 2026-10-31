@@ -113,6 +113,8 @@
   "souls_btn_view": "Az ítélet megtekintése",
 
   "case_subtitle": "Rekonstruáld az életét. Találd meg az igazságot. Ítélj.",
+  "ps_evidence": "Bizonyítékok",
+  "ps_scenes": "Kitöltött jelenetek",
   "case_progress": "Bizonyítékok: %d / %d   ·   Kitöltött jelenetek: %d / %d",
   "case_questions": "Nyitott kérdések",
   "tab_briefing": "Érkezés",
@@ -211,11 +213,7 @@
   "jd_pick": "Válassz ítéletet – kiválasztás után még megerősítheted vagy visszaléphetsz.",
   "jd_pronounce": "Kimondom az ítéletet",
   "jd_confirm": "Kimondod az ítéletet: „%s”? Ez nem vonható vissza.",
-  "jd_confirm_full": "[b]Biztosan ezt az ítéletet választod: „%s”?[/b]
-
-Ez azt jelenti, hogy %s esetében %s.
-
-Az ítélet végleges, és a Ház is reagálni fog rá.",
+  "jd_confirm_full": "[b]Biztosan ezt az ítéletet választod: „%s”?[/b]\n\nEz azt jelenti, hogy %s esetében %s.\n\nAz ítélet végleges, és a Ház is reagálni fog rá.",
   "scales_heart": "szív",
 
   "res_why": "Miért született ez az ítélet?",

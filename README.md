@@ -106,3 +106,5 @@ A kiadási kulcstár nincs a repóban – őrizd meg, nélküle nem adható ki f
 
 - Betűk (SIL Open Font License): Cinzel, EB Garamond, Noto Sans Egyptian Hieroglyphs – `assets/fonts/OFL-*.txt`
 - Textúrák (CC0): Poly Haven – `assets/textures/LICENSE.txt`
+
+Illusztrációk: `assets/art/` – a szükséges képek listája és képgenerálási promptok: `assets/art/KEPEK.md`. Hiányzó kép helyett a játék tartalékképet rajzol.

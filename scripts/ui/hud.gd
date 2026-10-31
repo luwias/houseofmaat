@@ -33,10 +33,12 @@ func _ready() -> void:
 	top.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
 	top.offset_bottom = 70
 	add_child(top)
-	var top_band := FriezeStrip.new(9.0)
+	var top_band := ColorRect.new()
+	top_band.color = Color(T.GOLD_D, 0.9)
+	top_band.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	top_band.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
 	top_band.offset_top = 70
-	top_band.offset_bottom = 79
+	top_band.offset_bottom = 71
 	add_child(top_band)
 	var th := UI.hbox(22)
 	top.add_child(th)
@@ -115,9 +117,11 @@ func _ready() -> void:
 	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	bottom.offset_top = -78
 	add_child(bottom)
-	var bottom_band := FriezeStrip.new(9.0)
+	var bottom_band := ColorRect.new()
+	bottom_band.color = Color(T.GOLD_D, 0.9)
+	bottom_band.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bottom_band.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	bottom_band.offset_top = -87
+	bottom_band.offset_top = -79
 	bottom_band.offset_bottom = -78
 	add_child(bottom_band)
 	var bh := UI.hbox(8)

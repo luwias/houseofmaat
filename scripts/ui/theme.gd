@@ -1,17 +1,17 @@
 extends RefCounted
-## A „sírfestmény” vizuális nyelv: thébai sírkamrák színei, festett táblák, színes sávkeretek.
-## Sötét felület = csillagos sírmennyezet (mélykék), világos felület = papirusz / vakolat.
+## Vizuális nyelv: mély navy felületek vékony arany vonalakkal és díszített sarkokkal,
+## meleg pergamen dokumentumok, elegáns, visszafogott gombok.
 
 # --- paletta (a régi nevek megmaradtak, hogy minden képernyő automatikusan átálljon)
-const NAVY := Color("161c30")       # éjszakai lapis – a sírmennyezet
-const DEEP := Color("0d111e")
-const LAPIS := Color("27468f")
+const NAVY := Color("131b30")
+const DEEP := Color("0a0f1c")
+const LAPIS := Color("2a4178")
 const LAPIS_L := Color("3d63b4")
-const GOLD := Color("e6b04a")       # festett okkersárga, nem fémes arany
-const GOLD_L := Color("f7d98f")
-const GOLD_D := Color("8f6626")
+const GOLD := Color("d8aa52")
+const GOLD_L := Color("f3d696")
+const GOLD_D := Color("8a6a30")
 const SAND := Color("d9c49b")
-const PAPYRUS := Color("f0e2c0")
+const PAPYRUS := Color("eadbb6")
 const PAPYRUS_D := Color("cfb37e")
 const INK := Color("1e150d")
 const INK_L := Color("6b4f2e")
@@ -101,24 +101,25 @@ static func build() -> Theme:
 	t.set_color("font_disabled_color", "Button", Color(0.62, 0.58, 0.52))
 	t.set_color("font_focus_color", "Button", GOLD_L)
 	t.set_color("font_outline_color", "Button", BLACK)
+	t.set_font("font", "Button", font_body)
 
 	# Panelek (a legtöbb képernyő a festett panelt használja, ez csak alapértelmezés)
-	t.set_stylebox("panel", "PanelContainer", _flat(Color(NAVY, 0.96), BLACK, 2, 2))
-	t.set_stylebox("panel", "Panel", _flat(Color(NAVY, 0.96), BLACK, 2, 2))
+	t.set_stylebox("panel", "PanelContainer", _flat(Color(NAVY, 0.96), Color(GOLD_D, 0.8), 1, 3))
+	t.set_stylebox("panel", "Panel", _flat(Color(NAVY, 0.96), Color(GOLD_D, 0.8), 1, 3))
 
 	# Tooltip: kis papirusz
-	var tip := _flat(PAPYRUS, BLACK, 2, 2)
+	var tip := _flat(Color("0e1526"), GOLD_D, 1, 3)
 	tip.content_margin_left = 10
 	tip.content_margin_right = 10
 	tip.content_margin_top = 6
 	tip.content_margin_bottom = 6
 	t.set_stylebox("panel", "TooltipPanel", tip)
-	t.set_color("font_color", "TooltipLabel", INK)
+	t.set_color("font_color", "TooltipLabel", PAPYRUS)
 	t.set_font("font", "TooltipLabel", font_body)
 
 	# Görgetősáv: vékony festett rúd
-	var grab := _flat(GOLD_D, BLACK, 1, 2)
-	var grab_h := _flat(GOLD, BLACK, 1, 2)
+	var grab := _flat(Color(GOLD_D, 0.9), Color(0, 0, 0, 0), 0, 3)
+	var grab_h := _flat(GOLD, Color(0, 0, 0, 0), 0, 3)
 	var sbg := _flat(Color(0, 0, 0, 0.22), Color(0, 0, 0, 0), 0, 2)
 	for sb in ["VScrollBar", "HScrollBar"]:
 		t.set_stylebox("grabber", sb, grab)
@@ -133,12 +134,12 @@ static func build() -> Theme:
 	t.set_stylebox("focus", "OptionButton", StyleBoxEmpty.new())
 	t.set_color("font_color", "OptionButton", CREAM)
 	t.set_font("font", "OptionButton", font_body_bold)
-	var pm := _flat(PAPYRUS, BLACK, 2, 2)
+	var pm := _flat(Color("0e1526"), GOLD_D, 1, 3)
 	t.set_stylebox("panel", "PopupMenu", pm)
-	t.set_color("font_color", "PopupMenu", INK)
-	t.set_color("font_hover_color", "PopupMenu", RED_INK)
+	t.set_color("font_color", "PopupMenu", PAPYRUS)
+	t.set_color("font_hover_color", "PopupMenu", GOLD_L)
 	t.set_font("font", "PopupMenu", font_body)
-	t.set_stylebox("hover", "PopupMenu", _flat(Color(GOLD, 0.55), Color(0, 0, 0, 0), 0, 0))
+	t.set_stylebox("hover", "PopupMenu", _flat(Color(LAPIS, 0.8), Color(0, 0, 0, 0), 0, 2))
 	t.set_stylebox("panel", "ItemList", _flat(Color(DEEP, 0.6), BLACK, 1, 2))
 	t.set_color("font_color", "ItemList", PAPYRUS)
 	t.set_stylebox("selected", "ItemList", _flat(Color(LAPIS, 0.9), GOLD, 1, 2))
@@ -150,65 +151,32 @@ static func build() -> Theme:
 	return t
 
 
-# ------------------------------------------------------------ festett táblák
-## Egy festett tábla képe: fekete, kissé szabálytalan kontúr, belső okkervonal,
-## ecsetszerű szemcse. 9-szeletes textúraként skálázódik bármilyen méretre.
-static func _tablet_image(fill: Color, inner: Color, seed_v: int) -> Image:
-	var n := 48
-	var img := Image.create(n, n, false, Image.FORMAT_RGBA8)
-	var rng := RandomNumberGenerator.new()
-	rng.seed = seed_v
-	var noise := FastNoiseLite.new()
-	noise.seed = seed_v
-	noise.frequency = 0.18
-	for y in n:
-		for x in n:
-			var d := mini(mini(x, y), mini(n - 1 - x, n - 1 - y))
-			var jit := 1 if noise.get_noise_2d(x * 3.0, y * 3.0) > 0.35 else 0
-			var c := Color(0, 0, 0, 0)
-			if d <= 1 + jit:
-				c = BLACK
-			elif d == 4 or d == 5:
-				c = inner.lerp(BLACK, 0.12 * rng.randf())
-			elif d >= 2:
-				var v := noise.get_noise_2d(x * 0.6, y * 1.8) * 0.045 + rng.randf_range(-0.012, 0.012)
-				c = Color(fill.r + v, fill.g + v, fill.b + v, 1.0)
-			# a sarkok enyhén kerekítve
-			if (x < 2 or x > n - 3) and (y < 2 or y > n - 3):
-				c = Color(0, 0, 0, 0)
-			img.set_pixel(x, y, c)
-	return img
-
-
-static func _tablet(fill: Color, inner: Color, seed_v: int) -> StyleBoxTexture:
-	var sb := StyleBoxTexture.new()
-	sb.texture = ImageTexture.create_from_image(_tablet_image(fill, inner, seed_v))
-	sb.texture_margin_left = 8
-	sb.texture_margin_right = 8
-	sb.texture_margin_top = 8
-	sb.texture_margin_bottom = 8
-	sb.axis_stretch_horizontal = StyleBoxTexture.AXIS_STRETCH_MODE_TILE_FIT
-	sb.axis_stretch_vertical = StyleBoxTexture.AXIS_STRETCH_MODE_TILE_FIT
+# ------------------------------------------------------------ gombstílusok
+static func _btn(bg: Color, border: Color, bw: int = 1) -> StyleBoxFlat:
+	var sb := _flat(bg, border, bw, 3)
 	sb.content_margin_left = 18
 	sb.content_margin_right = 18
-	sb.content_margin_top = 9
-	sb.content_margin_bottom = 10
+	sb.content_margin_top = 8
+	sb.content_margin_bottom = 9
+	sb.shadow_color = Color(0, 0, 0, 0.35)
+	sb.shadow_size = 3
+	sb.shadow_offset = Vector2(0, 2)
 	return sb
 
 
 static func _build_tablets() -> void:
 	tablets = {
-		"normal": _tablet(Color("24396f"), GOLD_D, 11),
-		"hover": _tablet(Color("31509a"), GOLD, 12),
-		"pressed": _tablet(Color("8e3220"), GOLD, 13),
-		"disabled": _tablet(Color("3a342d"), Color("5a5246"), 14),
-		"selected": _tablet(Color("9a3a22"), GOLD_L, 15),
-		"plaster": _tablet(Color("e7d3a6"), RED_INK, 16),
-		"plaster_hover": _tablet(Color("f3e3bd"), RED, 17),
-		"plaster_pressed": _tablet(Color("d9bf88"), RED_INK, 18),
-		"plaster_disabled": _tablet(Color("cbbb98"), Color("a89878"), 19),
-		"red": _tablet(Color("a53a22"), GOLD, 20),
-		"red_hover": _tablet(Color("bf4a2c"), GOLD_L, 21),
+		"normal": _btn(Color("111a2f"), Color(GOLD_D, 0.95)),
+		"hover": _btn(Color("1a2747"), GOLD),
+		"pressed": _btn(Color("0b111f"), GOLD_L),
+		"disabled": _btn(Color("12161f"), Color(0.32, 0.3, 0.27)),
+		"selected": _btn(Color("2a4178"), GOLD_L, 2),
+		"plaster": _btn(Color("111a2f"), Color(GOLD_D, 0.95)),
+		"plaster_hover": _btn(Color("1a2747"), GOLD),
+		"plaster_pressed": _btn(Color("0b111f"), GOLD_L),
+		"plaster_disabled": _btn(Color("3b3a37"), Color(0.45, 0.42, 0.37)),
+		"red": _btn(Color("2a4178"), GOLD_L, 2),
+		"red_hover": _btn(Color("34508f"), GOLD_L, 2),
 	}
 
 
